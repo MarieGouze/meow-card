@@ -28,7 +28,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ro
 .header-btn{display:flex;align-items:center;gap:6px;padding:10px 14px;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.4);border-radius:var(--radius-md);color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);white-space:nowrap}.header-btn:hover:not(:disabled){background:rgba(255,255,255,.4);transform:translateY(-2px)}.header-btn:active:not(:disabled){transform:scale(.95)}.header-btn:disabled{opacity:.5;cursor:not-allowed}.header-btn.warning{background:rgba(255,179,102,.4);border-color:rgba(255,179,102,.6)}.header-btn.purple{background:rgba(159,122,234,.4);border-color:rgba(159,122,234,.6)}
 .header-btn .label{display:none}
 .hamburger-btn{display:none!important}
-.header-select{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.4);border-radius:var(--radius-md);color:#fff;font-size:13px}.header-select select{background:transparent;border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;outline:none;max-width:160px}.header-select select option{color:var(--text);background:var(--white)}.model-dropdown-wrap{position:relative}.model-dropdown-trigger{display:flex;align-items:center;gap:6px;cursor:pointer;min-width:0;padding:2px 0}.model-dropdown-trigger .model-name{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;font-size:13px}.model-dropdown-trigger .drop-arrow{font-size:10px;opacity:.7;transition:var(--transition)}.model-dropdown-panel{position:absolute;top:calc(100% + 8px);right:0;min-width:260px;max-width:350px;background:var(--white);border:2px solid var(--sky-soft);border-radius:var(--radius-md);box-shadow:0 8px 32px var(--shadow);z-index:100;overflow:hidden;animation:fadeIn .15s ease}.model-dropdown-panel .mdp-search{width:100%;padding:10px 14px;border:none;border-bottom:2px solid var(--border);font-size:16px;background:var(--cream);color:var(--text);outline:none;font-family:inherit;box-sizing:border-box}.model-dropdown-panel .mdp-search::placeholder{color:var(--text-soft)}.model-dropdown-panel .mdp-search:focus{background:var(--sky-pale)}.model-dropdown-panel .mdp-list{max-height:240px;overflow-y:auto;overscroll-behavior:contain}.model-dropdown-panel .mdp-item{padding:12px 14px;font-size:14px;cursor:pointer;transition:background .15s;color:var(--text);display:flex;align-items:center;gap:8px;min-height:44px}.model-dropdown-panel .mdp-item:hover{background:var(--sky-pale)}.model-dropdown-panel .mdp-item:active{background:var(--sky-soft)}.model-dropdown-panel .mdp-item.active{background:var(--sky-pale);color:var(--sky);font-weight:700}.model-dropdown-panel .mdp-item .check{width:16px;text-align:center;flex-shrink:0}.model-dropdown-panel .mdp-empty{padding:20px;text-align:center;color:var(--text-soft);font-size:13px}.header-select .refresh-btn{background:none;border:none;color:#fff;cursor:pointer;font-size:14px;padding:2px;opacity:.7;transition:var(--transition);min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center}.header-select .refresh-btn:hover{opacity:1;transform:rotate(180deg)}
+.header-select{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.4);border-radius:var(--radius-md);color:#fff;font-size:13px}.header-select select{background:transparent;border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;outline:none;max-width:160px}.header-select select option{color:var(--text);background:var(--white)}.model-dropdown-wrap{position:relative}.model-dropdown-trigger{display:flex;align-items:center;gap:6px;cursor:pointer;min-width:0;padding:2px 0}.model-dropdown-trigger .model-name{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;font-size:13px}.model-dropdown-trigger .drop-arrow{font-size:10px;opacity:.7;transition:var(--transition)}.model-dropdown-panel{position:absolute;top:calc(100% + 8px);right:0;min-width:260px;max-width:350px;background:var(--white);border:2px solid var(--sky-soft);border-radius:var(--radius-md);box-shadow:0 8px 32px var(--shadow);z-index:100;overflow:hidden;animation:fadeIn .15s ease}.model-dropdown-panel .mdp-header{display:none}.model-dropdown-panel .mdp-search{width:100%;padding:10px 14px;border:none;border-bottom:2px solid var(--border);font-size:16px;background:var(--cream);color:var(--text);outline:none;font-family:inherit;box-sizing:border-box}.model-dropdown-panel .mdp-search::placeholder{color:var(--text-soft)}.model-dropdown-panel .mdp-search:focus{background:var(--sky-pale)}.model-dropdown-panel .mdp-list{max-height:240px;overflow-y:auto;overscroll-behavior:contain}.model-dropdown-panel .mdp-item{padding:12px 14px;font-size:14px;cursor:pointer;transition:background .15s;color:var(--text);display:flex;align-items:center;gap:8px;min-height:44px}.model-dropdown-panel .mdp-item:hover{background:var(--sky-pale)}.model-dropdown-panel .mdp-item:active{background:var(--sky-soft)}.model-dropdown-panel .mdp-item.active{background:var(--sky-pale);color:var(--sky);font-weight:700}.model-dropdown-panel .mdp-item .check{width:16px;text-align:center;flex-shrink:0}.model-dropdown-panel .mdp-empty{padding:20px;text-align:center;color:var(--text-soft);font-size:13px}.header-select .refresh-btn{background:none;border:none;color:#fff;cursor:pointer;font-size:14px;padding:2px;opacity:.7;transition:var(--transition);min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center}.header-select .refresh-btn:hover{opacity:1;transform:rotate(180deg)}
+/* Mobile model dropdown overlay backdrop */
+.model-dropdown-backdrop{display:none}
 .upload-area{background:var(--white);border:3px dashed var(--sky-soft);border-radius:var(--radius-xl);padding:60px 40px;text-align:center;transition:var(--transition);position:relative;overflow:hidden}.upload-area.drag-over{border-color:var(--sky);background:var(--sky-pale)}.upload-icon{font-size:64px;margin-bottom:16px;animation:float 3s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}.upload-text{color:var(--text-soft);font-size:16px;margin-bottom:6px}.upload-sub{color:var(--text-soft);font-size:13px;margin-bottom:24px;opacity:.7}.upload-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 .history-section{margin-top:30px;padding-top:24px;border-top:2px dashed var(--cream-deep)}.history-title{font-size:14px;font-weight:600;color:var(--text-soft);margin-bottom:12px}.history-search{width:100%;max-width:300px;margin:0 auto 12px;padding:8px 14px;border:2px solid var(--cream-deep);border-radius:var(--radius-md);font-size:16px;background:var(--white);color:var(--text);text-align:center}.history-search:focus{outline:none;border-color:var(--sky-soft)}.history-list{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.history-item{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--cream);border:2px solid var(--cream-deep);border-radius:var(--radius-md);cursor:pointer;transition:var(--transition);max-width:220px;min-height:48px}.history-item:hover{background:var(--sky-pale);border-color:var(--sky-soft)}.history-item:active{transform:scale(.97)}.history-item img{width:36px;height:48px;object-fit:cover;border-radius:6px}.history-item .placeholder{width:36px;height:48px;background:var(--cream-deep);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px}.history-item .info{flex:1;min-width:0}.history-item .name{font-size:13px;font-weight:600;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.history-item .date{font-size:11px;color:var(--text-soft)}.history-item .has-data{font-size:10px;color:var(--mint-dark);background:var(--mint);padding:1px 6px;border-radius:6px;margin-left:4px}.history-item .delete{padding:6px 10px;background:var(--blush);border:none;border-radius:6px;color:#c9939c;font-size:12px;cursor:pointer;opacity:0;transition:var(--transition);min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center}.history-item:hover .delete{opacity:1}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border:none;border-radius:var(--radius-lg);font-size:15px;font-weight:700;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden}.btn.primary{background:linear-gradient(135deg,var(--sky) 0%,var(--sky-soft) 100%);color:#fff}.btn.secondary{background:var(--cream-soft);color:var(--text);border:2px solid var(--cream-deep)}.btn.success{background:linear-gradient(135deg,var(--mint-dark) 0%,var(--mint-soft) 100%);color:#fff}.btn.danger{background:linear-gradient(135deg,#e8a0a0 0%,var(--blush) 100%);color:#fff}.btn.warning{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-soft) 100%);color:#fff}.btn.purple{background:linear-gradient(135deg,var(--purple) 0%,var(--purple-soft) 100%);color:#fff}.btn:hover:not(:disabled){transform:translateY(-3px) scale(1.02)}.btn:active:not(:disabled){transform:scale(.97)!important;transition-duration:.1s}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
@@ -120,34 +122,58 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ro
 .mobile-bottom-btn .mbb-icon{font-size:20px;line-height:1}
 .mobile-bottom-btn:active{background:var(--sky-pale);transform:scale(.9)}
 .mobile-bottom-btn:disabled{opacity:.3;pointer-events:none}
-.mobile-bottom-btn.primary{color:var(--sky)}.mobile-bottom-btn.success{color:var(--mint-dark)}
+.mobile-bottom-btn.primary{color:var(--sky)}.mobile-bottom-btn.success{color:var(--mint-dark)}.mobile-bottom-btn.warning{color:var(--orange)}.mobile-bottom-btn.danger{color:#c9939c}
 
 /* ═══ Responsive ═══ */
 @media(max-width:768px){
   :root{--bottom-bar-h:60px}
-  .container{padding:12px;padding-top:calc(12px + var(--safe-top));padding-bottom:calc(12px + var(--bottom-bar-h) + var(--safe-bottom))}
-  .header{padding:14px 16px;border-radius:var(--radius-lg);gap:8px}
-  .header-title{font-size:18px;gap:8px}.header-title .cat-icon{font-size:26px}
-  .header-actions{gap:6px}
+  .container{padding:10px;padding-top:calc(10px + var(--safe-top));padding-bottom:calc(10px + var(--bottom-bar-h) + var(--safe-bottom))}
+  .header{padding:12px 14px;border-radius:var(--radius-lg);gap:8px;flex-wrap:nowrap}
+  .header-title{font-size:16px;gap:6px;flex-shrink:0;min-width:0}.header-title .cat-icon{font-size:24px}
+  .header-actions{gap:5px;flex-wrap:nowrap;flex-shrink:1;min-width:0;justify-content:flex-end}
   .header-actions .desktop-only{display:none!important}
-  .hamburger-btn{display:flex!important;padding:10px 12px!important;min-width:44px;min-height:44px;justify-content:center;font-size:18px!important}
-  .header-btn{padding:8px 10px;font-size:12px;min-width:40px;min-height:40px;justify-content:center}.header-btn .label{display:none}
-  .header-select{padding:6px 10px;min-height:40px}
-  .model-dropdown-trigger .model-name{max-width:100px;font-size:12px}
-  .model-dropdown-panel{min-width:220px;right:-10px;left:auto;max-width:calc(100vw - 32px)}
-  .upload-area{padding:40px 20px;border-radius:var(--radius-lg)}
-  .file-bar{padding:10px 14px;gap:6px;border-radius:var(--radius-md)}
-  .cute-bar-btn .label{display:none}.cute-bar-btn{padding:8px 12px;min-width:40px;justify-content:center}
-  .char-info{flex-direction:column;padding:20px;gap:16px}
-  .char-avatar{flex:none;max-width:160px;margin:0 auto}
-  .tabs{padding:10px 14px;gap:6px;top:0;scroll-snap-type:x mandatory}
-  .tab-btn{padding:10px 16px;font-size:13px;min-height:44px;scroll-snap-align:start}
-  .tab-content{padding:16px}
-  .section-header{flex-wrap:nowrap;gap:8px}
-  .section-title{font-size:14px}
-  .section-tools{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:5px;padding-right:8px}
+  .hamburger-btn{display:flex!important;padding:8px 10px!important;min-width:44px;min-height:44px;justify-content:center;font-size:20px!important}
+  .header-btn{padding:6px 8px;font-size:12px;min-width:40px;min-height:40px;justify-content:center;border-radius:var(--radius-sm)}.header-btn .label{display:none}
+  .header-select{padding:6px 8px;min-height:40px;border-radius:var(--radius-sm);flex-shrink:1;min-width:0;overflow:visible}
+  .model-dropdown-trigger .model-name{max-width:80px;font-size:12px}
+  .model-dropdown-trigger .drop-arrow{display:none}
+
+  /* ═══ Mobile Model Dropdown → Bottom Sheet ═══ */
+  .model-dropdown-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1199;backdrop-filter:blur(4px);animation:fadeIn .2s ease}
+  .model-dropdown-panel{position:fixed!important;top:auto!important;bottom:0!important;left:0!important;right:0!important;min-width:100vw!important;max-width:100vw!important;border-radius:20px 20px 0 0!important;z-index:1200!important;animation:slideUpSheet .3s cubic-bezier(.32,.72,0,1)!important;box-shadow:0 -8px 40px rgba(0,0,0,.2)!important;border:none!important;border-top:3px solid var(--sky-soft)!important;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .model-dropdown-panel .mdp-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:none}
+  .model-dropdown-panel .mdp-header .mdp-title{font-size:16px;font-weight:700;color:var(--text-dark);display:flex;align-items:center;gap:8px}
+  .model-dropdown-panel .mdp-header .mdp-close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--cream);border:2px solid var(--cream-deep);border-radius:50%;color:var(--text-soft);font-size:18px;cursor:pointer;border:none;font-weight:700}
+  .model-dropdown-panel .mdp-handle{display:block;width:40px;height:5px;background:var(--cream-deep);border-radius:3px;margin:10px auto 4px}
+  .model-dropdown-panel .mdp-search{padding:12px 20px;font-size:16px;border-bottom:2px solid var(--border);border-radius:0;background:var(--cream)}
+  .model-dropdown-panel .mdp-list{max-height:50vh;padding:4px 8px 8px;-webkit-overflow-scrolling:touch}
+  .model-dropdown-panel .mdp-item{padding:14px 16px;min-height:52px;font-size:15px;border-radius:var(--radius-sm);margin-bottom:2px}
+  .model-dropdown-panel .mdp-item:active{background:var(--sky-soft);transform:scale(.98)}
+  .model-dropdown-panel .mdp-item.active{background:var(--sky-pale);border:2px solid var(--sky-soft)}
+  .model-dropdown-panel .mdp-item .check{font-size:18px}
+  .model-dropdown-panel .mdp-empty{padding:30px 20px;font-size:14px}
+
+  .upload-area{padding:32px 16px;border-radius:var(--radius-lg);border-width:2px}
+  .upload-icon{font-size:48px;margin-bottom:12px}
+  .upload-text{font-size:14px}
+  .upload-buttons{gap:12px}
+  .upload-buttons .btn{padding:12px 24px;font-size:14px}
+  .file-bar{padding:8px 12px;gap:6px;border-radius:var(--radius-md)}
+  .file-bar .file-name{font-size:13px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .file-bar .file-icon{font-size:20px}
+  .cute-bar-btn .label{display:none}.cute-bar-btn{padding:8px 10px;min-width:40px;justify-content:center;min-height:36px;font-size:14px}
+  .char-info{flex-direction:column;padding:16px;gap:14px}
+  .char-avatar{flex:none;max-width:140px;margin:0 auto}
+  .char-details{gap:12px}
+  .tabs{padding:8px 12px;gap:5px;top:0;scroll-snap-type:x mandatory}
+  .tab-btn{padding:10px 14px;font-size:13px;min-height:44px;scroll-snap-align:start;flex-shrink:0}
+  .tab-content{padding:14px}
+  .section-card{padding:14px;margin-bottom:14px}
+  .section-header{flex-wrap:nowrap;gap:6px}
+  .section-title{font-size:13px;gap:5px}
+  .section-tools{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:4px;padding-right:4px;flex-shrink:1;min-width:0}
   .section-tools::-webkit-scrollbar{display:none}
-  .btn-sm{min-height:36px;min-width:36px;padding:6px 10px}
+  .btn-sm{min-height:34px;min-width:34px;padding:5px 8px;font-size:11px}
   .compare-grid{grid-template-columns:1fr}
   .expand-compare-grid{grid-template-columns:1fr;height:auto}
   .expand-compare-grid textarea{min-height:200px}
@@ -163,22 +189,34 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ro
   .modal-body{padding:16px}
   .modal-footer{padding:12px 16px calc(12px + var(--safe-bottom));gap:8px}
 
-  .history-item{max-width:100%;flex:1;min-width:150px}
-  .history-item .delete{opacity:1;min-width:36px;min-height:36px}
-  .export-section{padding:20px}
+  .history-section{margin-top:24px;padding-top:20px}
+  .history-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .history-item{max-width:100%;min-width:0;padding:8px 10px;min-height:54px}
+  .history-item .delete{opacity:1;min-width:32px;min-height:32px;padding:4px 6px;font-size:14px}
+  .history-item img{width:30px;height:40px}
+  .history-item .placeholder{width:30px;height:40px;font-size:14px}
+  .history-item .name{font-size:12px}
+  .history-item .date{font-size:10px}
+  .export-section{padding:16px}
 
   /* Toast at top on mobile */
   .toast-container{bottom:auto;top:calc(12px + var(--safe-top));right:12px;left:12px}
+  .toast{min-width:auto}
   @keyframes toastIn{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
 
   .gen-fields-grid{grid-template-columns:1fr}
   .concurrency-control input[type="range"]{width:60px}
+  .batch-actions{margin-bottom:16px}
+  .batch-actions .btn{width:100%;justify-content:center}
 
   /* Bottom bar */
-  .mobile-bottom-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:2px solid var(--border);padding:6px 8px calc(6px + var(--safe-bottom));z-index:900;gap:4px;justify-content:space-around;align-items:center;box-shadow:0 -4px 20px var(--shadow-soft)}
+  .mobile-bottom-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:2px solid var(--border);padding:4px 8px calc(4px + var(--safe-bottom));z-index:900;gap:0;justify-content:space-around;align-items:center;box-shadow:0 -4px 20px var(--shadow-soft)}
+  .mobile-bottom-btn{min-width:0;flex:1;max-width:72px;padding:4px 2px;min-height:50px}
+  .mobile-bottom-btn .mbb-icon{font-size:22px}
+  .mobile-bottom-btn .mbb-label{font-size:9px;white-space:nowrap}
 
   /* Floating bar above bottom bar */
-  .tr-mini-bar{bottom:calc(var(--bottom-bar-h) + var(--safe-bottom) + 12px);min-width:260px;padding:10px 14px;gap:8px}
+  .tr-mini-bar{bottom:calc(var(--bottom-bar-h) + var(--safe-bottom) + 12px);min-width:260px;max-width:calc(100vw - 24px);padding:10px 14px;gap:8px}
 
   .stats-label{min-width:90px}
   .greeting-nav{gap:5px;flex-wrap:wrap;justify-content:center}
@@ -192,22 +230,41 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ro
 
   .toggle-track{width:48px;height:28px}.toggle-track::before{width:22px;height:22px}.toggle input:checked+.toggle-track::before{transform:translateX(20px)}
 
-  .outline-card .section-tools{flex-wrap:wrap}
+  .outline-card .section-tools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .outline-card .section-tools::-webkit-scrollbar{display:none}
+  .outline-card{padding:14px}
+  .outline-hint{font-size:10px}
+
+  .char-count{padding:3px 8px;font-size:10px}
+  .token-count{padding:2px 6px;font-size:9px}
+
+  /* Connection badge compact */
+  .header-actions .conn-badge{padding:4px 8px!important;font-size:10px!important;gap:4px!important;min-width:auto!important;border-radius:10px!important}
+
+  .spec-badge{font-size:11px;padding:4px 10px}
+  .ai-gen-tag{padding:5px 10px;font-size:11px;min-height:32px}
+
+  .textarea{padding:12px;font-size:15px;min-height:100px}
+  .input{padding:12px 14px;font-size:15px}
 }
+
 @media(max-width:480px){
-  .header-title{font-size:15px;gap:6px}.header-title .cat-icon{font-size:22px}
+  .header-title{font-size:14px;gap:5px}.header-title .cat-icon{font-size:20px}
   .header-title .ver-badge{display:none}
-  .char-avatar{max-width:120px}
+  .char-avatar{max-width:110px}
   .guide-row .arrow{display:none}
-  .compare-item{padding:12px}
-  .batch-actions .btn{width:100%}
-  .tab-btn{padding:8px 12px;font-size:12px}
-  .section-card{padding:14px}
-  .tab-content{padding:12px}
-  .modal-header h2{font-size:16px}
+  .compare-item{padding:10px}
+  .tab-btn{padding:8px 10px;font-size:12px}
+  .section-card{padding:12px}
+  .tab-content{padding:10px}
+  .modal-header h2{font-size:15px}
   .greeting-nav{gap:4px}
-  .file-bar .file-name{font-size:13px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .history-list{grid-template-columns:1fr;gap:6px}
+  .history-item{padding:10px 12px}
 }
+
+/* Desktop-only model dropdown handle - hidden */
+.mdp-handle{display:none}
     
 .sync-status{display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(255,255,255,.2);border-radius:var(--radius-sm);font-size:11px;color:#fff}.sync-status .dot{width:8px;height:8px;border-radius:50%;background:#90EE90}.sync-status .dot.disconnected{background:#FFB366}
 .header-btn.github{background:rgba(159,122,234,.4);border-color:rgba(159,122,234,.6)}.header-btn.github.connected{background:rgba(124,201,184,.5);border-color:rgba(124,201,184,.7)}
@@ -416,7 +473,7 @@ const MobileMenu=memo(({show,onClose,actions})=>{useEffect(()=>{if(show)document
 return html`<><div class="mobile-menu-overlay" onClick=${onClose}/><div class="mobile-menu-drawer"><div class="mobile-menu-header"><h3>🐱 菜单</h3></div><div class="mobile-menu-body">${actions.map((a,i)=>a.divider?html`<div key=${i} class="mobile-menu-divider"/>`:html`<button key=${i} class="mobile-menu-item ${a.cls||''}" onClick=${()=>{a.action();onClose()}}><span class="mm-icon">${a.icon}</span><div><div>${a.label}</div>${a.desc&&html`<div class="mm-desc">${a.desc}</div>`}</div></button>`)}</div></div></>`});
 
 /* ═══════════ Mobile Bottom Bar ═══════════ */
-const MobileBottomBar=memo(({data,tab,onTranslate,onExport,onUndo,onRedo,canUndo,canRedo})=>{if(!data)return null;return html`<div class="mobile-bottom-bar"><button class="mobile-bottom-btn primary" onClick=${onTranslate}><span class="mbb-icon">🌸</span><span>翻译</span></button><button class="mobile-bottom-btn" onClick=${onUndo} disabled=${!canUndo}><span class="mbb-icon">↶</span><span>撤销</span></button><button class="mobile-bottom-btn" onClick=${onRedo} disabled=${!canRedo}><span class="mbb-icon">↷</span><span>重做</span></button><button class="mobile-bottom-btn success" onClick=${onExport}><span class="mbb-icon">💾</span><span>导出</span></button></div>`});
+const MobileBottomBar=memo(({data,tab,onTranslate,onExport,onUndo,onRedo,canUndo,canRedo,onReplace,onOpenFile})=>{if(!data)return null;return html`<div class="mobile-bottom-bar"><button class="mobile-bottom-btn primary" onClick=${onTranslate}><span class="mbb-icon">🌸</span><span class="mbb-label">翻译</span></button><button class="mobile-bottom-btn warning" onClick=${onReplace}><span class="mbb-icon">🔁</span><span class="mbb-label">替换</span></button><button class="mobile-bottom-btn" onClick=${onUndo} disabled=${!canUndo}><span class="mbb-icon">↶</span><span class="mbb-label">撤销</span></button><button class="mobile-bottom-btn" onClick=${onRedo} disabled=${!canRedo}><span class="mbb-icon">↷</span><span class="mbb-label">重做</span></button><button class="mobile-bottom-btn success" onClick=${onExport}><span class="mbb-icon">💾</span><span class="mbb-label">导出</span></button></div>`});
 
 /* ═══════════ 模板系统 ═══════════ */
 const isCat=n=>n._t==='cat';
@@ -571,7 +628,7 @@ useEffect(()=>{loadTrCache()},[]);
 const navModels=useMemo(()=>{const p=providers[providerIdx];if(!p)return[];return(p.models||'').split(',').map(x=>x.trim()).filter(Boolean)},[providers,providerIdx]);
 const filteredNavModels=useMemo(()=>modelFilter?navModels.filter(m=>m.toLowerCase().includes(modelFilter.toLowerCase())):navModels,[navModels,modelFilter]);
 
-useEffect(()=>{if(!modelDropOpen)return;const handler=e=>{if(modelDropRef.current&&!modelDropRef.current.contains(e.target))setModelDropOpen(false)};document.addEventListener('mousedown',handler);return()=>document.removeEventListener('mousedown',handler)},[modelDropOpen]);
+useEffect(()=>{if(!modelDropOpen)return;if(isMobile){document.body.style.overflow='hidden';return()=>{document.body.style.overflow=''}}const handler=e=>{if(modelDropRef.current&&!modelDropRef.current.contains(e.target))setModelDropOpen(false)};document.addEventListener('mousedown',handler);return()=>{document.removeEventListener('mousedown',handler);document.body.style.overflow=''}},[modelDropOpen,isMobile]);
 useEffect(()=>{if(navModels.length&&(!model||!navModels.includes(model)))setModel(navModels[0]);else if(!navModels.length&&model)setModel('')},[navModels]);
 
 const guideText=useMemo(()=>{const rows=guideRows||[];return rows.filter(r=>r.enabled&&r.src.trim()).map(r=>`${r.src} = ${r.dst}`).join('\n')},[guideRows]);
@@ -680,6 +737,8 @@ const filteredHist=useMemo(()=>{if(!histSearch.trim())return hist;const q=histSe
 
 const handleTabChange=useCallback(newTab=>{scrollPositions.current[tab]=window.scrollY;setTab(newTab);requestAnimationFrame(()=>{window.scrollTo(0,scrollPositions.current[newTab]||0)})},[tab]);
 
+const closeModelDrop=useCallback(()=>{setModelDropOpen(false);setModelFilter('')},[]);
+
 /* ═══ Mobile menu actions ═══ */
 const mobileMenuActions=useMemo(()=>[
   {icon:'📝',label:'提示词',desc:'翻译系统提示词',action:()=>openModal('prompt')},
@@ -702,8 +761,8 @@ return html`<>
 <div class="header-title"><span class="cat-icon">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">${html`<${GHLogo}/>`} GitHub</span></div>
 <div class="header-actions">
 <div class="sync-status"><span class=${'dot '+(sync.ic?'':'disconnected')}/><span>${sync.ic?'已连接':'未连接'}</span></div>
-${providers[providerIdx]?.key ? html`<span class="header-btn" style=${{padding:'6px 12px',fontSize:11,cursor:'default',background:'rgba(124,201,184,.4)',borderColor:'rgba(124,201,184,.6)'}}>🟢 已连接</span>` : html`<span class="header-btn" style=${{padding:'6px 12px',fontSize:11,cursor:'default',background:'rgba(201,147,156,.3)',borderColor:'rgba(201,147,156,.5)'}}>🔴 未连接</span>`}
-<div class="header-select" ref=${modelDropRef}><span>🤖</span><div class="model-dropdown-wrap"><div class="model-dropdown-trigger" onClick=${()=>{setModelDropOpen(p=>!p);if(!modelDropOpen)setModelFilter('')}}><span class="model-name">${model||'选择模型'}</span><span class="drop-arrow">${modelDropOpen?'▲':'▼'}</span></div>${modelDropOpen&&html`<div class="model-dropdown-panel" onClick=${e=>e.stopPropagation()}><input class="mdp-search" placeholder="🔍 筛选模型..." value=${modelFilter} onChange=${e=>setModelFilter(e.target.value)} autoFocus/><div class="mdp-list">${filteredNavModels.length?filteredNavModels.map(m=>html`<div key=${m} class="mdp-item ${m===model?'active':''}" onClick=${()=>{setModel(m);setModelDropOpen(false);setModelFilter('')}}><span class="check">${m===model?'✓':''}</span><span>${m}</span></div>`):html`<div class="mdp-empty">😿 无匹配模型</div>`}</div></div>`}</div><button class="refresh-btn" onClick=${async()=>{const p=providers[providerIdx];if(!p?.key)return;try{const m=await fetchModels(p);setCachedModels(prev=>({...prev,[p.id]:m}));addToast(m.length+'个模型','success')}catch(e){addToast(e.message,'error')}}}>🔄</button></div>
+${providers[providerIdx]?.key ? html`<span class="header-btn conn-badge" style=${{padding:'6px 12px',fontSize:11,cursor:'default',background:'rgba(124,201,184,.4)',borderColor:'rgba(124,201,184,.6)'}}>🟢 已连接</span>` : html`<span class="header-btn conn-badge" style=${{padding:'6px 12px',fontSize:11,cursor:'default',background:'rgba(201,147,156,.3)',borderColor:'rgba(201,147,156,.5)'}}>🔴 未连接</span>`}
+<div class="header-select" ref=${modelDropRef}><span>🤖</span><div class="model-dropdown-wrap"><div class="model-dropdown-trigger" onClick=${()=>{setModelDropOpen(p=>!p);if(!modelDropOpen)setModelFilter('')}}><span class="model-name">${model||'选择模型'}</span><span class="drop-arrow">${modelDropOpen?'▲':'▼'}</span></div>${modelDropOpen&&html`<>${isMobile&&html`<div class="model-dropdown-backdrop" onClick=${closeModelDrop}/>`}<div class="model-dropdown-panel" onClick=${e=>e.stopPropagation()}><div class="mdp-handle"/><div class="mdp-header"><span class="mdp-title">🤖 选择模型</span><button class="mdp-close" onClick=${closeModelDrop}>✕</button></div><input class="mdp-search" placeholder="🔍 筛选模型..." value=${modelFilter} onChange=${e=>setModelFilter(e.target.value)} autoFocus=${!isMobile}/><div class="mdp-list">${filteredNavModels.length?filteredNavModels.map(m=>html`<div key=${m} class="mdp-item ${m===model?'active':''}" onClick=${()=>{setModel(m);closeModelDrop()}}><span class="check">${m===model?'✓':''}</span><span>${m}</span></div>`):html`<div class="mdp-empty">😿 无匹配模型${!navModels.length?html`<br/><span style=${{fontSize:12}}>请先在 ⚙️ API设置 中配置模型</span>`:''}</div>`}</div></div></>`}</div><button class="refresh-btn" onClick=${async()=>{const p=providers[providerIdx];if(!p?.key)return;try{const m=await fetchModels(p);setCachedModels(prev=>({...prev,[p.id]:m}));const newModels=m.join(', ');setProviders(prev=>prev.map((pr,i)=>i===providerIdx?{...pr,models:newModels}:pr));addToast(m.length+'个模型','success')}catch(e){addToast(e.message,'error')}}}>🔄</button></div>
 <button class="header-btn desktop-only" onClick=${()=>openModal('rpl')} disabled=${!data}>🔁<span class="label">替换</span></button>
 <button class="header-btn desktop-only" onClick=${()=>openModal('prompt')}>📝<span class="label">提示词</span></button>
 <button class="header-btn desktop-only warning" onClick=${()=>openModal('jb')}>🔓<span class="label">破限</span></button>
@@ -785,7 +844,7 @@ ${regenLoading&&html`<${LoadingOverlay} msg="🔄 重新生成中"/>`}
 <${Toast} toasts=${toasts}/>
 <${ConfirmModal} state=${confirmState} onClose=${closeConfirm}/>
 <${MobileMenu} show=${mobileMenuOpen} onClose=${()=>setMobileMenuOpen(false)} actions=${mobileMenuActions}/>
-<${MobileBottomBar} data=${data} tab=${tab} onTranslate=${handleMobileTranslate} onExport=${()=>openModal('exp')} onUndo=${undo} onRedo=${redo} canUndo=${canUndo} canRedo=${canRedo}/>
+<${MobileBottomBar} data=${data} tab=${tab} onTranslate=${handleMobileTranslate} onExport=${()=>openModal('exp')} onUndo=${undo} onRedo=${redo} canUndo=${canUndo} canRedo=${canRedo} onReplace=${()=>openModal('rpl')}/>
 <${FloatingTrBar} show=${trMinimized&&modals.cmp} progress=${progress} items=${compareItems} eta=${eta} translating=${translating} onRestore=${()=>setTrMin(false)} onCancel=${cancelTranslation}/>
 ${!!modals.settings&&html`<${SettingsModal} show onClose=${()=>openModal('settings',0)} providers=${providers} providerIdx=${providerIdx} onSave=${(p,i)=>{setProviders(p);setProviderIdx(i)}} cachedModels=${cachedModels} setCachedModels=${setCachedModels}/>`}
 ${!!modals.prompt&&html`<${PromptModal} show onClose=${()=>openModal('prompt',0)} cfg=${config} onSave=${setConfig} list=${promptList} setList=${setPromptList}/>`}
@@ -803,6 +862,7 @@ ${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync
 ${!!modals.gen&&html`<${GenModal} show onClose=${()=>openModal('gen',0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
 ${!!modals.greetGen&&html`<${GreetGenModal} show onClose=${()=>openModal('greetGen',0)} data=${data} onApply=${handleGreetApply} pv=${providers} pi=${providerIdx} model=${model}/>`}
 ${!!modals.sfPreview&&html`<${SmartFillPreviewModal} show onClose=${()=>openModal('sfPreview',0)} parsed=${sfPreviewData} currentData=${data||{}} onConfirm=${confirmSmartFill}/>`}
+${!!modals.backup&&html`<${BackupModal} show onClose=${()=>openModal('backup',0)} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyBackup} addToast=${addToast}/>`}
 ${''/* @SLOT:SYNC_MODAL_RENDER */}${''/* @SLOT:SYNC_MODAL_RENDER_END */}
 </>`;
 };
