@@ -380,10 +380,12 @@
     .header-actions {
       display: flex;
       gap: 8px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       position: relative;
-      z-index: 1
+      z-index: 1;
+      min-width: 0;
+      flex-shrink: 1
     }
 
     .header-btn {
@@ -399,7 +401,10 @@
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
-      white-space: nowrap
+      white-space: nowrap;
+      flex-shrink: 1;
+      min-width: 40px;
+      overflow: hidden
     }
 
     .header-btn:hover:not(:disabled) {
