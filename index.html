@@ -125,6 +125,15 @@
       line-height: 1.6
     }
 
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='40' opacity='0.025'%3E🐾%3C/text%3E%3C/svg%3E");
+      background-size: 100px;
+      pointer-events: none;
+      z-index: -1
+    }
     @media(max-width:768px) {
 
       html,
@@ -175,7 +184,19 @@
       flex-wrap: wrap;
       gap: 12px;
       position: relative;
-      user-select: none
+      user-select: none;
+      overflow: hidden
+    }
+
+    .header::before {
+      content: '🐾';
+      position: absolute;
+      right: 20px;
+      top: -10px;
+      font-size: 80px;
+      opacity: .1;
+      transform: rotate(15deg);
+      pointer-events: none
     }
 
     .header-title {
@@ -449,6 +470,7 @@
       position: relative;
       overflow: hidden
     }
+
 
     .upload-area.drag-over {
       border-color: var(--sky);
@@ -3564,6 +3586,12 @@
         border-radius: var(--radius-lg);
         gap: 8px;
         flex-wrap: nowrap
+      }
+
+      .header::before {
+        font-size: 50px;
+        right: 10px;
+        top: -5px
       }
 
       .header-title {
