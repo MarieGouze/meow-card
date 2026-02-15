@@ -3676,7 +3676,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
   { divider: true },
   { icon: '⚙️', label: 'API 设置', desc: '配置模型和密钥', action: () => openModal(MK.SETTINGS) },
   { icon: '🔄', label: '刷新模型列表', desc: model ? `当前: ${model}` : '获取最新模型', action: refreshModels },
-  { icon: '💾', label: '备份恢复', desc: '导入导出配置', action: () => openModal(MK.BACKUP), cls: 'purple' },
+  { icon: '🐙', label: 'GitHub同步', desc: '同步数据', action: () => openModal('sync'), cls: 'purple' },
   { divider: true },
   { icon: FONT_ICONS[fontSize], label: '字体：' + FONT_LABELS[fontSize], desc: '小 → 中 → 大 循环切换', action: cycleFontSize },
   { icon: theme === 'light' ? '🌙' : '☀️', label: theme === 'light' ? '暗色模式' : '亮色模式', action: toggleTheme },
@@ -3781,7 +3781,7 @@ ${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync
 ${!!modals[MK.GEN] && html`<${GenModal} show onClose=${() => openModal(MK.GEN, 0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
 ${!!modals[MK.GREET_GEN] && html`<${GreetGenModal} show onClose=${() => openModal(MK.GREET_GEN, 0)} data=${data} onApply=${handleGreetApply} pv=${providers} pi=${providerIdx} model=${model}/>`}
 ${!!modals[MK.SF_PREVIEW] && html`<${SmartFillPreviewModal} show onClose=${() => openModal(MK.SF_PREVIEW, 0)} parsed=${sfPreviewData} currentData=${data || {}} onConfirm=${confirmSmartFill}/>`}
-${!!modals[MK.BACKUP] && html`<${BackupModal} show onClose=${() => openModal(MK.BACKUP, 0)} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyBackup} addToast=${addToast}/>`}
+${!!modals[MK.BACKUP] && html`<${BackupModal} show onClose=${() => openModal(MK.BACKUP, 0)} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} addToast=${addToast}/>`}
 ${''/* @SLOT:SYNC_MODAL_RENDER */}${''/* @SLOT:SYNC_MODAL_RENDER_END */}
 </>`;
     };
