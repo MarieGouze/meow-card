@@ -3465,7 +3465,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 <button class="header-btn desktop-only warning" onClick=${() => openModal(MK.JB)} title="破限设置" aria-label="破限设置">🔓<span class="label">破限</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.GUIDE)} title="翻译指导" aria-label="翻译指导">📖<span class="label">指导</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.SETTINGS)} title="API设置" aria-label="API设置">⚙️<span class="label">API</span></button>
-<button class=${'header-btn github '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>${html`<${GHLogo}/>`}<span class="label">同步</span></button>
+<button class=${'header-btn desktop-only github '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>${html`<${GHLogo}/>`}<span class="label">同步</span></button>
 <button class="font-size-btn desktop-only" onClick=${cycleFontSize} title=${'字体：' + FONT_LABELS[fontSize]} aria-label=${'切换字体大小，当前' + FONT_LABELS[fontSize]}>${FONT_ICONS[fontSize]} ${FONT_LABELS[fontSize]}</button>
 <button class="header-btn desktop-only" onClick=${toggleTheme} title=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'} aria-label=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'}>${theme === 'light' ? '🌙' : '☀️'}</button>
 <button class="header-btn hamburger-btn" onClick=${() => setMobileMenuOpen(true)} aria-label="打开菜单">☰</button>
@@ -3676,7 +3676,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
   { divider: true },
   { icon: '⚙️', label: 'API 设置', desc: '配置模型和密钥', action: () => openModal(MK.SETTINGS) },
   { icon: '🔄', label: '刷新模型列表', desc: model ? `当前: ${model}` : '获取最新模型', action: refreshModels },
-  { icon: '☁️', label: 'GitHub同步', desc: '同步数据', action: () => openModal('sync'), cls: 'purple' },
+  { icon: '🐙', label: 'GitHub同步', desc: 'Gist同步', action: () => openModal('sync') },
   { divider: true },
   { icon: FONT_ICONS[fontSize], label: '字体：' + FONT_LABELS[fontSize], desc: '小 → 中 → 大 循环切换', action: cycleFontSize },
   { icon: theme === 'light' ? '🌙' : '☀️', label: theme === 'light' ? '暗色模式' : '亮色模式', action: toggleTheme },
@@ -3775,13 +3775,26 @@ ${!!modals[MK.EXP] && html`<${Modal} show onClose=${() => openModal(MK.EXP, 0)} 
 ${!!modals[MK.BATCH] && html`<${BatchModal} show onClose=${() => openModal(MK.BATCH, 0)} onStart=${(f, gp) => handleBatchStart(f, gp, 'basic')} title="🌸 基础翻译" fields=${BATCH_BASIC} antiTrunc=${antiTrunc} setAntiTrunc=${setAntiTrunc} greetTotal=${greetTotal} concurrency=${concurrency} setConcurrency=${setConcurrency} streamEnabled=${streamEnabled} setStreamEnabled=${setStreamEnabled}/>`}
 ${!!modals[MK.ADV] && html`<${BatchModal} show onClose=${() => openModal(MK.ADV, 0)} onStart=${(f, gp) => handleBatchStart(f, gp, 'adv')} title="🌸 高级翻译" fields=${BATCH_ADV} antiTrunc=${antiTrunc} setAntiTrunc=${setAntiTrunc} greetTotal=${0} concurrency=${concurrency} setConcurrency=${setConcurrency} streamEnabled=${streamEnabled} setStreamEnabled=${setStreamEnabled}/>`}
 ${!!modals[MK.WB] && html`<${BatchModal} show onClose=${() => openModal(MK.WB, 0)} onStart=${(f, gp) => handleBatchStart(f, gp, 'wb')} title="🌸 世界书翻译" fields=${Object.fromEntries((data?.book_entries || []).map(e => [e._id || e.name, 1]))} antiTrunc=${antiTrunc} setAntiTrunc=${setAntiTrunc} greetTotal=${0} concurrency=${concurrency} setConcurrency=${setConcurrency} streamEnabled=${streamEnabled} setStreamEnabled=${setStreamEnabled}/>`}
-<${TranslationModal} show=${!!modals[MK.CMP]} onClose=${closeTranslation} items=${compareItems} setItems=${setCompareItems} onApply=${applyTranslation} translating=${translating} progress=${progress} onRetry=${handleRetry} onCancel=${cancelTranslation} eta=${eta} minimized=${trMinimized} onMinimize=${() => setTrMin(true)} onRestore=${() => setTrMin(false)}/>
+${!!modals[MK.CMP] && html`<${TranslationModal}
+  show
+  onClose=${closeTranslation}
+  items=${compareItems}
+  setItems=${setCompareItems}
+  onApply=${applyTranslation}
+  translating=${translating}
+  progress=${progress}
+  onRetry=${handleRetry}
+  onCancel=${cancelTranslation}
+  eta=${eta}
+  minimized=${trMinimized}
+  onMinimize=${() => setTrMin(true)}
+  onRestore=${() => setTrMin(false)}
+/>`}
 ${fullEditor.show && html`<${Modal} show onClose=${() => setFullEditor(p => ({ ...p, show: false }))} title=${fullEditor.title} fullscreen footer=${html`<><button class="btn primary" onClick=${handleFESave}>💾</button><button class="btn secondary" onClick=${() => setFullEditor(p => ({ ...p, show: false }))}>取消</button></>`}><div class="full-editor-stats"><span>📝 ${charCount(fullEditor.value)} 字</span><span>📊 ~${estimateTokens(fullEditor.value)} tokens</span>${estimateTokens(fullEditor.value) > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠️ 内容较长</span>`}<span style=${{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-soft)' }}>💡 Ctrl+S 保存</span></div><textarea class="full-editor-textarea" value=${fullEditor.value} onChange=${e => setFullEditor(p => ({ ...p, value: e.target.value }))} onKeyDown=${e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); handleFESave() } }}/><//>`}
 ${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync=${sync} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} addToast=${addToast}/>`}
 ${!!modals[MK.GEN] && html`<${GenModal} show onClose=${() => openModal(MK.GEN, 0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
 ${!!modals[MK.GREET_GEN] && html`<${GreetGenModal} show onClose=${() => openModal(MK.GREET_GEN, 0)} data=${data} onApply=${handleGreetApply} pv=${providers} pi=${providerIdx} model=${model}/>`}
 ${!!modals[MK.SF_PREVIEW] && html`<${SmartFillPreviewModal} show onClose=${() => openModal(MK.SF_PREVIEW, 0)} parsed=${sfPreviewData} currentData=${data || {}} onConfirm=${confirmSmartFill}/>`}
-${!!modals[MK.BACKUP] && html`<${BackupModal} show onClose=${() => openModal(MK.BACKUP, 0)} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} addToast=${addToast}/>`}
 ${''/* @SLOT:SYNC_MODAL_RENDER */}${''/* @SLOT:SYNC_MODAL_RENDER_END */}
 </>`;
     };
