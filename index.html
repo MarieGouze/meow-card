@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <!-- M-4: Removed user-scalable=no for accessibility -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>🐱 喵喵角色卡工坊 - GitHub云同步版</title>
+  <title>🐱 喵喵角色卡工坊 - 云同步版</title>
   <!-- O1: PWA meta -->
   <meta name="theme-color" content="#66ccff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1764,7 +1764,7 @@
       overflow-y: auto
     }
     .compare-box-edit:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px var(--sky-pale) }
-    .compare-box-edit.large { min-height: 200px }
+    .compare-box-edit.large { min-height: 65vh }
 
     .compare-box {
       padding: 12px;
@@ -1795,7 +1795,7 @@
     }
     .sync-para.sync-active { background-color: #FFF59D; box-shadow: inset 0 0 0 1px rgba(200, 180, 0, .25) }
     [data-theme="dark"] .sync-para.sync-active { background-color: rgba(255, 245, 100, .18) }
-    .sync-large { max-height: 40vh !important }
+    .sync-large { max-height: 60vh !important }
 
     .expand-edit-area { margin-top: 16px }
     .expand-edit-area .edit-label { font-size: 13px; font-weight: 600; color: var(--text-soft); margin-bottom: 8px }
@@ -2805,10 +2805,8 @@
     /* Desktop-only model dropdown handle - hidden */
     .mdp-handle { display: none }
   
-.header-btn.github{background:rgba(159,122,234,.4);border-color:rgba(159,122,234,.6)}.header-btn.github.connected{background:rgba(124,201,184,.5);border-color:rgba(124,201,184,.7)}
-.github-logo{width:18px;height:18px;vertical-align:middle;fill:currentColor}
-.sync-info{background:var(--purple-pale);border:2px solid var(--purple-soft);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.sync-info h4{color:var(--purple);margin-bottom:8px}.sync-info p{font-size:13px;color:var(--text)}.sync-info .time{font-size:12px;color:var(--text-soft);margin-top:8px}.sync-info .gist-link{font-size:12px;color:var(--purple);display:inline-block;margin-top:8px}
-.step-guide{background:var(--cream);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.step-guide h4{color:var(--text-dark);margin-bottom:12px}.step-guide ol{padding-left:20px;font-size:13px}.step-guide li{margin-bottom:8px}.step-guide a{color:var(--purple)}
+.header-btn.sync{background:rgba(124,201,184,.4);border-color:rgba(124,201,184,.6)}.header-btn.sync.connected{background:rgba(124,201,184,.6);border-color:rgba(124,201,184,.8)}
+.sync-info{background:var(--mint);border:2px solid var(--mint-soft);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.sync-info h4{color:var(--mint-dark);margin-bottom:8px}.sync-info p{font-size:13px;color:var(--text)}.sync-info .time{font-size:12px;color:var(--text-soft);margin-top:8px}
 </style>
 </head>
 
@@ -2918,7 +2916,7 @@
     /* U11: Supported file types */
     const SUPPORTED_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'application/json']);
     const SUPPORTED_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.json'];
-    const GFN='meow-sync.json';
+    const SYNC_URL='https://meow-sync-api.monickpoxno.workers.dev';
 
     /* ═══════════ S-1: API Key 混淆 ═══════════ */
     const _obfKey = 'mW0k'; /* Simple XOR seed */
@@ -3327,9 +3325,8 @@
     /* C6: Context for shared props to avoid prop drilling */
     const EditorContext = createContext(null);
 
-    const GHLogo=()=>html`<svg class="github-logo" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>`;
-const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalStorage('gid','');const[ss,sSS]=useState('disconnected');const[lt,sLT]=useState(null);const[gu,sGU]=useState('');const[un,sUN]=useState('');const ic=!!tk;const vt=useCallback(async t=>{try{const r=await fetch('https://api.github.com/user',{headers:{'Authorization':`Bearer ${t}`}});if(!r.ok)throw 0;return{ok:true,un:(await r.json()).login}}catch{return{ok:false}}},[]);const fog=useCallback(async()=>{if(!tk)return null;try{if(gi){const r=await fetch(`https://api.github.com/gists/${gi}`,{headers:{'Authorization':`Bearer ${tk}`}});if(r.ok){sGU((await r.json()).html_url);return gi}}const lr=await fetch('https://api.github.com/gists?per_page=100',{headers:{'Authorization':`Bearer ${tk}`}});const gs=await lr.json();const ex=gs.find(g=>g.files[GFN]);if(ex){sGi(ex.id);sGU(ex.html_url);return ex.id}const cr=await fetch('https://api.github.com/gists',{method:'POST',headers:{'Authorization':`Bearer ${tk}`,'Content-Type':'application/json'},body:JSON.stringify({description:'🐱 Meow Sync',public:false,files:{[GFN]:{content:'{}'}}})});const ng=await cr.json();sGi(ng.id);sGU(ng.html_url);return ng.id}catch{return null}},[tk,gi]);const fD=useCallback(async()=>{if(!tk)return null;sSS('syncing');try{const id=await fog();if(!id){sSS('disconnected');return null}const r=await fetch(`https://api.github.com/gists/${id}`,{headers:{'Authorization':`Bearer ${tk}`}});const d=JSON.parse((await r.json()).files[GFN]?.content||'{}');sSS('synced');if(d._st)sLT(d._st);return d}catch{sSS('disconnected');return null}},[tk,fog]);const pD=useCallback(async d=>{if(!tk)return false;sSS('syncing');try{const id=await fog();if(!id){sSS('disconnected');return false}const sd={...d,_st:Date.now()};await fetch(`https://api.github.com/gists/${id}`,{method:'PATCH',headers:{'Authorization':`Bearer ${tk}`,'Content-Type':'application/json'},body:JSON.stringify({files:{[GFN]:{content:JSON.stringify(sd,null,2)}}})});sSS('synced');sLT(sd._st);return true}catch{sSS('disconnected');return false}},[tk,fog]);const dc=useCallback(()=>{sTk('');sGi('');sGU('');sUN('');sSS('disconnected');sLT(null)},[]);return{tk,sTk,gi,gu,ss,ic,lt,un,sUN,fD,pD,vt,dc,fog}};
-    const SyncModal=memo(({show,onClose,sync,pv,pi,cfg,jL,pL,gr,gL,onApply,addToast})=>{const[it,sIt]=useState('');const[st2,sSt2]=useState(false);const[sy,sSy]=useState(false);useEffect(()=>{if(show&&sync.tk)sync.vt(sync.tk).then(r=>{if(r.ok)sync.sUN(r.un)})},[show]);if(!show)return null;return html`<${Modal} show onClose=${onClose} title=${html`<${GHLogo}/> GitHub 同步`} headerClass="purple">${sync.ic?html`<div class="sync-info"><h4>✅ @${sync.un}</h4>${sync.lt&&html`<p class="time">上次: ${new Date(sync.lt).toLocaleString()}</p>`}${sync.gu&&html`<a href=${sync.gu} target="_blank" class="gist-link">📄 Gist</a>`}</div>`:html`<div class="step-guide"><h4>🔑 Token</h4><ol><li><a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub</a> → Fine-grained Token</li><li>Gists → Read and Write</li></ol></div>`}${!sync.ic?html`<><div class="form-group"><div class="form-row"><div class="form-group"><input type=${st2?'text':'password'} value=${it} onChange=${e=>sIt(e.target.value)} placeholder="ghp_xxx"/></div><button class="btn secondary" style=${{padding:'10px'}} onClick=${()=>sSt2(!st2)}>${st2?'🙈':'👁️'}</button></div></div><button class="btn purple" style=${{width:'100%'}} onClick=${async()=>{sSy(true);const r=await sync.vt(it);sSy(false);if(r.ok){sync.sTk(it);sync.sUN(r.un);sIt('');await sync.fog();addToast('OK','success')}else addToast('无效','error')}} disabled=${sy||!it.trim()}>${sy?'⏳':'🔗 连接'}</button></>`:html`<><div style=${{display:'flex',gap:10,marginBottom:16}}><button class="btn primary" style=${{flex:1}} onClick=${async()=>{sSy(true);const d=await sync.fD();sSy(false);if(d&&Object.keys(d).length>1){onApply(d);addToast('OK','success')}else addToast('空','warning')}} disabled=${sy}>⬇️</button><button class="btn success" style=${{flex:1}} onClick=${async()=>{sSy(true);const ok=await sync.pD({pv,pi,cfg,jL,pL,gr,gL});sSy(false);ok?addToast('OK','success'):addToast('失败','error')}} disabled=${sy}>⬆️</button></div><button class="btn secondary" style=${{width:'100%'}} onClick=${()=>{sync.dc();addToast('断开','info')}}>🔌</button></>`}<//>`});
+    const uCFS=(addToast)=>{const[sk,sSk]=useLocalStorage('syncKey','');const[ss,sSS]=useState('disconnected');const[lt,sLT]=useState(null);const ic=!!sk&&sk.length>=6;const fD=useCallback(async()=>{if(!ic)return null;sSS('syncing');try{const r=await fetch(SYNC_URL,{headers:{'X-Sync-Key':sk,'X-App-Type':'charcard'}});const j=await r.json();if(j.success){sSS('synced');if(j.data?._syncTime)sLT(j.data._syncTime);return j.data}throw new Error(j.error)}catch(e){sSS('disconnected');addToast('同步失败:'+e.message,'error');return null}},[sk,ic,addToast]);const pD=useCallback(async d=>{if(!ic)return false;sSS('syncing');try{const r=await fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json','X-Sync-Key':sk,'X-App-Type':'charcard'},body:JSON.stringify(d)});const j=await r.json();if(j.success){sSS('synced');sLT(j.syncTime);return true}throw new Error(j.error)}catch(e){sSS('disconnected');addToast('上传失败:'+e.message,'error');return false}},[sk,ic,addToast]);const del=useCallback(async()=>{if(!ic)return;try{await fetch(SYNC_URL,{method:'DELETE',headers:{'X-Sync-Key':sk,'X-App-Type':'charcard'}});sLT(null);addToast('已删除','success')}catch{addToast('删除失败','error')}},[sk,ic,addToast]);const dc=useCallback(()=>{sSk('');sSS('disconnected');sLT(null)},[]);return{sk,sSk,ss,ic,lt,fD,pD,del,dc}};
+    const SyncModal=memo(({show,onClose,sync,pv,pi,cfg,jL,pL,gr,gL,onApply,askConfirm})=>{const[key,sKey]=useState('');const[showK,sSK]=useState(false);const[sy,sSy]=useState(false);useEffect(()=>{if(show)sKey(sync.sk||'')},[show]);if(!show)return null;const connect=()=>{if(key.length<6)return;sync.sSk(key)};return html`<${Modal} show onClose=${onClose} title="☁️ 云同步" headerClass="success">${sync.ic?html`<div class="sync-info"><h4>✅ 已连接</h4><p>其他设备用相同密钥同步。</p>${sync.lt&&html`<p class="time">上次: ${new Date(sync.lt).toLocaleString()}</p>`}</div>`:html`<div style=${{background:'var(--cream)',borderRadius:'var(--radius-md)',padding:16,marginBottom:16}}><h4 style=${{color:'var(--text-dark)',marginBottom:8}}>🔑 设置同步密钥</h4><p style=${{fontSize:13,color:'var(--text-soft)'}}>输入至少6位密钥。</p></div>`}<div class="form-group"><label>密钥</label><div class="form-row"><div class="form-group"><input type=${showK?'text':'password'} value=${key} onChange=${e=>sKey(e.target.value)} placeholder="至少6位" disabled=${sync.ic}/></div><button class="btn secondary" style=${{padding:'10px'}} onClick=${()=>sSK(!showK)}>${showK?'🙈':'👁️'}</button></div></div>${!sync.ic?html`<button class="btn success" style=${{width:'100%'}} onClick=${connect} disabled=${key.length<6}>🔗 连接</button>`:html`<><div style=${{display:'flex',gap:10,marginBottom:16}}><button class="btn primary" style=${{flex:1}} onClick=${async()=>{sSy(true);const d=await sync.fD();sSy(false);if(d)onApply(d)}} disabled=${sy}>⬇️ 拉取</button><button class="btn success" style=${{flex:1}} onClick=${async()=>{sSy(true);await sync.pD({pv,pi,cfg,jL,pL,gr,gL});sSy(false)}} disabled=${sy}>⬆️ 推送</button></div><div style=${{display:'flex',gap:10}}><button class="btn secondary" style=${{flex:1}} onClick=${sync.dc}>🔌 断开</button><button class="btn danger" style=${{flex:1}} onClick=${async()=>{const ok=await askConfirm('删除云端数据？',{title:'删除',icon:'🗑️',type:'danger',dangerBtn:true,confirmText:'删除'});if(ok)await sync.del()}}>🗑️</button></div>`}${sy&&html`<p style=${{textAlign:'center',marginTop:16,color:'var(--sky)'}}>⏳</p>`}<//>`});
 
     /* ═══════════ ErrorBoundary ═══════════ */
     class ErrorBoundary extends Component {
@@ -3638,7 +3635,7 @@ ${expandMatch && html`<${ReplaceExpandModal} match=${expandMatch} checked=${!!ch
     /* ═══════════ P-2: 拆分 Header 为独立组件 ═══════════ */
     const HeaderBar = memo(({ hasApiKey, modelDropRef, modelDropOpen, setModelDropOpen, model, setModel, modelFilter, setModelFilter, filteredNavModels, navModels, kbFocusIdx, handleModelDropKeyDown, closeModelDrop, refreshModels, openModal, toggleTheme, theme, cycleFontSize, fontSize, setMobileMenuOpen, isMobile, sync }) => {
       return html`<header class="header">
-<div class="header-title"><span class="cat-icon" aria-hidden="true">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">${html`<${GHLogo}/>`} GitHub</span></div>
+<div class="header-title"><span class="cat-icon" aria-hidden="true">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">☁️ 云同步版</span></div>
 <div class="header-actions">
 
 ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="header-btn conn-badge" style=${{ padding: '6px 12px', fontSize: 11, cursor: 'pointer', background: 'rgba(124,201,184,.4)', borderColor: 'rgba(124,201,184,.6)' }} onClick=${() => openModal(MK.SETTINGS)} aria-label="API已连接">🟢 已连接</span>` : html`<span class="header-btn conn-badge" style=${{ padding: '6px 12px', fontSize: 11, cursor: 'pointer', background: 'rgba(201,147,156,.3)', borderColor: 'rgba(201,147,156,.5)' }} onClick=${() => openModal(MK.SETTINGS)} aria-label="API未连接 — 点击设置">🔴 未连接</span>`}
@@ -3648,7 +3645,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 <button class="header-btn desktop-only warning" onClick=${() => openModal(MK.JB)} title="破限设置" aria-label="破限设置">🔓<span class="label">破限</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.GUIDE)} title="翻译指导" aria-label="翻译指导">📖<span class="label">指导</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.SETTINGS)} title="API设置" aria-label="API设置">⚙️<span class="label">API</span></button>
-<button class=${'header-btn desktop-only github '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>${html`<${GHLogo}/>`}<span class="label">同步</span></button>
+<button class=${'header-btn desktop-only sync '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>☁️<span class="label">同步</span></button>
 <button class="font-size-btn desktop-only" onClick=${cycleFontSize} title=${'字体：' + FONT_LABELS[fontSize]} aria-label=${'切换字体大小，当前' + FONT_LABELS[fontSize]}>${FONT_ICONS[fontSize]} ${FONT_LABELS[fontSize]}</button>
 <button class="header-btn desktop-only" onClick=${toggleTheme} title=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'} aria-label=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'}>${theme === 'light' ? '🌙' : '☀️'}</button>
 <button class="header-btn hamburger-btn" onClick=${() => setMobileMenuOpen(true)} aria-label="打开菜单">☰</button>
@@ -3665,7 +3662,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       const getZ = useModalZ();
       const isMobile = useIsMobile();
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const sync=uGHS();
+      const sync=uCFS(addToast);
       const [fileName, setFileName] = useState('');
       const [imgUrl, setImgUrl] = useState('');
       const imgDataRef = useRef(''); const giRef = useRef(null);
@@ -3861,7 +3858,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
   { divider: true },
   { icon: '⚙️', label: 'API 设置', desc: '配置模型和密钥', action: () => openModal(MK.SETTINGS) },
   { icon: '🔄', label: '刷新模型列表', desc: model ? `当前: ${model}` : '获取最新模型', action: refreshModels },
-  { icon: '🐙', label: 'GitHub同步', desc: 'Gist同步', action: () => openModal('sync') },
+  { icon: '☁️', label: '云同步', desc: '跨设备同步', action: () => openModal('sync') },
   { divider: true },
   { icon: FONT_ICONS[fontSize], label: '字体：' + FONT_LABELS[fontSize], desc: '小 → 中 → 大 循环切换', action: cycleFontSize },
   { icon: theme === 'light' ? '🌙' : '☀️', label: theme === 'light' ? '暗色模式' : '亮色模式', action: toggleTheme },
@@ -3976,7 +3973,7 @@ ${!!modals[MK.CMP] && html`<${TranslationModal}
   onRestore=${() => setTrMin(false)}
 />`}
 ${fullEditor.show && html`<${Modal} show onClose=${() => setFullEditor(p => ({ ...p, show: false }))} title=${fullEditor.title} fullscreen footer=${html`<><button class="btn primary" onClick=${handleFESave}>💾</button><button class="btn secondary" onClick=${() => setFullEditor(p => ({ ...p, show: false }))}>取消</button></>`}><div class="full-editor-stats"><span>📝 ${charCount(fullEditor.value)} 字</span><span>📊 ~${estimateTokens(fullEditor.value)} tokens</span>${estimateTokens(fullEditor.value) > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠️ 内容较长</span>`}<span style=${{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-soft)' }}>💡 Ctrl+S 保存</span></div><textarea class="full-editor-textarea" value=${fullEditor.value} onChange=${e => setFullEditor(p => ({ ...p, value: e.target.value }))} onKeyDown=${e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); handleFESave() } }}/><//>`}
-${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync=${sync} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} addToast=${addToast}/>`}
+${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync=${sync} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} askConfirm=${askConfirm}/>`}
 ${!!modals[MK.GEN] && html`<${GenModal} show onClose=${() => openModal(MK.GEN, 0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
 ${!!modals[MK.GREET_GEN] && html`<${GreetGenModal} show onClose=${() => openModal(MK.GREET_GEN, 0)} data=${data} onApply=${handleGreetApply} pv=${providers} pi=${providerIdx} model=${model}/>`}
 ${!!modals[MK.SF_PREVIEW] && html`<${SmartFillPreviewModal} show onClose=${() => openModal(MK.SF_PREVIEW, 0)} parsed=${sfPreviewData} currentData=${data || {}} onConfirm=${confirmSmartFill}/>`}
