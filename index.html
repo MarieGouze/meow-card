@@ -17,9 +17,9 @@
     if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) { }</script>
   <!-- P9: CDN fallback detection -->
-  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"
+  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"
     onerror="document.getElementById('cdn-error').style.display='flex'"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"
+  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"
     onerror="document.getElementById('cdn-error').style.display='flex'"></script>
   <link rel="modulepreload" href="https://esm.sh/htm@3.1.1">
   <script
@@ -2799,9 +2799,64 @@
   <script type="module">
     import htm from 'htm';
     import { GoogleGenerativeAI } from "@google/generative-ai";
-    const html = htm.bind((tag, props, ...c) => tag === '' ? React.createElement(React.Fragment, null, ...c) : React.createElement(tag, props, ...c));
+    const html = htm.bind((tag, props, ...c) => (!tag || tag === '') ? React.createElement(React.Fragment, null, ...c) : React.createElement(tag, props, ...c));
     const { useState, useEffect, useCallback, useMemo, useRef, memo, Component, createContext, useContext, useReducer } = React;
     const { startTransition } = React;
+
+    /* ═══ DEBUG: 详细 hooks 错误追踪 ═══ */
+    const _origUseState = useState;
+    const _origUseEffect = useEffect;
+    const _origUseCallback = useCallback;
+    const _origUseMemo = useMemo;
+    const _origUseRef = useRef;
+    const _origUseReducer = useReducer;
+    const _origUseContext = useContext;
+    let _hookCallCount = 0;
+    let _hookRenderCount = 0;
+    let _hookTrace = [];
+    let _prevHookTrace = [];
+    let _debugHooks = false;
+
+    window._enableHookDebug = () => {
+      _debugHooks = true;
+      console.log('🔍 Hook debug enabled. Interact with the page to trigger re-renders.');
+    };
+
+    window._disableHookDebug = () => {
+      _debugHooks = false;
+      console.log('Hook debug disabled.');
+    };
+
+    window._compareHookTraces = () => {
+      console.log('Previous hooks:', _prevHookTrace);
+      console.log('Current hooks:', _hookTrace);
+      if (_prevHookTrace.length !== _hookTrace.length) {
+        console.error(`❌ Hook count mismatch! Previous: ${_prevHookTrace.length}, Current: ${_hookTrace.length}`);
+        const maxLen = Math.max(_prevHookTrace.length, _hookTrace.length);
+        for (let i = 0; i < maxLen; i++) {
+          const prev = _prevHookTrace[i] || '(missing)';
+          const curr = _hookTrace[i] || '(missing)';
+          if (prev !== curr) console.warn(`  Hook #${i}: "${prev}" → "${curr}" ← DIFF`);
+          else console.log(`  Hook #${i}: "${prev}" ✓`);
+        }
+      }
+    };
+
+    /* 全局错误捕获 */
+    window.addEventListener('error', e => {
+      if (e.message && (e.message.includes('hooks') || e.message.includes('fewer') || e.message.includes('Rendered'))) {
+        console.error('🚨 HOOKS ERROR DETECTED');
+        console.error('Error:', e.message);
+        console.error('File:', e.filename, 'Line:', e.lineno, 'Col:', e.colno);
+        console.error('Stack:', e.error?.stack);
+        window._compareHookTraces();
+      }
+    });
+
+    console.log('%c🐱 调试模式已启用', 'color: #66ccff; font-size: 16px; font-weight: bold');
+    console.log('在控制台输入以下命令：');
+    console.log('  _enableHookDebug()  — 开启hook追踪');
+    console.log('  _compareHookTraces() — 对比前后hook调用');
 
     /* ═══════════ 常量 ═══════════ */
     const PNG_SIG = [137, 80, 78, 71, 13, 10, 26, 10];
@@ -3076,12 +3131,13 @@
       /* Deobfuscate key */
       const actualKey = deobfuscate(provider.key);
       let fullParts = [...parts];
-      if (apiConfig.jailbreakText?.trim()) { const textParts = fullParts.filter(x => typeof x === 'string'); fullParts = [apiConfig.jailbreakText + '\n\n' + textParts.join('\n'), ...fullParts.filter(x => typeof x !== 'string')] }
-	        let sysPrompt = systemPrompt;
+      let sysPrompt = systemPrompt;
+      if (apiConfig.jailbreakText?.trim()) sysPrompt = apiConfig.jailbreakText + '\n\n' + sysPrompt;
       if (apiConfig.translationGuide?.trim()) sysPrompt += '\n\n' + apiConfig.translationGuide;
       /* 防提示词泄漏：在系统提示中明确要求不要添加解释 */
       sysPrompt += '\n\n[重要：直接输出翻译结果，不要添加任何前缀、解释、注释或引号包裹。]';
-      const useStream = !!onChunk;
+	  
+	  const useStream = !!onChunk;
       /* S-2: Create timeout-wrapped signal */
       const timeoutAc = withTimeout(signal, 60000);
       const effectiveSignal = timeoutAc.signal;
@@ -3245,7 +3301,43 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
     const SyncModal=memo(({show,onClose,sync,pv,pi,cfg,jL,pL,gr,gL,onApply,addToast})=>{const[it,sIt]=useState('');const[st2,sSt2]=useState(false);const[sy,sSy]=useState(false);useEffect(()=>{if(show&&sync.tk)sync.vt(sync.tk).then(r=>{if(r.ok)sync.sUN(r.un)})},[show]);if(!show)return null;return html`<${Modal} show onClose=${onClose} title=${html`<${GHLogo}/> GitHub 同步`} headerClass="purple">${sync.ic?html`<div class="sync-info"><h4>✅ @${sync.un}</h4>${sync.lt&&html`<p class="time">上次: ${new Date(sync.lt).toLocaleString()}</p>`}${sync.gu&&html`<a href=${sync.gu} target="_blank" class="gist-link">📄 Gist</a>`}</div>`:html`<div class="step-guide"><h4>🔑 Token</h4><ol><li><a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub</a> → Fine-grained Token</li><li>Gists → Read and Write</li></ol></div>`}${!sync.ic?html`<><div class="form-group"><div class="form-row"><div class="form-group"><input type=${st2?'text':'password'} value=${it} onChange=${e=>sIt(e.target.value)} placeholder="ghp_xxx"/></div><button class="btn secondary" style=${{padding:'10px'}} onClick=${()=>sSt2(!st2)}>${st2?'🙈':'👁️'}</button></div></div><button class="btn purple" style=${{width:'100%'}} onClick=${async()=>{sSy(true);const r=await sync.vt(it);sSy(false);if(r.ok){sync.sTk(it);sync.sUN(r.un);sIt('');await sync.fog();addToast('OK','success')}else addToast('无效','error')}} disabled=${sy||!it.trim()}>${sy?'⏳':'🔗 连接'}</button></>`:html`<><div style=${{display:'flex',gap:10,marginBottom:16}}><button class="btn primary" style=${{flex:1}} onClick=${async()=>{sSy(true);const d=await sync.fD();sSy(false);if(d&&Object.keys(d).length>1){onApply(d);addToast('OK','success')}else addToast('空','warning')}} disabled=${sy}>⬇️</button><button class="btn success" style=${{flex:1}} onClick=${async()=>{sSy(true);const ok=await sync.pD({pv,pi,cfg,jL,pL,gr,gL});sSy(false);ok?addToast('OK','success'):addToast('失败','error')}} disabled=${sy}>⬆️</button></div><button class="btn secondary" style=${{width:'100%'}} onClick=${()=>{sync.dc();addToast('断开','info')}}>🔌</button></>`}<//>`});
 
     /* ═══════════ ErrorBoundary ═══════════ */
-    class ErrorBoundary extends Component { constructor(p) { super(p); this.state = { hasError: false, error: null } } static getDerivedStateFromError(e) { return { hasError: true, error: e } } render() { if (this.state.hasError) return html`<div class="error-boundary"><div style=${{ fontSize: '64px' }}>😿</div><h2>出错了</h2><p>${this.state.error?.message || '未知错误'}</p><button onClick=${() => { this.setState({ hasError: false }); location.reload() }}>刷新页面</button></div>`; return this.props.children } }
+    class ErrorBoundary extends Component {
+      constructor(p) { super(p); this.state = { hasError: false, error: null, errorInfo: null } }
+      static getDerivedStateFromError(e) { return { hasError: true, error: e } }
+      componentDidCatch(error, errorInfo) {
+        this.setState({ errorInfo });
+        console.error('🚨 ErrorBoundary caught:');
+        console.error('Error:', error?.message);
+        console.error('Stack:', error?.stack);
+        console.error('Component Stack:', errorInfo?.componentStack);
+        /* 解析组件栈找到出错组件 */
+        const stack = errorInfo?.componentStack || '';
+        const lines = stack.split('\n').filter(l => l.trim());
+        if (lines.length) {
+          console.error('📍 出错组件链:');
+          lines.forEach((line, i) => console.error(`  ${i}: ${line.trim()}`));
+        }
+      }
+      render() {
+        if (this.state.hasError) {
+          const stack = this.state.errorInfo?.componentStack || '';
+          const errMsg = this.state.error?.message || '未知错误';
+          const errStack = this.state.error?.stack || '';
+          return html`<div class="error-boundary">
+            <div style=${{ fontSize: '64px' }}>😿</div>
+            <h2>出错了</h2>
+            <p style=${{ color: 'red', fontWeight: 'bold' }}>${errMsg}</p>
+            <details style=${{ textAlign: 'left', maxWidth: 600, width: '100%', marginTop: 16 }}>
+              <summary style=${{ cursor: 'pointer', fontWeight: 'bold' }}>📋 详细错误信息（点击展开复制给开发者）</summary>
+              <pre style=${{ background: '#f5f5f5', padding: 16, borderRadius: 8, overflow: 'auto', fontSize: 12, maxHeight: 400, whiteSpace: 'pre-wrap', wordBreak: 'break-all', marginTop: 8 }}>${errMsg}\n\n--- Error Stack ---\n${errStack}\n\n--- Component Stack ---\n${stack}</pre>
+              <button style=${{ marginTop: 8, padding: '8px 16px', background: '#66ccff', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer' }} onClick=${() => { navigator.clipboard.writeText(errMsg + '\n\n' + errStack + '\n\n' + stack); }}>📋 复制错误信息</button>
+            </details>
+            <button style=${{ marginTop: 16 }} onClick=${() => { this.setState({ hasError: false }); location.reload() }}>刷新页面</button>
+          </div>`
+        }
+        return this.props.children;
+      }
+    }
 
     /* ═══════════ 基础组件 ═══════════ */
     const Toast = memo(({ toasts, onDismiss }) => html`<div class="toast-container" role="status" aria-live="polite">${toasts.map(t => html`<div key=${t.id} class="toast ${t.type}" onClick=${() => onDismiss(t.id)} role="alert"><span class="toast-icon" aria-hidden="true">${t.type === 'success' ? '✅' : t.type === 'error' ? '❌' : t.type === 'warning' ? '⚠️' : t.type === 'important' ? '🎉' : '💡'}</span><span class="toast-message">${t.msg}</span><button class="toast-close" onClick=${e => { e.stopPropagation(); onDismiss(t.id) }} aria-label="关闭通知">×</button></div>`)}</div>`);
@@ -3391,7 +3483,7 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
       const editToggle = editable ? html`<button class="edit-toggle-btn ${isEditing ? 'active' : ''}" onClick=${() => setIsEditing(!isEditing)}>${isEditing ? '✏️ 编辑中' : '✏️ 编辑'}</button>` : null;
       const editBox = html`<textarea class="compare-box-edit ${large ? 'large' : ''}" ref=${editRef} value=${translated || ''} onChange=${e => onTranslatedChange?.(e.target.value)}/>`;
 
-      if (status !== 'success') return html`<div class="compare-grid"><div class="compare-col original"><h4><span>原文</span></h4><div class="compare-box">${original}</div></div><div class="compare-col translated"><h4><span>译文</span>${syncToggle}${editToggle}</h4>${isEditing && editable ? editBox : html`<div class="compare-box ${status === 'pending' ? 'pending' : ''}">${status === 'error' ? html`<span style=${{ color: '#c9939c' }}>❌ ${error}</span>` : '…'}</div>`}</div></div>`;
+      if (status !== 'success') return html`<div class="compare-grid"><div class="compare-col original"><h4><span>原文</span></h4><div class="compare-box">${original}</div></div><div class="compare-col translated"><h4><span>译文</span>${syncToggle}${editToggle}</h4>${isEditing && editable ? editBox : html`<div class="compare-box ${status === 'pending' ? 'pending' : ''}" style=${{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>${status === 'error' ? html`<span style=${{ color: '#c9939c' }}>❌ ${error}</span>` : (status === 'translating' && translated) ? translated : '…'}</div>`}</div></div>`;
       return html`<div class="compare-grid"><div class="compare-col original"><h4><span>原文</span></h4><div class=${boxCls} ref=${oRef} onScroll=${onOrigScroll} onMouseLeave=${onLeave}>${origParas.map((p, i) => html`<div key=${i} class="sync-para ${activeO === i ? 'sync-active' : ''}" onMouseEnter=${() => doSync('orig', i)} onClick=${() => doSync('orig', i)}>${p}</div>`)}</div></div><div class="compare-col translated"><h4><span>译文</span>${syncToggle}${editToggle}</h4>${isEditing && editable ? editBox : html`<div class=${boxCls} ref=${tRef} onScroll=${onTransScroll} onMouseLeave=${onLeave}>${transParas.map((p, i) => html`<div key=${i} class="sync-para ${activeT === i ? 'sync-active' : ''}" onMouseEnter=${() => doSync('trans', i)} onClick=${() => doSync('trans', i)}>${p}</div>`)}</div>`}</div></div>`
     });
 
@@ -3401,9 +3493,9 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
       const [trSearch, setTrSearch] = useState(''); /* U-4 */
       useEffect(() => { if (prevTranslating.current && !translating) { const s = {}; items.forEach((item, idx) => { if (item.status === 'success') s[idx] = true }); setSel(s) } prevTranslating.current = translating }, [translating, items]);
       useEffect(() => { if (translating) document.title = `[${Math.round(progress)}%] 翻译中...`; else if (show) document.title = '🐱 喵喵角色卡工坊' }, [translating, progress, show]);
-      if (!show || minimized) return null;
       const stats = items.reduce((a, i) => { a[i.status || 'pending']++; return a }, { success: 0, error: 0, pending: 0, translating: 0 }); const failedCount = stats.error + stats.pending;
       const getLabel = item => { let l = fieldLabel(item.field) || ''; if (item.entryIndex != null) l = `#${item.entryIndex + 1}: ${l}`; else if (item.index != null) l += ` #${item.index + 1}`; return l };
+      const selCount = useMemo(() => Object.keys(sel).filter(k => sel[k]).length, [sel]);
       const filteredItems = useMemo(() => {
         let result = items.map((i, idx) => ({ ...i, _idx: idx }));
         if (filter === 'success') result = result.filter(i => i.status === 'success');
@@ -3411,13 +3503,14 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
         if (trSearch.trim()) { const q = trSearch.toLowerCase(); result = result.filter(i => getLabel(i).toLowerCase().includes(q) || (i.original || '').toLowerCase().includes(q) || (i.translated || '').toLowerCase().includes(q)) }
         return result
       }, [items, filter, trSearch]);
-      const successIdxs = items.map((_, i) => i).filter(i => items[i].status === 'success'); const selAll = () => { const n = { ...sel }; successIdxs.forEach(i => n[i] = true); setSel(n) }; const selNone = () => { const n = { ...sel }; successIdxs.forEach(i => n[i] = false); setSel(n) }; const selInvert = () => { const n = { ...sel }; successIdxs.forEach(i => n[i] = !n[i]); setSel(n) };
+      if (!show || minimized) return null;
+      const allIdxs = items.map((_, i) => i); const selAll = () => { const n = {}; allIdxs.forEach(i => n[i] = true); setSel(n) }; const selNone = () => setSel({}); const selInvert = () => { const n = {}; allIdxs.forEach(i => n[i] = !sel[i]); setSel(n) };
       /* U-11: Length change indicator */
       const getLengthChange = item => { if (item.status !== 'success' || !item.original || !item.translated) return null; const olen = item.original.length, tlen = item.translated.length; const pct = Math.round(((tlen - olen) / olen) * 100); if (pct === 0) return html`<span class="length-change same">=</span>`; return html`<span class="length-change ${pct < 0 ? 'shorter' : 'longer'}">${pct > 0 ? '+' : ''}${pct}%</span>` };
-      return html`<><${Modal} show large title=${translating ? '🐱 翻译中~' : '✨ 完成'} onClose=${onClose} canClose=${!translating} footer=${translating ? html`<><button class="btn warning" onClick=${onMinimize}>📌 后台</button><button class="btn danger" onClick=${onCancel}>⏹</button></>` : html`<><button class="btn success" onClick=${() => onApply(items.map((i, idx) => ({ ...i, selected: i.status === 'success' && sel[idx] })))} disabled=${stats.success === 0}>✅ 应用(${Object.values(sel).filter(Boolean).length})</button><button class="btn secondary" onClick=${onClose}>取消</button></>`}>
-<div class="compare-header"><div class="compare-top"><div style=${{ display: 'flex', alignItems: 'center', gap: 12, flex: 1 }}><div class="progress-bar"><div class="progress-fill" style=${{ width: `${progress}%` }}/></div><span style=${{ fontSize: 13 }}>${Math.round(progress)}%</span>${translating && eta > 0 && html`<span class="eta-info">⏱ ~${eta < 60 ? Math.ceil(eta) + '秒' : Math.ceil(eta / 60) + '分'}</span>`}</div><div class="stats"><span class="stat success">✓${stats.success}</span><span class="stat error">✗${stats.error}</span><span class="stat pending">◷${stats.pending + stats.translating}</span></div></div><div style=${{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><div class="filter-bar"><button class="filter-btn ${filter === 'all' ? 'active' : ''}" onClick=${() => setFilter('all')}>全部(${items.length})</button><button class="filter-btn ${filter === 'success' ? 'active' : ''}" onClick=${() => setFilter('success')}>✓(${stats.success})</button><button class="filter-btn ${filter === 'failed' ? 'active' : ''}" onClick=${() => setFilter('failed')}>✗(${stats.error + stats.pending})</button></div>${!translating && stats.success > 0 && html`<div class="select-all-bar" style=${{ margin: 0, padding: '4px 8px' }}><button class="sa" onClick=${selAll}>全选</button><button class="si" onClick=${selInvert}>反选</button><button class="sn" onClick=${selNone}>清空</button></div>`}${!translating && failedCount > 0 && html`<button class="btn warning" style=${{ padding: '8px 18px', fontSize: 13 }} onClick=${() => onRetry(items.map((_, i) => i).filter(i => items[i].status === 'error' || items[i].status === 'pending'))}>⚡ 重试(${failedCount})</button>`}</div></div>
+      return html`<><${Modal} show large title=${translating ? '🐱 翻译中~' : '✨ 完成'} onClose=${onClose} canClose=${!translating} footer=${translating ? html`<><button class="btn warning" onClick=${onMinimize}>📌 后台</button><button class="btn danger" onClick=${onCancel}>⏹</button></>` : html`<><button class="btn success" onClick=${() => onApply(items.map((i, idx) => ({ ...i, selected: i.status === 'success' && sel[idx] })))} disabled=${stats.success === 0}>✅ 应用(${Object.keys(sel).filter(k => sel[k] && items[k]?.status === 'success').length})</button><button class="btn secondary" onClick=${onClose}>取消</button></>`}>
+<div class="compare-header"><div class="compare-top"><div style=${{ display: 'flex', alignItems: 'center', gap: 12, flex: 1 }}><div class="progress-bar"><div class="progress-fill" style=${{ width: `${progress}%` }}/></div><span style=${{ fontSize: 13 }}>${Math.round(progress)}%</span>${translating && eta > 0 && html`<span class="eta-info">⏱ ~${eta < 60 ? Math.ceil(eta) + '秒' : Math.ceil(eta / 60) + '分'}</span>`}</div><div class="stats"><span class="stat success">✓${stats.success}</span><span class="stat error">✗${stats.error}</span><span class="stat pending">◷${stats.pending + stats.translating}</span></div></div><div style=${{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><div class="filter-bar"><button class="filter-btn ${filter === 'all' ? 'active' : ''}" onClick=${() => setFilter('all')}>全部(${items.length})</button><button class="filter-btn ${filter === 'success' ? 'active' : ''}" onClick=${() => setFilter('success')}>✓(${stats.success})</button><button class="filter-btn ${filter === 'failed' ? 'active' : ''}" onClick=${() => setFilter('failed')}>✗(${stats.error + stats.pending})</button></div>${!translating && html`<div class="select-all-bar" style=${{ margin: 0, padding: '4px 8px' }}><button class="sa" onClick=${selAll}>全选</button><button class="si" onClick=${selInvert}>反选</button><button class="sn" onClick=${selNone}>清空</button><span style=${{ fontSize: 11, marginLeft: 4 }}>${selCount}/${items.length}</span></div>`}${!translating && failedCount > 0 && html`<button class="btn warning" style=${{ padding: '8px 18px', fontSize: 13 }} onClick=${() => onRetry(allIdxs.filter(i => items[i].status === 'error' || items[i].status === 'pending'))}>⚡ 一键重试(${failedCount})</button>`}${!translating && selCount > 0 && html`<button class="btn purple" style=${{ padding: '8px 18px', fontSize: 13 }} onClick=${() => { const indices = Object.keys(sel).filter(k => sel[k]).map(Number); if (indices.length) onRetry(indices) }}>🔄 重试选中(${selCount})</button>`}</div></div>
 ${/* U-4: Search bar */''}<div class="tr-search-bar"><input placeholder="🔍 搜索翻译项..." value=${trSearch} onChange=${e => startTransition(() => setTrSearch(e.target.value))}/></div>
-<div style=${{ marginTop: 8 }}>${filteredItems.map(item => { const idx = item._idx, st = item.status || 'pending'; return html`<div key=${idx} class="compare-item ${st}"><div class="compare-item-header"><label><input type="checkbox" checked=${!!sel[idx]} onChange=${() => setSel(p => ({ ...p, [idx]: !p[idx] }))}/><span style=${{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>${getLabel(item)}</span></label><div class="item-actions">${getLengthChange(item)}<button class="btn-sm lavender" onClick=${() => { setExpandItem({ ...item, _idx: idx }); setExpandVal(item.translated || '') }} aria-label="放大">⛶</button><span class="status-badge ${st}">${{ pending: '⏳等待', translating: '⏳…', success: '✅ 完成', error: '❌ 失败' }[st]}</span></div></div><${SyncCompareBoxes} original=${item.original} translated=${item.translated} status=${st} error=${item.error} editable=${st !== 'translating'} onTranslatedChange=${(newText) => { setItems(p => p.map((x, j) => j === idx ? { ...x, translated: newText, status: newText.trim() ? 'success' : 'pending' } : x)) }}/></div>` })}</div><//>
+<div style=${{ marginTop: 8 }}>${filteredItems.map(item => { const idx = item._idx, st = item.status || 'pending'; const isFailed = st === 'error' || st === 'pending'; return html`<div key=${idx} class="compare-item ${st}"><div class="compare-item-header"><label><input type="checkbox" checked=${!!sel[idx]} onChange=${() => setSel(p => ({ ...p, [idx]: !p[idx] }))}/><span style=${{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>${getLabel(item)}</span></label><div class="item-actions">${getLengthChange(item)}${!translating && st === 'success' && html`<button class="btn-sm orange" onClick=${() => onRetry([idx])} title="重新翻译此条" aria-label="重新翻译">🔄</button>`}${!translating && isFailed && html`<button class="btn-sm orange" onClick=${() => onRetry([idx])} title="重试此条" aria-label="重试">⚡</button>`}<button class="btn-sm lavender" onClick=${() => { setExpandItem({ ...item, _idx: idx }); setExpandVal(item.translated || '') }} aria-label="放大">⛶</button><span class="status-badge ${st}">${{ pending: '⏳等待', translating: '⏳…', success: '✅ 完成', error: '❌ 失败' }[st]}</span></div></div><${SyncCompareBoxes} original=${item.original} translated=${item.translated} status=${st} error=${item.error} editable=${st !== 'translating'} onTranslatedChange=${(newText) => { setItems(p => p.map((x, j) => j === idx ? { ...x, translated: newText, status: newText.trim() ? 'success' : 'pending' } : x)) }}/></div>` })}</div><//>
 ${expandItem && html`<${Modal} show fullscreen onClose=${() => setExpandItem(null)} title=${getLabel(expandItem)} footer=${html`<><button class="btn primary" onClick=${() => { setItems(p => p.map((x, i) => i === expandItem._idx ? { ...x, translated: expandVal, status: expandVal.trim() ? 'success' : 'pending' } : x)); setExpandItem(null) }}>✅</button><button class="btn secondary" onClick=${() => setExpandItem(null)}>取消</button></>`}><${SyncCompareBoxes} original=${expandItem.original || ''} translated=${expandVal} status=${expandVal ? 'success' : 'pending'} error="" large editable onTranslatedChange=${v => setExpandVal(v)}/><//>`}</>`
     });
 
@@ -3486,9 +3579,10 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       const [fileName, setFileName] = useState('');
       const [imgUrl, setImgUrl] = useState('');
       const imgDataRef = useRef(''); const giRef = useRef(null);
-      const clearImgState = useCallback(() => { if (imgUrl) URL.revokeObjectURL(imgUrl); setImgUrl(''); imgDataRef.current = ''; giRef.current = null }, [imgUrl]);
-      /* B-8: Always revoke old URL first */
-      const loadImgFromDataURL = useCallback(dataUrl => { if (imgUrl) URL.revokeObjectURL(imgUrl); if (!dataUrl) { setImgUrl(''); imgDataRef.current = ''; giRef.current = null; return } const blob = dataURLToBlob(dataUrl); if (blob) setImgUrl(URL.createObjectURL(blob)); imgDataRef.current = dataUrl; giRef.current = giFromDataURL(dataUrl) }, [imgUrl]);
+      const clearImgState = useCallback(() => { if (imgUrlRef.current) URL.revokeObjectURL(imgUrlRef.current); setImgUrl(''); imgUrlRef.current = ''; imgDataRef.current = ''; giRef.current = null }, []);
+      /* B-8: Always revoke old URL first — use ref to avoid dependency on imgUrl */
+      const imgUrlRef = useRef('');
+      const loadImgFromDataURL = useCallback(dataUrl => { if (imgUrlRef.current) URL.revokeObjectURL(imgUrlRef.current); if (!dataUrl) { setImgUrl(''); imgUrlRef.current = ''; imgDataRef.current = ''; giRef.current = null; return } const blob = dataURLToBlob(dataUrl); if (blob) { const url = URL.createObjectURL(blob); setImgUrl(url); imgUrlRef.current = url } imgDataRef.current = dataUrl; giRef.current = giFromDataURL(dataUrl) }, []);
       const [imgLoading, setImgLoading] = useState(false);
       const [cardDef, setCardDef] = useState(null); const [loading, setLoading] = useState(''); const [tab, setTab] = useState(TAB.BASIC); const [dragOver, setDragOver] = useState(false); const [lastSave, setLastSave] = useState(null); const [isNew, setIsNew] = useState(false);
       const [pageDrag, setPageDrag] = useState(false); const pageDragCounter = useRef(0);
@@ -3505,7 +3599,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       }); const openModal = useCallback((k, v = 1) => setModals(m => ({ ...m, [k]: v })), []);
       const [fullEditor, setFullEditor] = useState({ show: false, field: '', title: '', entryIdx: null, value: '' });
       const [providers, setProviders] = useLocalStorage('pv', [{ id: 1, name: 'Google Gemini', url: '', key: '', models: '' }]);
-      const [providerIdx, setProviderIdx] = useLocalStorage('pi', 0); const [model, setModel] = useState('');
+      const [providerIdx, setProviderIdx] = useLocalStorage('pi', 0); const [model, setModel] = useLocalStorage('selectedModel', '');
       const [config, setConfig] = useLocalStorage('tc', { systemPrompt: '请翻译成简体中文，保持原有语气和风格。', jailbreakText: '' });
       const [jbList, setJbList] = useLocalStorage('jbList', DJ); const [promptList, setPromptList] = useLocalStorage('prList', DPR);
       const [guideRows, setGuideRows] = useLocalStorage('gr', []); const [guideList, setGuideList] = useLocalStorage('gList', []);
@@ -3525,7 +3619,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       const filteredNavModels = useMemo(() => modelFilter ? navModels.filter(m => m.toLowerCase().includes(modelFilter.toLowerCase())) : navModels, [navModels, modelFilter]);
 
       useEffect(() => { if (!modelDropOpen) return; setKbFocusIdx(-1); if (isMobile) { document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = '' } } const handler = e => { if (modelDropRef.current && !modelDropRef.current.contains(e.target)) setModelDropOpen(false) }; document.addEventListener('pointerdown', handler); return () => { document.removeEventListener('pointerdown', handler); document.body.style.overflow = '' } }, [modelDropOpen, isMobile]);
-      useEffect(() => { if (navModels.length && (!model || !navModels.includes(model))) setModel(navModels[0]); else if (!navModels.length && model) setModel('') }, [navModels]);
+      useEffect(() => { if (navModels.length && !model) setModel(navModels[0]); else if (navModels.length && model && !navModels.includes(model)) setModel(navModels[0]); else if (!navModels.length && model) setModel('') }, [navModels]);
 
       const guideText = useMemo(() => { const rows = guideRows || []; return rows.filter(r => r.enabled && r.src.trim()).map(r => `${r.src} = ${r.dst}`).join('\n') }, [guideRows]);
 
