@@ -3,20 +3,16 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- M-4: Removed user-scalable=no for accessibility -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>🐱 喵喵角色卡工坊 - 云同步版</title>
-  <!-- O1: PWA meta -->
+  <title>🐱 喵喵角色卡工坊 - GitHub云同步版</title>
   <meta name="theme-color" content="#66ccff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <!-- U-1: System theme follow - apply before first paint -->
   <script>try {
     const stored = localStorage.getItem('theme');
     const theme = stored ? JSON.parse(stored) : (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
     if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) { }</script>
-  <!-- P9: CDN fallback detection -->
   <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"
     onerror="document.getElementById('cdn-error').style.display='flex'"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"
@@ -1227,16 +1223,17 @@
 
     .grid-field { display: flex; align-items: center; gap: 8px }
     .grid-field label { font-size: 12px; color: var(--text-soft); white-space: nowrap }
-    .grid-field input[type="number"] {
-      width: 70px;
+    .grid-field input[type="number"], .grid-field select {
+      width: 85px;
       padding: 8px 10px;
       border: 2px solid var(--border);
       border-radius: var(--radius-sm);
-      font-size: 16px;
-      text-align: center;
+      font-size: 13px;
       background: var(--white);
-      color: var(--text)
+      color: var(--text);
+      outline: none;
     }
+    .grid-field select { width: 120px; }
 
     /* A-1: Toggle with proper ARIA support */
     .toggle {
@@ -2805,15 +2802,15 @@
     /* Desktop-only model dropdown handle - hidden */
     .mdp-handle { display: none }
   
-.header-btn.sync{background:rgba(124,201,184,.4);border-color:rgba(124,201,184,.6)}.header-btn.sync.connected{background:rgba(124,201,184,.6);border-color:rgba(124,201,184,.8)}
-.sync-info{background:var(--mint);border:2px solid var(--mint-soft);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.sync-info h4{color:var(--mint-dark);margin-bottom:8px}.sync-info p{font-size:13px;color:var(--text)}.sync-info .time{font-size:12px;color:var(--text-soft);margin-top:8px}
+.header-btn.github{background:rgba(159,122,234,.4);border-color:rgba(159,122,234,.6)}.header-btn.github.connected{background:rgba(124,201,184,.5);border-color:rgba(124,201,184,.7)}
+.github-logo{width:18px;height:18px;vertical-align:middle;fill:currentColor}
+.sync-info{background:var(--purple-pale);border:2px solid var(--purple-soft);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.sync-info h4{color:var(--purple);margin-bottom:8px}.sync-info p{font-size:13px;color:var(--text)}.sync-info .time{font-size:12px;color:var(--text-soft);margin-top:8px}.sync-info .gist-link{font-size:12px;color:var(--purple);display:inline-block;margin-top:8px}
+.step-guide{background:var(--cream);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.step-guide h4{color:var(--text-dark);margin-bottom:12px}.step-guide ol{padding-left:20px;font-size:13px}.step-guide li{margin-bottom:8px}.step-guide a{color:var(--purple)}
 </style>
 </head>
 
 <body>
-  <!-- A5: Skip navigation link -->
   <a class="skip-nav" href="#main-content">跳转到主内容</a>
-  <!-- P9: CDN error fallback -->
   <div id="cdn-error" class="cdn-error-overlay">
     <div style="font-size:64px">😿</div>
     <h2>资源加载失败</h2>
@@ -2916,7 +2913,7 @@
     /* U11: Supported file types */
     const SUPPORTED_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'application/json']);
     const SUPPORTED_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.json'];
-    const SYNC_URL='https://meow-sync-api.monickpoxno.workers.dev';
+    const GFN='meow-sync.json';
 
     /* ═══════════ S-1: API Key 混淆 ═══════════ */
     const _obfKey = 'mW0k'; /* Simple XOR seed */
@@ -3051,7 +3048,6 @@
     const clip = async t => { try { await navigator.clipboard.writeText(t || ''); return true } catch { return false } };
     const formatDate = d => { const x = new Date(d); return `${x.getMonth() + 1}/${x.getDate()} ${x.getHours()}:${String(x.getMinutes()).padStart(2, '0')}` };
     const formatBackupDate = () => { const d = new Date(); return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}_${String(d.getHours()).padStart(2, '0')}${String(d.getMinutes()).padStart(2, '0')}` };
-    /* M-5: Mobile-friendly download with correct filename */
     /* M-5: Mobile-friendly download with correct filename */
     const downloadBlob = (blob, filename) => { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; a.rel = 'noopener'; a.style.display = 'none'; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url) }, 500) };
     /* P-5: Use shallow clone where safe, deep only for nested structures */
@@ -3325,8 +3321,9 @@
     /* C6: Context for shared props to avoid prop drilling */
     const EditorContext = createContext(null);
 
-    const uCFS=(addToast)=>{const[sk,sSk]=useLocalStorage('syncKey','');const[ss,sSS]=useState('disconnected');const[lt,sLT]=useState(null);const ic=!!sk&&sk.length>=6;const fD=useCallback(async()=>{if(!ic)return null;sSS('syncing');try{const r=await fetch(SYNC_URL,{headers:{'X-Sync-Key':sk,'X-App-Type':'charcard'}});const j=await r.json();if(j.success){sSS('synced');if(j.data?._syncTime)sLT(j.data._syncTime);return j.data}throw new Error(j.error)}catch(e){sSS('disconnected');addToast('同步失败:'+e.message,'error');return null}},[sk,ic,addToast]);const pD=useCallback(async d=>{if(!ic)return false;sSS('syncing');try{const r=await fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json','X-Sync-Key':sk,'X-App-Type':'charcard'},body:JSON.stringify(d)});const j=await r.json();if(j.success){sSS('synced');sLT(j.syncTime);return true}throw new Error(j.error)}catch(e){sSS('disconnected');addToast('上传失败:'+e.message,'error');return false}},[sk,ic,addToast]);const del=useCallback(async()=>{if(!ic)return;try{await fetch(SYNC_URL,{method:'DELETE',headers:{'X-Sync-Key':sk,'X-App-Type':'charcard'}});sLT(null);addToast('已删除','success')}catch{addToast('删除失败','error')}},[sk,ic,addToast]);const dc=useCallback(()=>{sSk('');sSS('disconnected');sLT(null)},[]);return{sk,sSk,ss,ic,lt,fD,pD,del,dc}};
-    const SyncModal=memo(({show,onClose,sync,pv,pi,cfg,jL,pL,gr,gL,onApply,askConfirm})=>{const[key,sKey]=useState('');const[showK,sSK]=useState(false);const[sy,sSy]=useState(false);useEffect(()=>{if(show)sKey(sync.sk||'')},[show]);if(!show)return null;const connect=()=>{if(key.length<6)return;sync.sSk(key)};return html`<${Modal} show onClose=${onClose} title="☁️ 云同步" headerClass="success">${sync.ic?html`<div class="sync-info"><h4>✅ 已连接</h4><p>其他设备用相同密钥同步。</p>${sync.lt&&html`<p class="time">上次: ${new Date(sync.lt).toLocaleString()}</p>`}</div>`:html`<div style=${{background:'var(--cream)',borderRadius:'var(--radius-md)',padding:16,marginBottom:16}}><h4 style=${{color:'var(--text-dark)',marginBottom:8}}>🔑 设置同步密钥</h4><p style=${{fontSize:13,color:'var(--text-soft)'}}>输入至少6位密钥。</p></div>`}<div class="form-group"><label>密钥</label><div class="form-row"><div class="form-group"><input type=${showK?'text':'password'} value=${key} onChange=${e=>sKey(e.target.value)} placeholder="至少6位" disabled=${sync.ic}/></div><button class="btn secondary" style=${{padding:'10px'}} onClick=${()=>sSK(!showK)}>${showK?'🙈':'👁️'}</button></div></div>${!sync.ic?html`<button class="btn success" style=${{width:'100%'}} onClick=${connect} disabled=${key.length<6}>🔗 连接</button>`:html`<><div style=${{display:'flex',gap:10,marginBottom:16}}><button class="btn primary" style=${{flex:1}} onClick=${async()=>{sSy(true);const d=await sync.fD();sSy(false);if(d)onApply(d)}} disabled=${sy}>⬇️ 拉取</button><button class="btn success" style=${{flex:1}} onClick=${async()=>{sSy(true);await sync.pD({pv,pi,cfg,jL,pL,gr,gL});sSy(false)}} disabled=${sy}>⬆️ 推送</button></div><div style=${{display:'flex',gap:10}}><button class="btn secondary" style=${{flex:1}} onClick=${sync.dc}>🔌 断开</button><button class="btn danger" style=${{flex:1}} onClick=${async()=>{const ok=await askConfirm('删除云端数据？',{title:'删除',icon:'🗑️',type:'danger',dangerBtn:true,confirmText:'删除'});if(ok)await sync.del()}}>🗑️</button></div>`}${sy&&html`<p style=${{textAlign:'center',marginTop:16,color:'var(--sky)'}}>⏳</p>`}<//>`});
+    const GHLogo=()=>html`<svg class="github-logo" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>`;
+const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalStorage('gid','');const[ss,sSS]=useState('disconnected');const[lt,sLT]=useState(null);const[gu,sGU]=useState('');const[un,sUN]=useState('');const ic=!!tk;const vt=useCallback(async t=>{try{const r=await fetch('https://api.github.com/user',{headers:{'Authorization':`Bearer ${t}`}});if(!r.ok)throw 0;return{ok:true,un:(await r.json()).login}}catch{return{ok:false}}},[]);const fog=useCallback(async()=>{if(!tk)return null;try{if(gi){const r=await fetch(`https://api.github.com/gists/${gi}`,{headers:{'Authorization':`Bearer ${tk}`}});if(r.ok){sGU((await r.json()).html_url);return gi}}const lr=await fetch('https://api.github.com/gists?per_page=100',{headers:{'Authorization':`Bearer ${tk}`}});const gs=await lr.json();const ex=gs.find(g=>g.files[GFN]);if(ex){sGi(ex.id);sGU(ex.html_url);return ex.id}const cr=await fetch('https://api.github.com/gists',{method:'POST',headers:{'Authorization':`Bearer ${tk}`,'Content-Type':'application/json'},body:JSON.stringify({description:'🐱 Meow Sync',public:false,files:{[GFN]:{content:'{}'}}})});const ng=await cr.json();sGi(ng.id);sGU(ng.html_url);return ng.id}catch{return null}},[tk,gi]);const fD=useCallback(async()=>{if(!tk)return null;sSS('syncing');try{const id=await fog();if(!id){sSS('disconnected');return null}const r=await fetch(`https://api.github.com/gists/${id}`,{headers:{'Authorization':`Bearer ${tk}`}});const d=JSON.parse((await r.json()).files[GFN]?.content||'{}');sSS('synced');if(d._st)sLT(d._st);return d}catch{sSS('disconnected');return null}},[tk,fog]);const pD=useCallback(async d=>{if(!tk)return false;sSS('syncing');try{const id=await fog();if(!id){sSS('disconnected');return false}const sd={...d,_st:Date.now()};await fetch(`https://api.github.com/gists/${id}`,{method:'PATCH',headers:{'Authorization':`Bearer ${tk}`,'Content-Type':'application/json'},body:JSON.stringify({files:{[GFN]:{content:JSON.stringify(sd,null,2)}}})});sSS('synced');sLT(sd._st);return true}catch{sSS('disconnected');return false}},[tk,fog]);const dc=useCallback(()=>{sTk('');sGi('');sGU('');sUN('');sSS('disconnected');sLT(null)},[]);return{tk,sTk,gi,gu,ss,ic,lt,un,sUN,fD,pD,vt,dc,fog}};
+    const SyncModal=memo(({show,onClose,sync,pv,pi,cfg,jL,pL,gr,gL,onApply,addToast})=>{const[it,sIt]=useState('');const[st2,sSt2]=useState(false);const[sy,sSy]=useState(false);useEffect(()=>{if(show&&sync.tk)sync.vt(sync.tk).then(r=>{if(r.ok)sync.sUN(r.un)})},[show]);if(!show)return null;return html`<${Modal} show onClose=${onClose} title=${html`<${GHLogo}/> GitHub 同步`} headerClass="purple">${sync.ic?html`<div class="sync-info"><h4>✅ @${sync.un}</h4>${sync.lt&&html`<p class="time">上次: ${new Date(sync.lt).toLocaleString()}</p>`}${sync.gu&&html`<a href=${sync.gu} target="_blank" class="gist-link">📄 Gist</a>`}</div>`:html`<div class="step-guide"><h4>🔑 Token</h4><ol><li><a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub</a> → Fine-grained Token</li><li>Gists → Read and Write</li></ol></div>`}${!sync.ic?html`<><div class="form-group"><div class="form-row"><div class="form-group"><input type=${st2?'text':'password'} value=${it} onChange=${e=>sIt(e.target.value)} placeholder="ghp_xxx"/></div><button class="btn secondary" style=${{padding:'10px'}} onClick=${()=>sSt2(!st2)}>${st2?'🙈':'👁️'}</button></div></div><button class="btn purple" style=${{width:'100%'}} onClick=${async()=>{sSy(true);const r=await sync.vt(it);sSy(false);if(r.ok){sync.sTk(it);sync.sUN(r.un);sIt('');await sync.fog();addToast('OK','success')}else addToast('无效','error')}} disabled=${sy||!it.trim()}>${sy?'⏳':'🔗 连接'}</button></>`:html`<><div style=${{display:'flex',gap:10,marginBottom:16}}><button class="btn primary" style=${{flex:1}} onClick=${async()=>{sSy(true);const d=await sync.fD();sSy(false);if(d&&Object.keys(d).length>1){onApply(d);addToast('OK','success')}else addToast('空','warning')}} disabled=${sy}>⬇️</button><button class="btn success" style=${{flex:1}} onClick=${async()=>{sSy(true);const ok=await sync.pD({pv,pi,cfg,jL,pL,gr,gL});sSy(false);ok?addToast('OK','success'):addToast('失败','error')}} disabled=${sy}>⬆️</button></div><button class="btn secondary" style=${{width:'100%'}} onClick=${()=>{sync.dc();addToast('断开','info')}}>🔌</button></>`}<//>`});
 
     /* ═══════════ ErrorBoundary ═══════════ */
     class ErrorBoundary extends Component {
@@ -3413,7 +3410,7 @@
     const PromptModal = memo(({ show, onClose, cfg, onSave, list, setList }) => { const [prompt, setPrompt] = useState(''); useEffect(() => { if (show) setPrompt(cfg?.systemPrompt || '') }, [show]); if (!show) return null; return html`<${Modal} show onClose=${onClose} title="📝 提示词" footer=${html`<><button class="btn secondary" style=${{ marginRight: 'auto' }} onClick=${() => setPrompt('')}>清空</button><button class="btn primary" onClick=${() => { onSave({ ...cfg, systemPrompt: prompt }); onClose() }}>保存</button></>`}><div class="form-group"><textarea value=${prompt} onChange=${e => setPrompt(e.target.value)} style=${{ minHeight: 120 }}/></div><${TplSys} list=${list} setList=${setList} onLoad=${t => setPrompt(t.prompt || '')} type="prompt" ck="prompt"/><//>` });
 
     const SettingsModal = memo(({ show, onClose, providers: pvIn, providerIdx: piIn, onSave, cachedModels, setCachedModels }) => {
-      const [providerList, setProviderList] = useState([]); const [activeIdx, setActiveIdx] = useState(0); const [editing, setEditing] = useState(null); const [modelList, setModelList] = useState([]); const [modelSearch, setModelSearch] = useState(''); const [fetchingModels, setFetchingModels] = useState(false); const [modelListCollapsed, setModelListCollapsed] = useState(false); const [selectedModels, setSelectedModels] = useState(new Set()); const [testResult, setTestResult] = useState(null); const [testing, setTesting] = useState(false); const [showKey, setShowKey] = useState(false);
+      const [providerList, setProviderList] = useState([]); const [activeIdx, useState] = React.useState(0); const [editing, setEditing] = React.useState(null); const [modelList, setModelList] = React.useState([]); const [modelSearch, setModelSearch] = React.useState(''); const [fetchingModels, setFetchingModels] = React.useState(false); const [modelListCollapsed, setModelListCollapsed] = React.useState(false); const [selectedModels, setSelectedModels] = React.useState(new Set()); const [testResult, setTestResult] = React.useState(null); const [testing, setTesting] = React.useState(false); const [showKey, setShowKey] = React.useState(false);
       /* S-1: Deobfuscate key for editing display */
       useEffect(() => { if (show) { setProviderList(deepClone(pvIn).map(p => ({ ...p, key: deobfuscate(p.key) }))); setActiveIdx(piIn); setEditing(null); setModelList([]); setTestResult(null); setShowKey(false) } }, [show]);
       if (!show) return null;
@@ -3459,11 +3456,70 @@
     const AdvancedTab = memo(p => html`<div>${ADV_FIELDS.map(([ic, ti, fk]) => html`<${FieldSection} key=${fk} icon=${ic} title=${ti} fieldKey=${fk} value=${p.data[fk]} onChange=${v => p.onChange(fk, v)}/>`)}</div>`);
 
     /* ═══════════ 世界书 ═══════════ */
-    const BookEntry = memo(({ entry, index, onChange, onRemove, collapsed, onToggle, onExpandContent, onMoveUp, onMoveDown, isFirst, isLast, onDuplicate, selected, onSelect }) => { const update = (k, v) => onChange(index, k, v); return html`<div class="book-entry ${collapsed ? 'collapsed' : ''}"><div class="entry-header" onClick=${onToggle}><span class="collapse-icon">▼</span>${onSelect && html`<input type="checkbox" checked=${!!selected} onClick=${e => e.stopPropagation()} onChange=${e => onSelect(index, e.target.checked)} style=${{ width: 20, height: 20, accentColor: 'var(--sky)', flexShrink: 0 }}/>`}<input value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder="名称"/><div class="entry-actions" onClick=${e => e.stopPropagation()}><button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button><button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button><button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button><${Toggle} label="启用" checked=${entry.enabled} onChange=${v => update('enabled', v)}/><button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除条目">删除</button></div></div><div class="entry-body"><div class="entry-row"><label>🔑 关键词</label><input class="input" value=${entry.keysText || ''} onChange=${e => update('keysText', e.target.value)}/></div><div class="entry-row"><label>📝 内容 <span class="expand-icon" onClick=${() => onExpandContent(index)} aria-label="展开编辑">⛶</span></label><${DebouncedTextarea} className="textarea" rows=${3} value=${entry.content || ''} onChange=${v => update('content', v)}/></div><div class="entry-grid"><div class="grid-field"><label>优先级</label><input type="number" value=${entry.insertion_order || 0} onChange=${e => update('insertion_order', +e.target.value)}/></div><div class="grid-field"><label>深度</label><input type="number" value=${entry.depth || 4} onChange=${e => update('depth', +e.target.value)}/></div><${Toggle} label="常驻" checked=${entry.constant} onChange=${v => update('constant', v)}/></div></div></div>` });
+    /* U1: 添加了 position, role, probability 选项 */
+    const WB_POSITIONS = [
+      { label: "角色定义之前", pos: 0, role: 0 },
+      { label: "角色定义之后", pos: 1, role: 0 },
+      { label: "作者注释之前", pos: 2, role: 0 },
+      { label: "作者注释之后", pos: 3, role: 0 },
+      { label: "@D [系统]在深度", pos: 4, role: 0 },
+      { label: "@D [用户]在深度", pos: 4, role: 1 },
+      { label: "@D [AI]在深度", pos: 4, role: 2 },
+      { label: "示例消息前", pos: 5, role: 0 },
+      { label: "示例消息后", pos: 6, role: 0 }
+    ];
+
+    const BookEntry = memo(({ entry, index, onChange, onRemove, collapsed, onToggle, onExpandContent, onMoveUp, onMoveDown, isFirst, isLast, onDuplicate, selected, onSelect }) => { 
+      const update = (k, v) => onChange(index, k, v); 
+      
+      const posValue = `${entry.position || 0}_${entry.role || 0}`;
+
+      return html`<div class="book-entry ${collapsed ? 'collapsed' : ''}"><div class="entry-header" onClick=${onToggle}><span class="collapse-icon">▼</span>${onSelect && html`<input type="checkbox" checked=${!!selected} onClick=${e => e.stopPropagation()} onChange=${e => onSelect(index, e.target.checked)} style=${{ width: 20, height: 20, accentColor: 'var(--sky)', flexShrink: 0 }}/>`}<input value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder="名称"/><div class="entry-actions" onClick=${e => e.stopPropagation()}><button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button><button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button><button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button><${Toggle} label="启用" checked=${entry.enabled !== false} onChange=${v => update('enabled', v)}/><button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除条目">删除</button></div></div><div class="entry-body"><div class="entry-row"><label>🔑 关键词 (逗号分隔)</label><input class="input" value=${entry.keysText || ''} onChange=${e => update('keysText', e.target.value)}/></div><div class="entry-row"><label>📝 内容 <span class="expand-icon" onClick=${() => onExpandContent(index)} aria-label="展开编辑">⛶</span></label><${DebouncedTextarea} className="textarea" rows=${3} value=${entry.content || ''} onChange=${v => update('content', v)}/></div><div class="entry-grid"><div class="grid-field"><label>📌 位置</label><select value=${posValue} onChange=${e => { const [p, r] = e.target.value.split('_').map(Number); update('position', p); update('role', r); }}>${WB_POSITIONS.map(op => html`<option key=${`${op.pos}_${op.role}`} value=${`${op.pos}_${op.role}`}>${op.label}</option>`)}</select></div><div class="grid-field"><label>🐚 深度</label><input type="number" value=${entry.depth ?? 4} onChange=${e => update('depth', +e.target.value)}/></div><div class="grid-field"><label>⚙️ 顺序</label><input type="number" value=${entry.order ?? (entry.insertion_order ?? 100)} onChange=${e => { update('order', +e.target.value); update('insertion_order', +e.target.value); }}/></div><div class="grid-field"><label>🎲 触发%</label><input type="number" min="0" max="100" value=${entry.probability ?? 100} onChange=${e => update('probability', +e.target.value)}/></div><${Toggle} label="🔵常驻" checked=${!!entry.constant} onChange=${v => update('constant', v)}/></div></div></div>` 
+    });
 
     const WorldBookTab = memo(({ data, setData, onExpandEntry, onExportWB, addToast }) => {
-      const [search, setSearch] = useState(''); const [collapsed, setCollapsed] = useState({}); const [batchSel, setBatchSel] = useState(new Set()); const wbImportRef = useRef(); const entries = data.book_entries || []; const filtered = useMemo(() => entries.filter(e => !search || (e.name || '').toLowerCase().includes(search.toLowerCase()) || (e.keysText || '').toLowerCase().includes(search.toLowerCase()) || (e.content || '').toLowerCase().includes(search.toLowerCase())), [entries, search]); const updateEntry = (i, k, v) => { const a = [...entries]; a[i] = { ...a[i], [k]: v }; setData(p => ({ ...p, book_entries: a })) }; const moveEntry = (idx, dir) => { const a = [...entries]; const t = idx + dir; if (t < 0 || t >= a.length) return;[a[idx], a[t]] = [a[t], a[idx]]; setData(p => ({ ...p, book_entries: a })) }; const collapseAll = () => { const nc = {}; entries.forEach((_, i) => nc[i] = true); setCollapsed(nc) }; const expandAll = () => setCollapsed({}); const dupEntry = idx => { const e = entries[idx]; const ne = { ...shallowClone(e), name: (e.name || '') + '(副本)', _id: `wb_${Date.now()}` }; const a = [...entries]; a.splice(idx + 1, 0, ne); setData(p => ({ ...p, book_entries: a })); addToast('已复制', 'success') }; const batchToggle = val => { setData(p => ({ ...p, book_entries: (p.book_entries || []).map(e => ({ ...e, enabled: val })) })); addToast(val ? '全部启用' : '全部禁用', 'success') }; const toggleBatchSel = (idx, checked) => { setBatchSel(p => { const n = new Set(p); checked ? n.add(idx) : n.delete(idx); return n }) }; const batchDelete = () => { if (!batchSel.size) return; setData(p => ({ ...p, book_entries: entries.filter((_, i) => !batchSel.has(i)) })); addToast(`删除${batchSel.size}个`, 'success'); setBatchSel(new Set()) }; const importWB = async file => { try { const text = await file.text(); const wb = JSON.parse(text); if (!wb || typeof wb !== 'object') throw new Error('格式无效'); const newEntries = (wb.entries || []).map((e, i) => ({ name: e.comment || e.name || `条目${i + 1}`, keysText: Array.isArray(e.keys) ? e.keys.join(', ') : '', content: e.content || '', enabled: e.enabled !== false, insertion_order: e.insertion_order || 100, depth: e.depth || 4, constant: !!e.constant, _id: `wb_${Date.now()}_${i}` })); setData(p => ({ ...p, book_entries: [...(p.book_entries || []), ...newEntries], world_book_name: wb.name || p.world_book_name })); addToast(`已导入 ${newEntries.length} 个条目`, 'success') } catch (err) { addToast('导入失败: ' + err.message, 'error') } };
-      return html`<div>${!entries.length ? html`<div style=${{ textAlign: 'center', padding: 40, color: 'var(--text-soft)' }}><div style=${{ fontSize: 48, marginBottom: 12 }}>📚</div><p>暂无世界书条目</p><div style=${{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16 }}><button class="btn primary" style=${{ padding: '10px 20px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', keysText: '', content: '', enabled: true, insertion_order: 100, depth: 4, _id: `wb_${Date.now()}` }] }))}>➕ 新建</button><label class="btn secondary" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label></div></div>` : html`<><div class="book-toolbar"><div class="search-box"><input placeholder="搜索..." value=${search} onChange=${e => { startTransition(() => setSearch(e.target.value)) }}/></div><button class="btn primary" style=${{ padding: '10px 16px' }} onClick=${() => setData(p => ({ ...p, book_entries: [...(p.book_entries || []), { name: '新条目', keysText: '', content: '', enabled: true, insertion_order: 100, depth: 4, _id: `wb_${Date.now()}` }] }))}>➕</button><label class="btn secondary" style=${{ padding: '10px 16px', fontSize: 13, cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label><button class="btn success" style=${{ padding: '10px 16px', fontSize: 13 }} onClick=${onExportWB} disabled=${!entries.length}>📤 导出</button><button class="btn-sm lavender" onClick=${collapseAll} aria-label="全部折叠">▲</button><button class="btn-sm lavender" onClick=${expandAll} aria-label="全部展开">▼</button><button class="btn-sm mint" onClick=${() => batchToggle(true)}>全启</button><button class="btn-sm blush" onClick=${() => batchToggle(false)}>全禁</button></div>${batchSel.size > 0 && html`<div class="wb-batch-bar"><span>已选 ${batchSel.size} 个</span><button style=${{ background: 'var(--blush)', borderColor: 'var(--rose)', color: '#c9939c' }} onClick=${batchDelete}>🗑️ 批量删除</button><button style=${{ background: 'var(--cream)', borderColor: 'var(--cream-deep)', color: 'var(--text-soft)' }} onClick=${() => setBatchSel(new Set())}>取消选择</button><button style=${{ background: 'var(--sky-pale)', borderColor: 'var(--sky-soft)', color: 'var(--sky)' }} onClick=${() => setBatchSel(new Set(entries.map((_, i) => i)))}>全选</button></div>`}<div style=${{ fontSize: 12, color: 'var(--text-soft)', marginBottom: 12 }}>共 ${entries.length} 个${search ? `，匹配 ${filtered.length}` : ''}</div>${filtered.map(e => { const realIdx = entries.indexOf(e); return html`<${BookEntry} key=${e._id || realIdx} entry=${e} index=${realIdx} onChange=${updateEntry} onRemove=${idx => setData(p => ({ ...p, book_entries: entries.filter((_, j) => j !== idx) }))} collapsed=${collapsed[realIdx]} onToggle=${() => setCollapsed(p => ({ ...p, [realIdx]: !p[realIdx] }))} onExpandContent=${onExpandEntry} onMoveUp=${() => moveEntry(realIdx, -1)} onMoveDown=${() => moveEntry(realIdx, 1)} isFirst=${realIdx === 0} isLast=${realIdx === entries.length - 1} onDuplicate=${() => dupEntry(realIdx)} selected=${batchSel.has(realIdx)} onSelect=${toggleBatchSel}/>` })}</>`}</div>`
+      const [search, setSearch] = useState(''); const [collapsed, setCollapsed] = useState({}); const [batchSel, setBatchSel] = useState(new Set()); const wbImportRef = useRef(); const entries = data.book_entries || []; const filtered = useMemo(() => entries.filter(e => !search || (e.name || '').toLowerCase().includes(search.toLowerCase()) || (e.keysText || '').toLowerCase().includes(search.toLowerCase()) || (e.content || '').toLowerCase().includes(search.toLowerCase())), [entries, search]); const updateEntry = (i, k, v) => { const a = [...entries]; a[i] = { ...a[i], [k]: v }; setData(p => ({ ...p, book_entries: a })) }; const moveEntry = (idx, dir) => { const a = [...entries]; const t = idx + dir; if (t < 0 || t >= a.length) return;[a[idx], a[t]] = [a[t], a[idx]]; setData(p => ({ ...p, book_entries: a })) }; const collapseAll = () => { const nc = {}; entries.forEach((_, i) => nc[i] = true); setCollapsed(nc) }; const expandAll = () => setCollapsed({}); const dupEntry = idx => { const e = entries[idx]; const ne = { ...shallowClone(e), name: (e.name || '') + '(副本)', _id: `wb_${Date.now()}` }; const a = [...entries]; a.splice(idx + 1, 0, ne); setData(p => ({ ...p, book_entries: a })); addToast('已复制', 'success') }; const batchToggle = val => { setData(p => ({ ...p, book_entries: (p.book_entries || []).map(e => ({ ...e, enabled: val })) })); addToast(val ? '全部启用' : '全部禁用', 'success') }; const toggleBatchSel = (idx, checked) => { setBatchSel(p => { const n = new Set(p); checked ? n.add(idx) : n.delete(idx); return n }) }; const batchDelete = () => { if (!batchSel.size) return; setData(p => ({ ...p, book_entries: entries.filter((_, i) => !batchSel.has(i)) })); addToast(`删除${batchSel.size}个`, 'success'); setBatchSel(new Set()) }; 
+      
+      const importWB = async file => { 
+        try { 
+          const text = await file.text(); const wb = JSON.parse(text); if (!wb || typeof wb !== 'object') throw new Error('格式无效'); 
+          // U2: Compatible with Dict-based entries on import
+          const entriesArr = Array.isArray(wb.entries) ? wb.entries : Object.values(wb.entries || {});
+          
+          const newEntries = entriesArr.map((e, i) => ({ 
+            name: e.comment || e.name || `条目${i + 1}`, 
+            keysText: Array.isArray(e.keys) ? e.keys.join(', ') : (e.key ? e.key.join(', ') : ''), 
+            content: e.content || '', 
+            enabled: e.disable ? false : (e.enabled !== false), 
+            insertion_order: e.order ?? (e.insertion_order ?? 100), 
+            order: e.order ?? (e.insertion_order ?? 100),
+            depth: e.depth ?? 4, 
+            constant: !!e.constant, 
+            position: e.position ?? 0,
+            role: e.role ?? 0,
+            probability: e.probability ?? 100,
+            _id: `wb_${Date.now()}_${i}` 
+          })); 
+          setData(p => ({ ...p, book_entries: [...(p.book_entries || []), ...newEntries], world_book_name: wb.name || p.world_book_name })); addToast(`已导入 ${newEntries.length} 个条目`, 'success') 
+        } catch (err) { 
+          addToast('导入失败: ' + err.message, 'error') 
+        } 
+      };
+
+      const sortEntries = () => {
+        const sorted = [...entries].sort((a,b) => {
+          if (a.enabled !== b.enabled) return a.enabled ? -1 : 1;
+          if (a.constant !== b.constant) return a.constant ? -1 : 1;
+          const orderA = a.order ?? (a.insertion_order ?? 100);
+          const orderB = b.order ?? (b.insertion_order ?? 100);
+          if (orderA !== orderB) return orderB - orderA; // Descending order like luck
+          return 0;
+        });
+        setData(p => ({ ...p, book_entries: sorted }));
+        addToast('已按优先级重新排序', 'success');
+      };
+
+      return html`<div>${!entries.length ? html`<div style=${{ textAlign: 'center', padding: 40, color: 'var(--text-soft)' }}><div style=${{ fontSize: 48, marginBottom: 12 }}>📚</div><p>暂无世界书条目</p><div style=${{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16 }}><button class="btn primary" style=${{ padding: '10px 20px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', keysText: '', content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: 0, probability: 100, _id: `wb_${Date.now()}` }] }))}>➕ 新建</button><label class="btn secondary" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label></div></div>` : html`<><div class="book-toolbar"><div class="search-box"><input placeholder="搜索..." value=${search} onChange=${e => { startTransition(() => setSearch(e.target.value)) }}/></div><button class="btn primary" style=${{ padding: '10px 16px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', keysText: '', content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: 0, probability: 100, _id: `wb_${Date.now()}` }, ...(p.book_entries || [])] }))}>➕</button><label class="btn secondary" style=${{ padding: '10px 16px', fontSize: 13, cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label><button class="btn success" style=${{ padding: '10px 16px', fontSize: 13 }} onClick=${onExportWB} disabled=${!entries.length}>📤 导出</button><button class="btn-sm lavender" onClick=${collapseAll} aria-label="全部折叠">▲</button><button class="btn-sm lavender" onClick=${expandAll} aria-label="全部展开">▼</button><button class="btn-sm mint" onClick=${() => batchToggle(true)}>全启</button><button class="btn-sm blush" onClick=${() => batchToggle(false)}>全禁</button><button class="btn-sm orange" onClick=${sortEntries}>🔄 优先级排序</button></div>${batchSel.size > 0 && html`<div class="wb-batch-bar"><span>已选 ${batchSel.size} 个</span><button style=${{ background: 'var(--blush)', borderColor: 'var(--rose)', color: '#c9939c' }} onClick=${batchDelete}>🗑️ 批量删除</button><button style=${{ background: 'var(--cream)', borderColor: 'var(--cream-deep)', color: 'var(--text-soft)' }} onClick=${() => setBatchSel(new Set())}>取消选择</button><button style=${{ background: 'var(--sky-pale)', borderColor: 'var(--sky-soft)', color: 'var(--sky)' }} onClick=${() => setBatchSel(new Set(entries.map((_, i) => i)))}>全选</button></div>`}<div style=${{ fontSize: 12, color: 'var(--text-soft)', marginBottom: 12 }}>共 ${entries.length} 个${search ? `，匹配 ${filtered.length}` : ''}</div>${filtered.map(e => { const realIdx = entries.indexOf(e); return html`<${BookEntry} key=${e._id || realIdx} entry=${e} index=${realIdx} onChange=${updateEntry} onRemove=${idx => setData(p => ({ ...p, book_entries: entries.filter((_, j) => j !== idx) }))} collapsed=${collapsed[realIdx]} onToggle=${() => setCollapsed(p => ({ ...p, [realIdx]: !p[realIdx] }))} onExpandContent=${onExpandEntry} onMoveUp=${() => moveEntry(realIdx, -1)} onMoveDown=${() => moveEntry(realIdx, 1)} isFirst=${realIdx === 0} isLast=${realIdx === entries.length - 1} onDuplicate=${() => dupEntry(realIdx)} selected=${batchSel.has(realIdx)} onSelect=${toggleBatchSel}/>` })}</>`}</div>`
     });
 
     /* ═══════════ 批量翻译弹窗 ═══════════ */
@@ -3635,7 +3691,7 @@ ${expandMatch && html`<${ReplaceExpandModal} match=${expandMatch} checked=${!!ch
     /* ═══════════ P-2: 拆分 Header 为独立组件 ═══════════ */
     const HeaderBar = memo(({ hasApiKey, modelDropRef, modelDropOpen, setModelDropOpen, model, setModel, modelFilter, setModelFilter, filteredNavModels, navModels, kbFocusIdx, handleModelDropKeyDown, closeModelDrop, refreshModels, openModal, toggleTheme, theme, cycleFontSize, fontSize, setMobileMenuOpen, isMobile, sync }) => {
       return html`<header class="header">
-<div class="header-title"><span class="cat-icon" aria-hidden="true">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">☁️ 云同步版</span></div>
+<div class="header-title"><span class="cat-icon" aria-hidden="true">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">${html`<${GHLogo}/>`} GitHub</span></div>
 <div class="header-actions">
 
 ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="header-btn conn-badge" style=${{ padding: '6px 12px', fontSize: 11, cursor: 'pointer', background: 'rgba(124,201,184,.4)', borderColor: 'rgba(124,201,184,.6)' }} onClick=${() => openModal(MK.SETTINGS)} aria-label="API已连接">🟢 已连接</span>` : html`<span class="header-btn conn-badge" style=${{ padding: '6px 12px', fontSize: 11, cursor: 'pointer', background: 'rgba(201,147,156,.3)', borderColor: 'rgba(201,147,156,.5)' }} onClick=${() => openModal(MK.SETTINGS)} aria-label="API未连接 — 点击设置">🔴 未连接</span>`}
@@ -3645,7 +3701,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 <button class="header-btn desktop-only warning" onClick=${() => openModal(MK.JB)} title="破限设置" aria-label="破限设置">🔓<span class="label">破限</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.GUIDE)} title="翻译指导" aria-label="翻译指导">📖<span class="label">指导</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.SETTINGS)} title="API设置" aria-label="API设置">⚙️<span class="label">API</span></button>
-<button class=${'header-btn desktop-only sync '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>☁️<span class="label">同步</span></button>
+<button class=${'header-btn desktop-only github '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>${html`<${GHLogo}/>`}<span class="label">同步</span></button>
 <button class="font-size-btn desktop-only" onClick=${cycleFontSize} title=${'字体：' + FONT_LABELS[fontSize]} aria-label=${'切换字体大小，当前' + FONT_LABELS[fontSize]}>${FONT_ICONS[fontSize]} ${FONT_LABELS[fontSize]}</button>
 <button class="header-btn desktop-only" onClick=${toggleTheme} title=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'} aria-label=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'}>${theme === 'light' ? '🌙' : '☀️'}</button>
 <button class="header-btn hamburger-btn" onClick=${() => setMobileMenuOpen(true)} aria-label="打开菜单">☰</button>
@@ -3662,7 +3718,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       const getZ = useModalZ();
       const isMobile = useIsMobile();
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const sync=uCFS(addToast);
+      const sync=uGHS();
       const [fileName, setFileName] = useState('');
       const [imgUrl, setImgUrl] = useState('');
       const imgDataRef = useRef(''); const giRef = useRef(null);
@@ -3738,7 +3794,33 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 
       const clearContent = useCallback(async () => { const hasContent = data && (data.name || data.description || data.first_message); if (hasContent) { const ok = await askConfirm('确定清空所有内容？可撤销。', { title: '清空内容', icon: '🗑️', confirmText: '清空', dangerBtn: true }); if (!ok) return } setData(mkEmpty()); clearImgState(); setCardDef({ spec: 'chara_card_v3' }); setFileName(''); setOutlineTextRaw(''); otRef.current = ''; setOTH([]); setOTF([]); addToast('已清空', 'success') }, [setData, addToast, data, askConfirm, clearImgState]);
 
-      const parseCardData = json => { const d = deepClone(json.data || json); d.first_message = d.first_mes || d.first_message || ''; d.message_example = d.mes_example || d.message_example || ''; d.alternate_greetings = d.alternate_greetings || []; d.tags = d.tags || []; const b = d.character_book || {}; d.book_entries = (b.entries || []).map((e, i) => ({ ...e, keysText: Array.isArray(e.keys) ? e.keys.join(', ') : '', name: e.comment || e.name || `条目${i + 1}`, _id: `wb_${Date.now()}_${i}` })); d.world_book_name = b.name || ''; return d };
+      const parseCardData = json => { 
+        const d = deepClone(json.data || json); 
+        d.first_message = d.first_mes || d.first_message || ''; 
+        d.message_example = d.mes_example || d.message_example || ''; 
+        d.alternate_greetings = d.alternate_greetings || []; 
+        d.tags = d.tags || []; 
+        const b = d.character_book || {}; 
+        
+        // U3: Parse dict-based entries properly from JSON into our array format
+        const entriesArr = Array.isArray(b.entries) ? b.entries : Object.values(b.entries || {});
+        
+        d.book_entries = entriesArr.map((e, i) => ({ 
+          ...e, 
+          keysText: Array.isArray(e.keys) ? e.keys.join(', ') : (e.key ? e.key.join(', ') : ''), 
+          name: e.comment || e.name || `条目${i + 1}`, 
+          enabled: e.disable ? false : (e.enabled !== false),
+          order: e.order ?? (e.insertion_order ?? 100),
+          insertion_order: e.order ?? (e.insertion_order ?? 100),
+          depth: e.depth ?? 4,
+          position: e.position ?? 0,
+          role: e.role ?? 0,
+          probability: e.probability ?? 100,
+          _id: `wb_${Date.now()}_${i}` 
+        })); 
+        d.world_book_name = b.name || ''; 
+        return d;
+      };
 
       const processJSON = useCallback(async (file) => { const j = JSON.parse(await file.text()); if (!validateCardData(j.data || j)) { addToast('文件格式无效或不是角色卡', 'error'); return } setCardDef(j); const parsed = parseCardData(j); resetData(parsed); const name = (j.data || j).name || file.name; addHist({ name, type: 'json' }); await saveCard(name, parsed, false); addToast('OK', 'success') }, [resetData, addHist, saveCard, addToast]);
 
@@ -3777,13 +3859,79 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 
       const doImgGen = useCallback(async () => { const gi = giRef.current; if (!gi) { addToast('请先上传图片', 'warning'); return } if (!hasApiKey) { addToast('请先配置API', 'warning'); return } setImgGen(true); try { const prompt = `请观察图片角色，生成角色卡大纲。格式：\n\n【描述】\n（外貌服饰）\n\n【性格】\n（性格）\n\n【场景】\n（场景）\n\n【对话示例】\n<START>\n{{user}}: ...\n{{char}}: ...`; const r = await callAPI([prompt, { inlineData: gi }], '你是角色卡设计师。', { providers, providerIdx, model, jailbreakText: '', translationGuide: '' }); setOutlineText(r.trim()); addToast('完成', 'success') } catch (e) { addToast('失败: ' + e.message, 'error') } finally { setImgGen(false) } }, [providers, providerIdx, model, addToast, setOutlineText, hasApiKey]);
 
-      const exportWB = useCallback(() => { if (!data?.book_entries?.length) { addToast('世界书为空', 'warning'); return } const wb = { name: data.world_book_name || data.name || 'world_book', entries: data.book_entries.map((e, i) => ({ id: i, keys: (e.keysText || '').split(',').map(k => k.trim()).filter(Boolean), secondary_keys: [], comment: e.name || '', content: e.content || '', constant: !!e.constant, selective: true, insertion_order: e.insertion_order || 100, enabled: !!e.enabled, position: 'before_char', depth: e.depth || 4 })) }; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(wb, null, 2)], { type: 'application/json' })); a.download = `${wb.name}.json`; a.click(); URL.revokeObjectURL(a.href); addToast('已导出', 'success') }, [data, addToast]);
+      const formatWorldBookData = useCallback(() => {
+        if (!data?.book_entries?.length) return null;
+        
+        // 转换我们内部的数据结构为标准的酒馆世界书字典结构
+        const entriesObj = {};
+        data.book_entries.forEach((e, i) => {
+          // 使用原有的 _id 或生成新的，确保作为对象的键
+          const uid = e._id ? e._id.replace('wb_', '') : Date.now() + i; 
+          entriesObj[uid] = {
+            uid: uid,
+            key: (e.keysText || '').split(',').map(k => k.trim()).filter(Boolean),
+            keysecondary: [], // 默认空
+            comment: e.name || '',
+            content: e.content || '',
+            constant: !!e.constant,
+            selective: true,
+            insertion_order: e.order ?? (e.insertion_order ?? 100),
+            order: e.order ?? (e.insertion_order ?? 100), // 添加 order
+            disable: !(e.enabled !== false), // 转换 enabled 为 disable
+            position: e.position ?? 0,
+            role: e.role ?? 0,
+            depth: e.depth ?? 4,
+            probability: e.probability ?? 100,
+            useProbability: true
+          };
+        });
+
+        return { 
+          name: data.world_book_name || data.name || 'world_book', 
+          entries: entriesObj,
+          extensions: {} 
+        };
+      }, [data]);
+
+      const exportWB = useCallback(() => { 
+        const wb = formatWorldBookData();
+        if (!wb) { addToast('世界书为空', 'warning'); return } 
+        
+        const a = document.createElement('a'); 
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(wb, null, 2)], { type: 'application/json' })); 
+        a.download = `${wb.name}.json`; 
+        a.click(); 
+        URL.revokeObjectURL(a.href); 
+        addToast('已导出', 'success') 
+      }, [formatWorldBookData, addToast]);
 
       /* B-5: Strip existing chunks before export */
-      const exportPNG = useCallback(async () => { if (!data) return false; const imgData = imgDataRef.current; if (!imgData) { addToast('无图片，导出JSON', 'warning'); exportJSON(); return true } try { const bytes = await new Promise((res, rej) => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; c.getContext('2d').drawImage(img, 0, 0); res(Uint8Array.from(atob(c.toDataURL('image/png').split(',')[1]), ch => ch.charCodeAt(0))) }; img.onerror = rej; img.src = imgData }); const ed = { ...data }; if (data.first_message) ed.first_mes = data.first_message; if (data.message_example) ed.mes_example = data.message_example; if (data.book_entries?.length) ed.character_book = { name: data.world_book_name || '', entries: data.book_entries.map(e => ({ ...e, comment: e.name, keys: (e.keysText || '').split(',').map(k => k.trim()).filter(Boolean) })) }; const v2 = base64Encode(JSON.stringify({ spec: 'chara_card_v2', data: ed })); const v3 = base64Encode(JSON.stringify({ spec: 'chara_card_v3', spec_version: '3.0', data: ed })); const stripped = stripPNGChunks(bytes, ['chara', 'ccv3']); const iend = stripped.length - 12; const c1 = makeChunk('chara', v2), c2 = makeChunk('ccv3', v3); const out = new Uint8Array(stripped.length + c1.length + c2.length); out.set(stripped.slice(0, iend)); out.set(c1, iend); out.set(c2, iend + c1.length); out.set(stripped.slice(iend), iend + c1.length + c2.length); const exportName = (data.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; downloadBlob(new Blob([out], { type: 'image/png' }), `${exportName}.png`); /* U-5: Enhanced export feedback */ addToast(`导出成功 "${exportName}.png" (${(out.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000); return true } catch { return false } }, [data, addToast, fileName]);
+      const exportPNG = useCallback(async () => { if (!data) return false; const imgData = imgDataRef.current; if (!imgData) { addToast('无图片，导出JSON', 'warning'); exportJSON(); return true } try { const bytes = await new Promise((res, rej) => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; c.getContext('2d').drawImage(img, 0, 0); res(Uint8Array.from(atob(c.toDataURL('image/png').split(',')[1]), ch => ch.charCodeAt(0))) }; img.onerror = rej; img.src = imgData }); const ed = { ...data }; if (data.first_message) ed.first_mes = data.first_message; if (data.message_example) ed.mes_example = data.message_example; 
+      
+      if (data.book_entries?.length) {
+        // 使用标准的字典格式导出 PNG 中的世界书
+        const wb = formatWorldBookData();
+        if(wb) ed.character_book = wb;
+      }
+      
+      const v2 = base64Encode(JSON.stringify({ spec: 'chara_card_v2', data: ed })); const v3 = base64Encode(JSON.stringify({ spec: 'chara_card_v3', spec_version: '3.0', data: ed })); const stripped = stripPNGChunks(bytes, ['chara', 'ccv3']); const iend = stripped.length - 12; const c1 = makeChunk('chara', v2), c2 = makeChunk('ccv3', v3); const out = new Uint8Array(stripped.length + c1.length + c2.length); out.set(stripped.slice(0, iend)); out.set(c1, iend); out.set(c2, iend + c1.length); out.set(stripped.slice(iend), iend + c1.length + c2.length); const exportName = (data.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; downloadBlob(new Blob([out], { type: 'image/png' }), `${exportName}.png`); /* U-5: Enhanced export feedback */ addToast(`导出成功 "${exportName}.png" (${(out.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000); return true } catch { return false } }, [data, addToast, fileName, formatWorldBookData]);
 
 
-      const exportJSON = useCallback(() => { if (!data) return; const str = JSON.stringify(data, null, 2); const exportName = (data.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; downloadBlob(new Blob([str], { type: 'application/json' }), `${exportName}.json`); addToast(`导出成功 "${exportName}.json" (${(str.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000) }, [data, addToast, fileName]);
+      const exportJSON = useCallback(() => { 
+        if (!data) return; 
+        const ed = { ...data };
+        
+        // 使用标准的字典格式导出 JSON
+        if (ed.book_entries?.length) {
+          const wb = formatWorldBookData();
+          if(wb) ed.character_book = wb;
+        }
+        
+        const str = JSON.stringify(ed, null, 2); 
+        const exportName = (ed.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; 
+        downloadBlob(new Blob([str], { type: 'application/json' }), `${exportName}.json`); 
+        addToast(`导出成功 "${exportName}.json" (${(str.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000) 
+      }, [data, addToast, fileName, formatWorldBookData]);
 
       const handleExport = useCallback(async type => { openModal(MK.EXP, 0); setLoading('导出~'); try { if (type === 'png') await exportPNG(); else if (type === 'json') exportJSON(); else { await exportPNG(); exportJSON() } } catch (e) { addToast(e.message, 'error') } finally { setLoading('') } }, [exportPNG, exportJSON, addToast, openModal]);
 
@@ -3858,7 +4006,7 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
   { divider: true },
   { icon: '⚙️', label: 'API 设置', desc: '配置模型和密钥', action: () => openModal(MK.SETTINGS) },
   { icon: '🔄', label: '刷新模型列表', desc: model ? `当前: ${model}` : '获取最新模型', action: refreshModels },
-  { icon: '☁️', label: '云同步', desc: '跨设备同步', action: () => openModal('sync') },
+  { icon: '🐙', label: 'GitHub同步', desc: 'Gist同步', action: () => openModal('sync') },
   { divider: true },
   { icon: FONT_ICONS[fontSize], label: '字体：' + FONT_LABELS[fontSize], desc: '小 → 中 → 大 循环切换', action: cycleFontSize },
   { icon: theme === 'light' ? '🌙' : '☀️', label: theme === 'light' ? '暗色模式' : '亮色模式', action: toggleTheme },
@@ -3973,7 +4121,7 @@ ${!!modals[MK.CMP] && html`<${TranslationModal}
   onRestore=${() => setTrMin(false)}
 />`}
 ${fullEditor.show && html`<${Modal} show onClose=${() => setFullEditor(p => ({ ...p, show: false }))} title=${fullEditor.title} fullscreen footer=${html`<><button class="btn primary" onClick=${handleFESave}>💾</button><button class="btn secondary" onClick=${() => setFullEditor(p => ({ ...p, show: false }))}>取消</button></>`}><div class="full-editor-stats"><span>📝 ${charCount(fullEditor.value)} 字</span><span>📊 ~${estimateTokens(fullEditor.value)} tokens</span>${estimateTokens(fullEditor.value) > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠️ 内容较长</span>`}<span style=${{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-soft)' }}>💡 Ctrl+S 保存</span></div><textarea class="full-editor-textarea" value=${fullEditor.value} onChange=${e => setFullEditor(p => ({ ...p, value: e.target.value }))} onKeyDown=${e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); handleFESave() } }}/><//>`}
-${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync=${sync} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} askConfirm=${askConfirm}/>`}
+${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync=${sync} pv=${providers} pi=${providerIdx} cfg=${config} jL=${jbList} pL=${promptList} gr=${guideRows} gL=${guideList} onApply=${handleApplyCloud} addToast=${addToast}/>`}
 ${!!modals[MK.GEN] && html`<${GenModal} show onClose=${() => openModal(MK.GEN, 0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
 ${!!modals[MK.GREET_GEN] && html`<${GreetGenModal} show onClose=${() => openModal(MK.GREET_GEN, 0)} data=${data} onApply=${handleGreetApply} pv=${providers} pi=${providerIdx} model=${model}/>`}
 ${!!modals[MK.SF_PREVIEW] && html`<${SmartFillPreviewModal} show onClose=${() => openModal(MK.SF_PREVIEW, 0)} parsed=${sfPreviewData} currentData=${data || {}} onConfirm=${confirmSmartFill}/>`}
