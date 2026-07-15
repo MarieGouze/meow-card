@@ -16,7 +16,7 @@
   <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"
     onerror="document.getElementById('cdn-error').style.display='flex'"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"
-    onerror="document.getElementById('cdn-error').style.display='flex'"></script>
+    onerror="document.getElementById('cdn-error').style.display='flex'"></script> 
   <link rel="modulepreload" href="https://esm.sh/htm@3.1.1">
   <script
     type="importmap">{"imports":{"htm":"https://esm.sh/htm@3.1.1","@google/generative-ai":"https://esm.run/@google/generative-ai"}}</script>
@@ -3474,36 +3474,61 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
       
       const posValue = `${entry.position || 0}_${entry.role || 0}`;
 
-      return html`<div class="book-entry ${collapsed ? 'collapsed' : ''}"><div class="entry-header" onClick=${onToggle}><span class="collapse-icon">▼</span>${onSelect && html`<input type="checkbox" checked=${!!selected} onClick=${e => e.stopPropagation()} onChange=${e => onSelect(index, e.target.checked)} style=${{ width: 20, height: 20, accentColor: 'var(--sky)', flexShrink: 0 }}/>`}<input value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder="名称"/><div class="entry-actions" onClick=${e => e.stopPropagation()}><button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button><button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button><button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button><${Toggle} label="启用" checked=${entry.enabled !== false} onChange=${v => update('enabled', v)}/><button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除条目">删除</button></div></div><div class="entry-body"><div class="entry-row"><label>🔑 关键词 (逗号分隔)</label><input class="input" value=${entry.keysText || ''} onChange=${e => update('keysText', e.target.value)}/></div><div class="entry-row"><label>📝 内容 <span class="expand-icon" onClick=${() => onExpandContent(index)} aria-label="展开编辑">⛶</span></label><${DebouncedTextarea} className="textarea" rows=${3} value=${entry.content || ''} onChange=${v => update('content', v)}/></div><div class="entry-grid"><div class="grid-field"><label>📌 位置</label><select value=${posValue} onChange=${e => { const [p, r] = e.target.value.split('_').map(Number); update('position', p); update('role', r); }}>${WB_POSITIONS.map(op => html`<option key=${`${op.pos}_${op.role}`} value=${`${op.pos}_${op.role}`}>${op.label}</option>`)}</select></div><div class="grid-field"><label>🐚 深度</label><input type="number" value=${entry.depth ?? 4} onChange=${e => update('depth', +e.target.value)}/></div><div class="grid-field"><label>⚙️ 顺序</label><input type="number" value=${entry.order ?? (entry.insertion_order ?? 100)} onChange=${e => { update('order', +e.target.value); update('insertion_order', +e.target.value); }}/></div><div class="grid-field"><label>🎲 触发%</label><input type="number" min="0" max="100" value=${entry.probability ?? 100} onChange=${e => update('probability', +e.target.value)}/></div><${Toggle} label="🔵常驻" checked=${!!entry.constant} onChange=${v => update('constant', v)}/></div></div></div>` 
+      return html`<div class="book-entry ${collapsed ? 'collapsed' : ''}"><div class="entry-header" onClick=${onToggle}><span class="collapse-icon">▼</span>${onSelect && html`<input type="checkbox" checked=${!!selected} onClick=${e => e.stopPropagation()} onChange=${e => onSelect(index, e.target.checked)} style=${{ width: 20, height: 20, accentColor: 'var(--sky)', flexShrink: 0 }}/>`}<input value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder="名称"/><div class="entry-actions" onClick=${e => e.stopPropagation()}><button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button><button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button><button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button><${Toggle} label="启用" checked=${entry.enabled !== false} onChange=${v => update('enabled', v)}/><button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除条目">删除</button></div></div><div class="entry-body"><div class="entry-row">
+  <label style=${{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '8px' }}>
+    <span>🔑 关键词 (回车或英文逗号自动生成 Tag)</span>
+    <button class="btn-sm mint" title="一键将带有中文逗号、顿号的混乱关键词修复为独立的Tag" onClick=${e => {
+      e.stopPropagation();
+      const rawText = Array.isArray(entry.key) ? entry.key.join(',') : '';
+      const fixed = rawText.split(/[,，、|]+/).map(t => t.trim()).filter(Boolean);
+      update('key', fixed);
+    }}>🛠️ 一键修复格式</button>
+  </label>
+  <${TagChips} 
+    tags=${Array.isArray(entry.key) ? entry.key : []} 
+    onChange=${arr => update('key', arr)} 
+  />
+</div><div class="entry-row"><label>📝 内容 <span class="expand-icon" onClick=${() => onExpandContent(index)} aria-label="展开编辑">⛶</span></label><${DebouncedTextarea} className="textarea" rows=${3} value=${entry.content || ''} onChange=${v => update('content', v)}/></div><div class="entry-grid"><div class="grid-field"><label>📌 位置</label><select value=${posValue} onChange=${e => { const [p, r] = e.target.value.split('_').map(Number); update('position', p); update('role', r); }}>${WB_POSITIONS.map(op => html`<option key=${`${op.pos}_${op.role}`} value=${`${op.pos}_${op.role}`}>${op.label}</option>`)}</select></div><div class="grid-field"><label>🐚 深度</label><input type="number" value=${entry.depth ?? 4} onChange=${e => update('depth', +e.target.value)}/></div><div class="grid-field"><label>⚙️ 顺序</label><input type="number" value=${entry.order ?? (entry.insertion_order ?? 100)} onChange=${e => { update('order', +e.target.value); update('insertion_order', +e.target.value); }}/></div><div class="grid-field"><label>🎲 触发%</label><input type="number" min="0" max="100" value=${entry.probability ?? 100} onChange=${e => update('probability', +e.target.value)}/></div><${Toggle} label="🔵常驻" checked=${!!entry.constant} onChange=${v => update('constant', v)}/></div></div></div>` 
     });
 
     const WorldBookTab = memo(({ data, setData, onExpandEntry, onExportWB, addToast }) => {
-      const [search, setSearch] = useState(''); const [collapsed, setCollapsed] = useState({}); const [batchSel, setBatchSel] = useState(new Set()); const wbImportRef = useRef(); const entries = data.book_entries || []; const filtered = useMemo(() => entries.filter(e => !search || (e.name || '').toLowerCase().includes(search.toLowerCase()) || (e.keysText || '').toLowerCase().includes(search.toLowerCase()) || (e.content || '').toLowerCase().includes(search.toLowerCase())), [entries, search]); const updateEntry = (i, k, v) => { const a = [...entries]; a[i] = { ...a[i], [k]: v }; setData(p => ({ ...p, book_entries: a })) }; const moveEntry = (idx, dir) => { const a = [...entries]; const t = idx + dir; if (t < 0 || t >= a.length) return;[a[idx], a[t]] = [a[t], a[idx]]; setData(p => ({ ...p, book_entries: a })) }; const collapseAll = () => { const nc = {}; entries.forEach((_, i) => nc[i] = true); setCollapsed(nc) }; const expandAll = () => setCollapsed({}); const dupEntry = idx => { const e = entries[idx]; const ne = { ...shallowClone(e), name: (e.name || '') + '(副本)', _id: `wb_${Date.now()}` }; const a = [...entries]; a.splice(idx + 1, 0, ne); setData(p => ({ ...p, book_entries: a })); addToast('已复制', 'success') }; const batchToggle = val => { setData(p => ({ ...p, book_entries: (p.book_entries || []).map(e => ({ ...e, enabled: val })) })); addToast(val ? '全部启用' : '全部禁用', 'success') }; const toggleBatchSel = (idx, checked) => { setBatchSel(p => { const n = new Set(p); checked ? n.add(idx) : n.delete(idx); return n }) }; const batchDelete = () => { if (!batchSel.size) return; setData(p => ({ ...p, book_entries: entries.filter((_, i) => !batchSel.has(i)) })); addToast(`删除${batchSel.size}个`, 'success'); setBatchSel(new Set()) }; 
+      const [search, setSearch] = useState(''); const [collapsed, setCollapsed] = useState({}); const [batchSel, setBatchSel] = useState(new Set()); const wbImportRef = useRef(); const entries = data.book_entries || []; const filtered = useMemo(() => entries.filter(e => !search || (e.name || '').toLowerCase().includes(search.toLowerCase()) || (Array.isArray(e.key) ? e.key.join(' ') : '').toLowerCase().includes(search.toLowerCase()) || (e.content || '').toLowerCase().includes(search.toLowerCase())), [entries, search]); const updateEntry = (i, k, v) => { const a = [...entries]; a[i] = { ...a[i], [k]: v }; setData(p => ({ ...p, book_entries: a })) }; const moveEntry = (idx, dir) => { const a = [...entries]; const t = idx + dir; if (t < 0 || t >= a.length) return;[a[idx], a[t]] = [a[t], a[idx]]; setData(p => ({ ...p, book_entries: a })) }; const collapseAll = () => { const nc = {}; entries.forEach((_, i) => nc[i] = true); setCollapsed(nc) }; const expandAll = () => setCollapsed({}); const dupEntry = idx => { const e = entries[idx]; const ne = { ...shallowClone(e), name: (e.name || '') + '(副本)', _id: `wb_${Date.now()}` }; const a = [...entries]; a.splice(idx + 1, 0, ne); setData(p => ({ ...p, book_entries: a })); addToast('已复制', 'success') }; const batchToggle = val => { setData(p => ({ ...p, book_entries: (p.book_entries || []).map(e => ({ ...e, enabled: val })) })); addToast(val ? '全部启用' : '全部禁用', 'success') }; const toggleBatchSel = (idx, checked) => { setBatchSel(p => { const n = new Set(p); checked ? n.add(idx) : n.delete(idx); return n }) }; const batchDelete = () => { if (!batchSel.size) return; setData(p => ({ ...p, book_entries: entries.filter((_, i) => !batchSel.has(i)) })); addToast(`删除${batchSel.size}个`, 'success'); setBatchSel(new Set()) }; 
       
-      const importWB = async file => { 
-        try { 
-          const text = await file.text(); const wb = JSON.parse(text); if (!wb || typeof wb !== 'object') throw new Error('格式无效'); 
-          // U2: Compatible with Dict-based entries on import
-          const entriesArr = Array.isArray(wb.entries) ? wb.entries : Object.values(wb.entries || {});
-          
-          const newEntries = entriesArr.map((e, i) => ({ 
-            name: e.comment || e.name || `条目${i + 1}`, 
-            keysText: Array.isArray(e.keys) ? e.keys.join(', ') : (e.key ? e.key.join(', ') : ''), 
-            content: e.content || '', 
-            enabled: e.disable ? false : (e.enabled !== false), 
-            insertion_order: e.order ?? (e.insertion_order ?? 100), 
+const importWB = async file => {
+        try {
+          const text = await file.text(); const wb = JSON.parse(text); if (!wb || typeof wb !== 'object') throw new Error('格式无效');
+          // U2: 借鉴 luck 编辑器，导入独立世界书时也要保留原有的 uid
+          const entriesArr = Array.isArray(wb.entries) ? wb.entries : Object.entries(wb.entries || {}).map(([k, v]) => ({ ...v, uid: v.uid ?? parseInt(k) }));
+
+          const newEntries = entriesArr.map((e, i) => ({
+            ...e, // 完美保留所有原生和插件的隐藏字段
+            uid: e.uid ?? parseInt(i),
+            name: e.comment || e.name || `条目${i + 1}`,
+            // 完美对齐 Luck：原生保留数组格式，彻底防止带有逗号的正则关键词被强制切碎
+            key: Array.isArray(e.keys) ? e.keys : (Array.isArray(e.key) ? e.key : (typeof e.key === 'string' ? [e.key].filter(Boolean) : [])),
+            content: e.content || '',
+            enabled: e.disable ? false : (e.enabled !== false),
+            insertion_order: e.order ?? (e.insertion_order ?? 100),
             order: e.order ?? (e.insertion_order ?? 100),
-            depth: e.depth ?? 4, 
-            constant: !!e.constant, 
+            depth: e.depth ?? 4,
+            constant: !!e.constant,
             position: e.position ?? 0,
-            role: e.role ?? 0,
+            role: (e.position === 4) ? (e.role ?? 0) : null,
             probability: e.probability ?? 100,
-            _id: `wb_${Date.now()}_${i}` 
+            _id: `wb_${Date.now()}_${i}`
+          }));
+          
+          // 借鉴 Luck 编辑器逻辑：如果世界书内部没有设定 name，则抓取外部导入文件的文件名（剔除.json后缀）作为它的名字
+          setData(p => ({ 
+            ...p, 
+            book_entries: [...(p.book_entries || []), ...newEntries], 
+            world_book_name: wb.name || file.name.replace(/\.json$/i, '') || p.world_book_name, 
+            world_book_extensions: wb.extensions || p.world_book_extensions || {} 
           })); 
-          setData(p => ({ ...p, book_entries: [...(p.book_entries || []), ...newEntries], world_book_name: wb.name || p.world_book_name })); addToast(`已导入 ${newEntries.length} 个条目`, 'success') 
-        } catch (err) { 
-          addToast('导入失败: ' + err.message, 'error') 
-        } 
+          addToast(`已导入 ${newEntries.length} 个条目`, 'success');
+        } catch (err) {
+          addToast('导入失败: ' + err.message, 'error')
+        }
       };
 
       const sortEntries = () => {
@@ -3519,7 +3544,7 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
         addToast('已按优先级重新排序', 'success');
       };
 
-      return html`<div>${!entries.length ? html`<div style=${{ textAlign: 'center', padding: 40, color: 'var(--text-soft)' }}><div style=${{ fontSize: 48, marginBottom: 12 }}>📚</div><p>暂无世界书条目</p><div style=${{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16 }}><button class="btn primary" style=${{ padding: '10px 20px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', keysText: '', content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: 0, probability: 100, _id: `wb_${Date.now()}` }] }))}>➕ 新建</button><label class="btn secondary" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label></div></div>` : html`<><div class="book-toolbar"><div class="search-box"><input placeholder="搜索..." value=${search} onChange=${e => { startTransition(() => setSearch(e.target.value)) }}/></div><button class="btn primary" style=${{ padding: '10px 16px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', keysText: '', content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: 0, probability: 100, _id: `wb_${Date.now()}` }, ...(p.book_entries || [])] }))}>➕</button><label class="btn secondary" style=${{ padding: '10px 16px', fontSize: 13, cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label><button class="btn success" style=${{ padding: '10px 16px', fontSize: 13 }} onClick=${onExportWB} disabled=${!entries.length}>📤 导出</button><button class="btn-sm lavender" onClick=${collapseAll} aria-label="全部折叠">▲</button><button class="btn-sm lavender" onClick=${expandAll} aria-label="全部展开">▼</button><button class="btn-sm mint" onClick=${() => batchToggle(true)}>全启</button><button class="btn-sm blush" onClick=${() => batchToggle(false)}>全禁</button><button class="btn-sm orange" onClick=${sortEntries}>🔄 优先级排序</button></div>${batchSel.size > 0 && html`<div class="wb-batch-bar"><span>已选 ${batchSel.size} 个</span><button style=${{ background: 'var(--blush)', borderColor: 'var(--rose)', color: '#c9939c' }} onClick=${batchDelete}>🗑️ 批量删除</button><button style=${{ background: 'var(--cream)', borderColor: 'var(--cream-deep)', color: 'var(--text-soft)' }} onClick=${() => setBatchSel(new Set())}>取消选择</button><button style=${{ background: 'var(--sky-pale)', borderColor: 'var(--sky-soft)', color: 'var(--sky)' }} onClick=${() => setBatchSel(new Set(entries.map((_, i) => i)))}>全选</button></div>`}<div style=${{ fontSize: 12, color: 'var(--text-soft)', marginBottom: 12 }}>共 ${entries.length} 个${search ? `，匹配 ${filtered.length}` : ''}</div>${filtered.map(e => { const realIdx = entries.indexOf(e); return html`<${BookEntry} key=${e._id || realIdx} entry=${e} index=${realIdx} onChange=${updateEntry} onRemove=${idx => setData(p => ({ ...p, book_entries: entries.filter((_, j) => j !== idx) }))} collapsed=${collapsed[realIdx]} onToggle=${() => setCollapsed(p => ({ ...p, [realIdx]: !p[realIdx] }))} onExpandContent=${onExpandEntry} onMoveUp=${() => moveEntry(realIdx, -1)} onMoveDown=${() => moveEntry(realIdx, 1)} isFirst=${realIdx === 0} isLast=${realIdx === entries.length - 1} onDuplicate=${() => dupEntry(realIdx)} selected=${batchSel.has(realIdx)} onSelect=${toggleBatchSel}/>` })}</>`}</div>`
+      return html`<div>${!entries.length ? html`<div style=${{ textAlign: 'center', padding: 40, color: 'var(--text-soft)' }}><div style=${{ fontSize: 48, marginBottom: 12 }}>📚</div><p>暂无世界书条目</p><div style=${{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16 }}><button class="btn primary" style=${{ padding: '10px 20px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', key: [], content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: null, probability: 100, _id: `wb_${Date.now()}` }] }))}>➕ 新建</button><label class="btn secondary" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label></div></div>` : html`<><div class="book-toolbar"><div class="search-box"><input placeholder="搜索..." value=${search} onChange=${e => { startTransition(() => setSearch(e.target.value)) }}/></div><button class="btn primary" style=${{ padding: '10px 16px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', key: [], content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: null, probability: 100, _id: `wb_${Date.now()}` }, ...(p.book_entries || [])] }))}>➕</button><label class="btn secondary" style=${{ padding: '10px 16px', fontSize: 13, cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label><button class="btn success" style=${{ padding: '10px 16px', fontSize: 13 }} onClick=${onExportWB} disabled=${!entries.length}>📤 导出</button><button class="btn-sm lavender" onClick=${collapseAll} aria-label="全部折叠">▲</button><button class="btn-sm lavender" onClick=${expandAll} aria-label="全部展开">▼</button><button class="btn-sm mint" onClick=${() => batchToggle(true)}>全启</button><button class="btn-sm blush" onClick=${() => batchToggle(false)}>全禁</button><button class="btn-sm orange" onClick=${sortEntries}>🔄 优先级排序</button></div>${batchSel.size > 0 && html`<div class="wb-batch-bar"><span>已选 ${batchSel.size} 个</span><button style=${{ background: 'var(--blush)', borderColor: 'var(--rose)', color: '#c9939c' }} onClick=${batchDelete}>🗑️ 批量删除</button><button style=${{ background: 'var(--cream)', borderColor: 'var(--cream-deep)', color: 'var(--text-soft)' }} onClick=${() => setBatchSel(new Set())}>取消选择</button><button style=${{ background: 'var(--sky-pale)', borderColor: 'var(--sky-soft)', color: 'var(--sky)' }} onClick=${() => setBatchSel(new Set(entries.map((_, i) => i)))}>全选</button></div>`}<div style=${{ fontSize: 12, color: 'var(--text-soft)', marginBottom: 12 }}>共 ${entries.length} 个${search ? `，匹配 ${filtered.length}` : ''}</div>${filtered.map(e => { const realIdx = entries.indexOf(e); return html`<${BookEntry} key=${e._id || realIdx} entry=${e} index=${realIdx} onChange=${updateEntry} onRemove=${idx => setData(p => ({ ...p, book_entries: entries.filter((_, j) => j !== idx) }))} collapsed=${collapsed[realIdx]} onToggle=${() => setCollapsed(p => ({ ...p, [realIdx]: !p[realIdx] }))} onExpandContent=${onExpandEntry} onMoveUp=${() => moveEntry(realIdx, -1)} onMoveDown=${() => moveEntry(realIdx, 1)} isFirst=${realIdx === 0} isLast=${realIdx === entries.length - 1} onDuplicate=${() => dupEntry(realIdx)} selected=${batchSel.has(realIdx)} onSelect=${toggleBatchSel}/>` })}</>`}</div>`
     });
 
     /* ═══════════ 批量翻译弹窗 ═══════════ */
@@ -3618,7 +3643,7 @@ ${expandItem && html`<${Modal} show fullscreen onClose=${() => setExpandItem(nul
         if (!data) return '';
         if (fieldKey.startsWith('wb_content_')) { const idx = parseInt(fieldKey.replace('wb_content_', '')); return data.book_entries?.[idx]?.content || '' }
         if (fieldKey.startsWith('wb_name_')) { const idx = parseInt(fieldKey.replace('wb_name_', '')); return data.book_entries?.[idx]?.name || '' }
-        if (fieldKey.startsWith('wb_keys_')) { const idx = parseInt(fieldKey.replace('wb_keys_', '')); return data.book_entries?.[idx]?.keysText || '' }
+        if (fieldKey.startsWith('wb_keys_')) { const idx = parseInt(fieldKey.replace('wb_keys_', '')); const k = data.book_entries?.[idx]?.key; return Array.isArray(k) ? k.join(', ') : '' }
         if (fieldKey === 'tags') { const m = fieldLabel.match(/#(\d+)/); if (m) return data.tags?.[parseInt(m[1]) - 1] || ''; return '' }
         if (fieldKey === 'alternate_greetings') { const m = fieldLabel.match(/#(\d+)/); if (m) return data.alternate_greetings?.[parseInt(m[1]) - 2] || ''; return '' }
         return data[fieldKey] || ''
@@ -3672,7 +3697,7 @@ ${segments.map((seg, i) => {
       const ITEM_H = 80;
       const isMobileReplace = useIsMobile();
       const ACTUAL_ITEM_H = isMobileReplace ? 110 : ITEM_H;
-      const doSearch = useCallback((keyword, d, isRegex) => { if (!keyword || !d) return []; const re = buildRegex(keyword, isRegex); if (!re) return []; const items = []; const addField = (fieldKey, fieldLabel, text) => { if (!text) return; let m; re.lastIndex = 0; while ((m = re.exec(text)) !== null) { const matchedText = m[0]; let start = m.index, end = m.index + matchedText.length; const bLimit = Math.max(0, m.index - 500), eLimit = Math.min(text.length, end + 500); while (start > bLimit && text[start - 1] !== '\n') start--; while (end < eLimit && text[end] !== '\n') end++; const prefix = start > 0 ? '…' : ''; const suffix = end < text.length ? '…' : ''; const before = text.slice(start, m.index); const after = text.slice(m.index + matchedText.length, end); items.push({ id: items.length, fieldKey, fieldLabel, before: prefix + before, matched: matchedText, after: after + suffix, pos: m.index }); if (items.length > MAX_REPLACE_MATCHES) return } }; REPLACE_FIELDS.forEach(([k, l]) => addField(k, l, d[k])); (d.tags || []).forEach((t, i) => addField('tags', `标签 #${i + 1}`, t)); (d.alternate_greetings || []).forEach((g, i) => addField('alternate_greetings', `开场白 #${i + 2}`, g)); (d.book_entries || []).forEach((e, i) => { addField(`wb_name_${i}`, `世界书 #${i + 1} 名称`, e.name); addField(`wb_content_${i}`, `世界书 #${i + 1} 内容`, e.content); addField(`wb_keys_${i}`, `世界书 #${i + 1} 关键词`, e.keysText) }); return items }, [buildRegex]);
+      const doSearch = useCallback((keyword, d, isRegex) => { if (!keyword || !d) return []; const re = buildRegex(keyword, isRegex); if (!re) return []; const items = []; const addField = (fieldKey, fieldLabel, text) => { if (!text) return; let m; re.lastIndex = 0; while ((m = re.exec(text)) !== null) { const matchedText = m[0]; let start = m.index, end = m.index + matchedText.length; const bLimit = Math.max(0, m.index - 500), eLimit = Math.min(text.length, end + 500); while (start > bLimit && text[start - 1] !== '\n') start--; while (end < eLimit && text[end] !== '\n') end++; const prefix = start > 0 ? '…' : ''; const suffix = end < text.length ? '…' : ''; const before = text.slice(start, m.index); const after = text.slice(m.index + matchedText.length, end); items.push({ id: items.length, fieldKey, fieldLabel, before: prefix + before, matched: matchedText, after: after + suffix, pos: m.index }); if (items.length > MAX_REPLACE_MATCHES) return } }; REPLACE_FIELDS.forEach(([k, l]) => addField(k, l, d[k])); (d.tags || []).forEach((t, i) => addField('tags', `标签 #${i + 1}`, t)); (d.alternate_greetings || []).forEach((g, i) => addField('alternate_greetings', `开场白 #${i + 2}`, g)); (d.book_entries || []).forEach((e, i) => { addField(`wb_name_${i}`, `世界书 #${i + 1} 名称`, e.name); addField(`wb_content_${i}`, `世界书 #${i + 1} 内容`, e.content); addField(`wb_keys_${i}`, `世界书 #${i + 1} 关键词`, Array.isArray(e.key) ? e.key.join(', ') : '') }); return items }, [buildRegex]);
       useEffect(() => { if (!show) { setFindText(''); setReplaceText(''); setMatches([]); setChecked({}); setUseRegex(false); setRegexError(''); setScrollTop(0) } }, [show]);
       useEffect(() => { if (!findText.trim() || !data) { setMatches([]); setChecked({}); return } const t = setTimeout(() => { startTransition(() => { const items = doSearch(findText, data, useRegex); setMatches(items); const c = {}; items.forEach(it => c[it.id] = true); setChecked(c); setScrollTop(0) }) }, 200); return () => clearTimeout(t) }, [findText, data, useRegex, doSearch]);
       const onListScroll = useCallback(() => { const el = listRef.current; if (el) setScrollTop(el.scrollTop) }, []);
@@ -3680,7 +3705,7 @@ ${segments.map((seg, i) => {
       const visibleStart = Math.max(0, Math.floor(scrollTop / ACTUAL_ITEM_H) - 3);
       const visibleEnd = Math.min(matches.length, visibleStart + Math.ceil(350 / ACTUAL_ITEM_H) + 6);
       const checkedCount = Object.values(checked).filter(Boolean).length;
-      const handleReplace = () => { if (!findText || !data || !checkedCount) return; const d = deepClone(data); const re = buildRegex(findText, useRegex); if (!re) return; const replaceInField = (str, fieldKey) => { if (!str) return str; const relevantMatches = matches.filter(m => m.fieldKey === fieldKey && checked[m.id]); if (!relevantMatches.length) return str; if (useRegex) return str.replace(re, replaceText); const positions = relevantMatches.map(m => m.pos).sort((a, b) => b - a); let result = str; positions.forEach(pos => { const matchLen = matches.find(m => m.fieldKey === fieldKey && m.pos === pos)?.matched.length || findText.length; result = result.slice(0, pos) + replaceText + result.slice(pos + matchLen) }); return result }; REPLACE_FIELDS.forEach(([k]) => { d[k] = replaceInField(d[k], k) }); d.tags = d.tags?.map((t, i) => { const relevant = matches.filter(m => m.fieldLabel === `标签 #${i + 1}` && checked[m.id]); return relevant.length ? (useRegex ? t.replace(re, replaceText) : t.replaceAll(findText, replaceText)) : t }); d.alternate_greetings = d.alternate_greetings?.map((g, i) => { const relevant = matches.filter(m => m.fieldLabel === `开场白 #${i + 2}` && checked[m.id]); return relevant.length ? (useRegex ? g.replace(re, replaceText) : g.replaceAll(findText, replaceText)) : g }); d.book_entries = d.book_entries?.map((e, i) => ({ ...e, name: matches.some(m => m.fieldKey === `wb_name_${i}` && checked[m.id]) ? (useRegex ? e.name.replace(re, replaceText) : e.name.replaceAll(findText, replaceText)) : e.name, content: matches.some(m => m.fieldKey === `wb_content_${i}` && checked[m.id]) ? (useRegex ? e.content.replace(re, replaceText) : e.content.replaceAll(findText, replaceText)) : e.content, keysText: matches.some(m => m.fieldKey === `wb_keys_${i}` && checked[m.id]) ? (useRegex ? (e.keysText || '').replace(re, replaceText) : (e.keysText || '').replaceAll(findText, replaceText)) : e.keysText })); onReplace(d, checkedCount) };
+      const handleReplace = () => { if (!findText || !data || !checkedCount) return; const d = deepClone(data); const re = buildRegex(findText, useRegex); if (!re) return; const replaceInField = (str, fieldKey) => { if (!str) return str; const relevantMatches = matches.filter(m => m.fieldKey === fieldKey && checked[m.id]); if (!relevantMatches.length) return str; if (useRegex) return str.replace(re, replaceText); const positions = relevantMatches.map(m => m.pos).sort((a, b) => b - a); let result = str; positions.forEach(pos => { const matchLen = matches.find(m => m.fieldKey === fieldKey && m.pos === pos)?.matched.length || findText.length; result = result.slice(0, pos) + replaceText + result.slice(pos + matchLen) }); return result }; REPLACE_FIELDS.forEach(([k]) => { d[k] = replaceInField(d[k], k) }); d.tags = d.tags?.map((t, i) => { const relevant = matches.filter(m => m.fieldLabel === `标签 #${i + 1}` && checked[m.id]); return relevant.length ? (useRegex ? t.replace(re, replaceText) : t.replaceAll(findText, replaceText)) : t }); d.alternate_greetings = d.alternate_greetings?.map((g, i) => { const relevant = matches.filter(m => m.fieldLabel === `开场白 #${i + 2}` && checked[m.id]); return relevant.length ? (useRegex ? g.replace(re, replaceText) : g.replaceAll(findText, replaceText)) : g }); d.book_entries = d.book_entries?.map((e, i) => ({ ...e, name: matches.some(m => m.fieldKey === `wb_name_${i}` && checked[m.id]) ? (useRegex ? e.name.replace(re, replaceText) : e.name.replaceAll(findText, replaceText)) : e.name, content: matches.some(m => m.fieldKey === `wb_content_${i}` && checked[m.id]) ? (useRegex ? e.content.replace(re, replaceText) : e.content.replaceAll(findText, replaceText)) : e.content, key: matches.some(m => m.fieldKey === `wb_keys_${i}` && checked[m.id]) ? (useRegex ? (Array.isArray(e.key) ? e.key.join(', ') : '').replace(re, replaceText) : (Array.isArray(e.key) ? e.key.join(', ') : '').replaceAll(findText, replaceText)).split(',').map(s=>s.trim()).filter(Boolean) : e.key })); onReplace(d, checkedCount) };
       if (!show) return null;
       const totalH = matches.length * ACTUAL_ITEM_H;
       return html`<><${Modal} show=${show} onClose=${onClose} title="🔁 查找替换" large footer=${html`<><button class="btn primary" onClick=${handleReplace} disabled=${!findText || !checkedCount}>✅ 替换(${checkedCount})</button><button class="btn secondary" onClick=${onClose}>取消</button></>`}><div class="form-group"><label>🔍 查找</label><div style=${{ display: 'flex', gap: 8 }}><input style=${{ flex: 1 }} value=${findText} onChange=${e => setFindText(e.target.value)} placeholder="查找文本"/><button class="regex-toggle ${useRegex ? 'active' : ''}" onClick=${() => setUseRegex(!useRegex)} aria-label="正则表达式模式">.*</button></div>${regexError && html`<small style=${{ color: '#c9939c' }}>正则错误: ${regexError}</small>`}</div><div class="form-group"><label>✏️ 替换为</label><input value=${replaceText} onChange=${e => setReplaceText(e.target.value)} placeholder="替换文本（留空=删除）"/></div>${findText.trim() && html`<>${matches.length > 0 ? html`<><div class="replace-stats"><span>🔍 ${matches.length} 处</span><span>✅ ${checkedCount} 选</span>${useRegex && html`<span>🔧 正则</span>`}<div style=${{ flex: 1 }}/><button class="btn-sm mint" onClick=${() => { const c = {}; matches.forEach(m => c[m.id] = true); setChecked(c) }}>全选</button><button class="btn-sm lavender" onClick=${() => { const c = {}; matches.forEach(m => c[m.id] = !checked[m.id]); setChecked(c) }}>反选</button><button class="btn-sm blush" onClick=${() => setChecked({})}>清空</button></div><div class="replace-preview" style=${{ maxHeight: '50vh' }}>${matches.map(m => html`<div key=${m.id} class="replace-match ${checked[m.id] ? '' : 'unchecked'}"><input type="checkbox" checked=${!!checked[m.id]} onChange=${() => setChecked(p => ({ ...p, [m.id]: !p[m.id] }))}/><span class="rm-idx">${m.id + 1}</span><span class="rm-field">${m.fieldLabel}</span><button class="rm-expand" onClick=${() => setExpandMatch(m)} aria-label="放大查看" title="放大查看">⛶</button><span class="rm-ctx">${m.before}<mark>${m.matched}</mark>${m.after}</span></div>`)}</div></>` : html`<div style=${{ textAlign: 'center', padding: 20, color: 'var(--text-soft)' }}>😿 未找到</div>`}</>`}<//>
@@ -3794,31 +3819,34 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 
       const clearContent = useCallback(async () => { const hasContent = data && (data.name || data.description || data.first_message); if (hasContent) { const ok = await askConfirm('确定清空所有内容？可撤销。', { title: '清空内容', icon: '🗑️', confirmText: '清空', dangerBtn: true }); if (!ok) return } setData(mkEmpty()); clearImgState(); setCardDef({ spec: 'chara_card_v3' }); setFileName(''); setOutlineTextRaw(''); otRef.current = ''; setOTH([]); setOTF([]); addToast('已清空', 'success') }, [setData, addToast, data, askConfirm, clearImgState]);
 
-      const parseCardData = json => { 
-        const d = deepClone(json.data || json); 
-        d.first_message = d.first_mes || d.first_message || ''; 
-        d.message_example = d.mes_example || d.message_example || ''; 
-        d.alternate_greetings = d.alternate_greetings || []; 
-        d.tags = d.tags || []; 
-        const b = d.character_book || {}; 
-        
-        // U3: Parse dict-based entries properly from JSON into our array format
-        const entriesArr = Array.isArray(b.entries) ? b.entries : Object.values(b.entries || {});
-        
-        d.book_entries = entriesArr.map((e, i) => ({ 
-          ...e, 
-          keysText: Array.isArray(e.keys) ? e.keys.join(', ') : (e.key ? e.key.join(', ') : ''), 
-          name: e.comment || e.name || `条目${i + 1}`, 
+            const parseCardData = json => {
+        const d = deepClone(json.data || json);
+        d.first_message = d.first_mes || d.first_message || '';
+        d.message_example = d.mes_example || d.message_example || '';
+        d.alternate_greetings = d.alternate_greetings || [];
+        d.tags = d.tags || [];
+        const b = d.character_book || {};
+
+        // U3: 借鉴 luck 编辑器，解析时保留原有的 uid 键，防止丢失
+        const entriesArr = Array.isArray(b.entries) ? b.entries : Object.entries(b.entries || {}).map(([k, v]) => ({ ...v, uid: v.uid ?? parseInt(k) }));
+
+        d.book_entries = entriesArr.map((e, i) => ({
+          ...e,
+          uid: e.uid ?? parseInt(i),
+          // 核心修复同上：防止不同工具残存字符串结构导致报错
+          keysText: Array.isArray(e.keys) ? e.keys.join(', ') : (Array.isArray(e.key) ? e.key.join(', ') : (typeof e.key === 'string' ? e.key : '')),
+          name: e.comment || e.name || `条目${i + 1}`,
           enabled: e.disable ? false : (e.enabled !== false),
           order: e.order ?? (e.insertion_order ?? 100),
           insertion_order: e.order ?? (e.insertion_order ?? 100),
           depth: e.depth ?? 4,
           position: e.position ?? 0,
-          role: e.role ?? 0,
+          role: e.role !== undefined ? e.role : null, // 完美还原 null 状态，不强制赋值0
           probability: e.probability ?? 100,
-          _id: `wb_${Date.now()}_${i}` 
-        })); 
-        d.world_book_name = b.name || ''; 
+          _id: `wb_${Date.now()}_${i}`
+        }));
+        d.world_book_name = b.name || '';
+        d.world_book_extensions = b.extensions || {}; // 保留世界书顶级扩展
         return d;
       };
 
@@ -3861,35 +3889,52 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 
       const formatWorldBookData = useCallback(() => {
         if (!data?.book_entries?.length) return null;
-        
-        // 转换我们内部的数据结构为标准的酒馆世界书字典结构
+
         const entriesObj = {};
-        data.book_entries.forEach((e, i) => {
-          // 使用原有的 _id 或生成新的，确保作为对象的键
-          const uid = e._id ? e._id.replace('wb_', '') : Date.now() + i; 
-          entriesObj[uid] = {
-            uid: uid,
-            key: (e.keysText || '').split(',').map(k => k.trim()).filter(Boolean),
-            keysecondary: [], // 默认空
-            comment: e.name || '',
-            content: e.content || '',
-            constant: !!e.constant,
-            selective: true,
-            insertion_order: e.order ?? (e.insertion_order ?? 100),
-            order: e.order ?? (e.insertion_order ?? 100), // 添加 order
-            disable: !(e.enabled !== false), // 转换 enabled 为 disable
-            position: e.position ?? 0,
-            role: e.role ?? 0,
-            depth: e.depth ?? 4,
-            probability: e.probability ?? 100,
-            useProbability: true
-          };
+        let maxUid = -1;
+        data.book_entries.forEach(e => {
+          if (e.uid != null && !isNaN(e.uid)) maxUid = Math.max(maxUid, parseInt(e.uid));
         });
 
-        return { 
-          name: data.world_book_name || data.name || 'world_book', 
+        data.book_entries.forEach((e, i) => {
+          let uidInt = e.uid;
+          if (uidInt == null || isNaN(uidInt)) uidInt = ++maxUid;
+          e.uid = parseInt(uidInt);
+
+            // Luck规范：完全剔除多余污染
+            const { name, enabled, _id, insertion_order, keys, keysText, key, ...original } = e;
+
+            // 完美的合并方案：严格保证原有键值顺序（酒馆部分插件强依赖此顺序）
+            // 1. 先通过 ...original 垫底，完美继承原生世界书和插件的所有隐藏参数及"原生排序"
+            // 2. 随后覆写核心字段，确保编辑生效的同时，绝对不会打乱原生的结构顺序
+            const formattedEntry = {
+              uid: uidInt,
+              key: Array.isArray(e.key) ? e.key : [],
+              ...original,
+              keysecondary: original.keysecondary || [],
+              comment: e.name || '',
+              content: e.content || '',
+              constant: !!e.constant,
+              disable: !(e.enabled !== false),
+              position: e.position ?? 0,
+              depth: e.depth ?? 4,
+              order: e.order ?? 100,
+              probability: e.probability ?? 100,
+              selective: original.selective ?? true,
+              useProbability: original.useProbability ?? true,
+              role: (e.position === 4) ? (e.role ?? 0) : null,
+              group: original.group ?? "",
+              displayIndex: i
+            };
+
+          entriesObj[String(uidInt)] = formattedEntry;
+        });
+
+        // 生成外部总包裹要求
+        return {
+          name: data.world_book_name || 'world_book',
           entries: entriesObj,
-          extensions: {} 
+          extensions: data.world_book_extensions || {}
         };
       }, [data]);
 
@@ -3906,28 +3951,77 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       }, [formatWorldBookData, addToast]);
 
       /* B-5: Strip existing chunks before export */
-      const exportPNG = useCallback(async () => { if (!data) return false; const imgData = imgDataRef.current; if (!imgData) { addToast('无图片，导出JSON', 'warning'); exportJSON(); return true } try { const bytes = await new Promise((res, rej) => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; c.getContext('2d').drawImage(img, 0, 0); res(Uint8Array.from(atob(c.toDataURL('image/png').split(',')[1]), ch => ch.charCodeAt(0))) }; img.onerror = rej; img.src = imgData }); const ed = { ...data }; if (data.first_message) ed.first_mes = data.first_message; if (data.message_example) ed.mes_example = data.message_example; 
-      
-      if (data.book_entries?.length) {
-        // 使用标准的字典格式导出 PNG 中的世界书
-        const wb = formatWorldBookData();
-        if(wb) ed.character_book = wb;
-      }
-      
-      const v2 = base64Encode(JSON.stringify({ spec: 'chara_card_v2', data: ed })); const v3 = base64Encode(JSON.stringify({ spec: 'chara_card_v3', spec_version: '3.0', data: ed })); const stripped = stripPNGChunks(bytes, ['chara', 'ccv3']); const iend = stripped.length - 12; const c1 = makeChunk('chara', v2), c2 = makeChunk('ccv3', v3); const out = new Uint8Array(stripped.length + c1.length + c2.length); out.set(stripped.slice(0, iend)); out.set(c1, iend); out.set(c2, iend + c1.length); out.set(stripped.slice(iend), iend + c1.length + c2.length); const exportName = (data.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; downloadBlob(new Blob([out], { type: 'image/png' }), `${exportName}.png`); /* U-5: Enhanced export feedback */ addToast(`导出成功 "${exportName}.png" (${(out.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000); return true } catch { return false } }, [data, addToast, fileName, formatWorldBookData]);
-
+      const exportPNG = useCallback(async () => { 
+        if (!data) return false; 
+        const imgData = imgDataRef.current; 
+        if (!imgData) { 
+          addToast('无图片，导出JSON', 'warning'); 
+          exportJSON(); 
+          return true; 
+        } 
+        try { 
+          const bytes = await new Promise((res, rej) => { 
+            const img = new Image(); 
+            img.onload = () => { 
+              const c = document.createElement('canvas'); 
+              c.width = img.width; 
+              c.height = img.height; 
+              c.getContext('2d').drawImage(img, 0, 0); 
+              res(Uint8Array.from(atob(c.toDataURL('image/png').split(',')[1]), ch => ch.charCodeAt(0))) 
+            }; 
+            img.onerror = rej; 
+            img.src = imgData 
+          }); 
+          
+          const ed = { ...data }; 
+          if (data.first_message) ed.first_mes = data.first_message; 
+          if (data.message_example) ed.mes_example = data.message_example; 
+          
+          if (ed.book_entries?.length) {
+            const wb = formatWorldBookData();
+            if(wb) ed.character_book = wb;
+          }
+          
+          // 【关键清理】：从最终角色卡数据中拔除用于 UI 展现的内部垃圾数组与缓存属性
+          delete ed.book_entries;
+          delete ed.world_book_name;
+          delete ed.world_book_extensions;
+          
+          const v2 = base64Encode(JSON.stringify({ spec: 'chara_card_v2', data: ed })); 
+          const v3 = base64Encode(JSON.stringify({ spec: 'chara_card_v3', spec_version: '3.0', data: ed })); 
+          const stripped = stripPNGChunks(bytes, ['chara', 'ccv3']); 
+          const iend = stripped.length - 12; 
+          const c1 = makeChunk('chara', v2), c2 = makeChunk('ccv3', v3); 
+          const out = new Uint8Array(stripped.length + c1.length + c2.length); 
+          out.set(stripped.slice(0, iend)); 
+          out.set(c1, iend); 
+          out.set(c2, iend + c1.length); 
+          out.set(stripped.slice(iend), iend + c1.length + c2.length); 
+          const exportName = (data.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; 
+          downloadBlob(new Blob([out], { type: 'image/png' }), `${exportName}.png`); 
+          /* U-5: Enhanced export feedback */ 
+          addToast(`导出成功 "${exportName}.png" (${(out.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000); 
+          return true 
+        } catch { 
+          return false 
+        } 
+      }, [data, addToast, fileName, formatWorldBookData]);
 
       const exportJSON = useCallback(() => { 
         if (!data) return; 
         const ed = { ...data };
         
-        // 使用标准的字典格式导出 JSON
         if (ed.book_entries?.length) {
           const wb = formatWorldBookData();
           if(wb) ed.character_book = wb;
         }
         
-        const str = JSON.stringify(ed, null, 2); 
+        // 【关键清理】：导出为世界书独立块后，必须切除编辑器专属数组缓存，防止严格的验证器报错
+        delete ed.book_entries;
+        delete ed.world_book_name;
+        delete ed.world_book_extensions;
+        
+        const str = JSON.stringify(ed, null, 2);
         const exportName = (ed.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; 
         downloadBlob(new Blob([str], { type: 'application/json' }), `${exportName}.json`); 
         addToast(`导出成功 "${exportName}.json" (${(str.length / 1024).toFixed(0)}KB) — 请在下载文件夹中查看`, 'important', 6000) 
