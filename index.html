@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>🐱 喵喵角色卡工坊 - GitHub云同步版</title>
   <meta name="theme-color" content="#66ccff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,15 +12,34 @@
     const theme = stored ? JSON.parse(stored) : (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
     if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   } catch (e) { }</script>
-  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"
-    onerror="document.getElementById('cdn-error').style.display='flex'"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"
-    onerror="document.getElementById('cdn-error').style.display='flex'"></script> 
+  
+  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js" onerror="document.getElementById('cdn-error').style.display='flex'"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js" onerror="document.getElementById('cdn-error').style.display='flex'"></script> 
   <link rel="modulepreload" href="https://esm.sh/htm@3.1.1">
-  <script
-    type="importmap">{"imports":{"htm":"https://esm.sh/htm@3.1.1","@google/generative-ai":"https://esm.run/@google/generative-ai"}}</script>
-  <style>
-    :root {
+  <script type="importmap">{"imports":{"htm":"https://esm.sh/htm@3.1.1","@google/generative-ai":"https://esm.run/@google/generative-ai"}}</script>
+  
+  <!-- 【注意这里】引入了外部的 CSS 文件 -->
+  
+
+<style>
+/* --- 注入的皮肤样式 --- */
+/* =========================================================
+   🎨 喵喵角色卡工坊 - 全局样式表 (styles.css)
+   
+   【目录】(你可以用 Ctrl+F 搜索下面的标题快速定位)
+   1. 🌈 基础变量与主题 (颜色、暗黑模式) -> 搜索 ":root"
+   2. 🧱 全局重置与排版 (body, 滚动条) -> 搜索 "html, body"
+   3. 🏷️ 顶部导航栏 (Header) -> 搜索 ".header"
+   4. 🗂️ 选项卡与布局 (Tabs, 容器) -> 搜索 ".tabs"
+   5. 🔘 通用组件 (按钮 btn, 输入框 input, 标签 tag) -> 搜索 ".btn"
+   6. 📚 世界书与列表 (Book_entry, 历史记录) -> 搜索 ".book-entry"
+   7. 🪟 弹窗与遮罩 (Modal, Overlay) -> 搜索 ".modal"
+   8. 🌸 翻译对比区 (Compare, Sync) -> 搜索 ".compare-grid"
+   9. 📱 移动端适配 (Media Queries) -> 搜索 "@media(max-width"
+  10. ✨ 新增高级功能 (AI助手, 正则, 剧场模式) -> 搜索 "新增功能专属样式"
+========================================================= */
+
+:root {
       --sky: #66ccff;
       --sky-soft: #9fdfff;
       --sky-pale: #d6f2ff;
@@ -64,38 +82,37 @@
       --font-scale: 1
     }
 
-    /* U15: Dark mode — A-3: improved contrast */
+    /* U15: Dark mode — 优化对比度与纯净度 */
     [data-theme="dark"] {
-      --sky: #5cb8e8;
-      --sky-soft: #4a9ac7;
-      --sky-pale: #2a3a45;
-      --cream: #1a1a2e;
-      --cream-soft: #222238;
-      --cream-deep: #2a2a42;
-      --blush: #3a2a32;
-      --blush-soft: #2e2228;
-      --rose: #4a3a42;
-      --mint: #2a3a38;
-      --mint-soft: #223230;
-      --mint-dark: #6ab8a5;
-      --lavender: #2a2838;
-      --lavender-soft: #222230;
-      --peach: #3a3228;
-      --peach-soft: #2e2820;
-      --orange: #cc8844;
-      --orange-soft: #aa7733;
-      --orange-pale: #3a3228;
-      --purple: #8b6fcc;
-      --purple-soft: #7b62c0;
-      --purple-pale: #2a2838;
-      /* A-3: higher contrast text in dark mode */
-      --text: #e0e0f0;
-      --text-soft: #c0c8e0;
-      --text-dark: #f5f5ff;
-      --white: #252540;
-      --border: #3a3a55;
-      --shadow: rgba(0, 0, 0, .3);
-      --shadow-soft: rgba(0, 0, 0, .2)
+      --sky: #66ccff;
+      --sky-soft: #3b82f6;
+      --sky-pale: #1e293b;
+      --cream: #0f172a;
+      --cream-soft: #1e293b;
+      --cream-deep: #334155;
+      --blush: #4c1d95;
+      --blush-soft: #312e81;
+      --rose: #5b21b6;
+      --mint: #064e3b;
+      --mint-soft: #065f46;
+      --mint-dark: #34d399;
+      --lavender: #1e1b4b;
+      --lavender-soft: #312e81;
+      --peach: #451a03;
+      --peach-soft: #78350f;
+      --orange: #f59e0b;
+      --orange-soft: #d97706;
+      --orange-pale: #451a03;
+      --purple: #a78bfa;
+      --purple-soft: #8b5cf6;
+      --purple-pale: #2e1065;
+      --text: #e2e8f0;
+      --text-soft: #94a3b8;
+      --text-dark: #f8fafc;
+      --white: #1e293b;
+      --border: #334155;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --shadow-soft: rgba(0, 0, 0, 0.3);
     }
 
     * {
@@ -140,10 +157,10 @@
     }
 
     /* U-9: Smooth theme transition */
-    html, body {
-      height: 100%;
+html, body {
+      min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: linear-gradient(160deg, var(--cream) 0%, var(--sky-pale) 50%, var(--lavender) 100%);
+      background: transparent;
       color: var(--text);
       line-height: 1.6;
       transition: background-color .4s ease, color .3s ease
@@ -1042,8 +1059,10 @@
     .section-card {
       background: var(--cream);
       border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 20px
+      padding: 28px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px var(--shadow-soft);
     }
 
     .section-header {
@@ -2149,30 +2168,53 @@
     .loading-dots::after { content: ''; animation: dots 1.5s infinite }
     @keyframes dots { 0% { content: '' } 25% { content: '.' } 50% { content: '..' } 75% { content: '...' } }
 
+    /* 优化后的统计卡片样式 */
     .stats-card {
-      background: var(--white);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 20px
+      margin-bottom: 24px;
     }
-
     .stats-card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px;
-      background: linear-gradient(135deg, var(--cream), var(--peach-soft));
+      padding: 12px 20px;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      font-weight: 700;
-      color: var(--text-dark);
-      font-size: 14px;
       transition: var(--transition);
-      min-height: 48px
+      min-height: 52px;
+      position: relative;
+      z-index: 2; /* 确保头部在最上层 */
     }
-    .stats-card-header:hover { filter: brightness(.97) }
-    .stats-card-header:active { filter: brightness(.94) }
-    .stats-card.collapsed .stats-card-body { display: none }
+    [data-theme="dark"] .stats-card-header {
+      background: var(--cream);
+      border-color: var(--border);
+    }
+    .stats-card-header:hover {
+      border-color: var(--sky-soft);
+      box-shadow: 0 4px 12px var(--shadow-soft);
+    }
+    .stats-card.collapsed .stats-card-header {
+      box-shadow: none;
+    }
+    .stats-card-body {
+      padding: 16px 20px;
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      margin-top: -10px; 
+      padding-top: 26px; /* 增加上边距，防止文字被头部挡住 */
+      position: relative;
+      z-index: 1; /* 修复空白问题：从 -1 改为 1，确保它显示在背景前面 */
+    }
+    [data-theme="dark"] .stats-card-body {
+      background: var(--cream);
+      border-color: var(--border);
+    }
+    .stats-card.collapsed .stats-card-body { display: none; }
+	
+	
     .stats-total { font-size: 16px; color: var(--sky); font-weight: 700 }
     .stats-card-body { padding: 16px 18px }
     .stats-row { display: flex; align-items: center; gap: 10px; padding: 5px 0 }
@@ -2477,23 +2519,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
-      padding: 6px 4px;
+      gap: 4px;
+      padding: 8px 4px;
       border: none;
       background: transparent;
       font-size: 10px;
       font-weight: 600;
       color: var(--text-soft);
       cursor: pointer;
-      border-radius: 12px;
-      min-width: 56px;
-      min-height: 48px;
+      border-radius: 16px;
+      min-width: 60px;
+      min-height: 54px;
       justify-content: center;
-      transition: var(--transition)
+      transition: all 0.2s ease;
     }
-    .mobile-bottom-btn .mbb-icon { font-size: 20px; line-height: 1 }
-    .mobile-bottom-btn:active { background: var(--sky-pale); transform: scale(.9); color: var(--sky); box-shadow: 0 0 0 2px var(--sky-soft) inset }
-    .mobile-bottom-btn:disabled { opacity: .3; pointer-events: none }
+    .mobile-bottom-btn .mbb-icon { font-size: 22px; line-height: 1; transition: transform 0.2s ease; }
+    .mobile-bottom-btn:active .mbb-icon { transform: translateY(-4px) scale(1.1); }
+    .mobile-bottom-btn:active { background: var(--sky-pale); color: var(--sky); }
+    .mobile-bottom-btn:disabled { opacity: .3; pointer-events: none; filter: grayscale(1); }
     .mobile-bottom-btn.primary { color: var(--sky) }
     .mobile-bottom-btn.success { color: var(--mint-dark) }
     .mobile-bottom-btn.warning { color: var(--orange) }
@@ -2654,83 +2697,92 @@
       .guide-row { flex-wrap: wrap }
       .guide-row .src, .guide-row .dst { min-width: calc(50% - 30px) }
 
-      /* U16: Bottom sheet modals */
-      .modal-overlay { align-items: flex-end; padding: 0 }
+      /* U16: Bottom sheet modals (手机端底部滑出弹窗) */
+      .modal-overlay { align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
       .modal {
-        border-radius: 20px 20px 0 0;
-        max-height: calc(92vh - var(--safe-top));
-        animation: slideUpSheet .3s cubic-bezier(.32, .72, 0, 1);
-        touch-action: none
+        border-radius: 24px 24px 0 0;
+        max-height: calc(90vh - var(--safe-top));
+        animation: slideUpSheet .35s cubic-bezier(0.2, 0.8, 0.2, 1);
+        touch-action: pan-y;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
       }
       .modal.fullscreen { max-width: 100vw; max-height: calc(100vh - var(--safe-top)); border-radius: 0 }
 
       @keyframes slideUpSheet {
-        from { opacity: 1; transform: translateY(100%) }
+        from { opacity: 0.8; transform: translateY(100%) }
         to { opacity: 1; transform: translateY(0) }
       }
 
       .modal-drag-handle {
         display: block;
-        width: 40px;
-        height: 5px;
-        background: var(--cream-deep);
+        width: 48px;
+        height: 6px;
+        background: var(--text-soft);
+        opacity: 0.3;
         border-radius: 3px;
-        margin: 10px auto 2px;
+        margin: 12px auto 4px;
         flex-shrink: 0;
-        cursor: grab
+        cursor: grab;
       }
 
-      .modal-header { padding: 14px 18px }
-      .modal-body { padding: 16px }
-      .modal-footer { padding: 12px 16px calc(12px + var(--safe-bottom)); gap: 8px }
+      .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); background: var(--white); color: var(--text-dark); }
+      .modal-header h2 { font-size: 17px; }
+      .modal-body { padding: 20px }
+      .modal-footer { padding: 16px 20px calc(16px + var(--safe-bottom)); gap: 12px; background: var(--white); border-top: 1px solid var(--border); }
+      
       .history-section { margin-top: 24px; padding-top: 20px }
-      .history-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
-      .history-item { max-width: 100%; min-width: 0; padding: 8px 10px; min-height: 54px }
+      .history-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+      .history-item { max-width: 100%; min-width: 0; padding: 12px; min-height: 60px; border-radius: 16px; }
       .history-item .delete { opacity: 1; min-width: 32px; min-height: 32px; padding: 4px 6px; font-size: 14px }
-      .history-item img { width: 30px; height: 40px }
-      .history-item .placeholder { width: 30px; height: 40px; font-size: 14px }
-      .history-item .name { font-size: 12px }
-      .history-item .date { font-size: 10px }
-      .export-section { padding: 16px }
+      .history-item img { width: 36px; height: 48px; border-radius: 8px; }
+      .history-item .placeholder { width: 36px; height: 48px; font-size: 16px; border-radius: 8px; }
+      .history-item .name { font-size: 13px; font-weight: bold; }
+      .history-item .date { font-size: 11px; margin-top: 4px; }
+      .export-section { padding: 20px; border-radius: 16px; }
 
-      /* U-8: Fixed toast on mobile - above bottom bar */
+      /* U-8: Fixed toast on mobile - top centered */
       .toast-container {
         bottom: auto;
-        top: calc(12px + var(--safe-top));
-        right: 12px;
-        left: 12px
+        top: calc(16px + var(--safe-top));
+        right: 16px;
+        left: 16px;
+        align-items: center;
       }
 
-      .toast { min-width: auto }
+      .toast { min-width: 90%; border-radius: 16px; }
       @keyframes toastIn {
-        from { opacity: 0; transform: translateY(-30px) }
-        to { opacity: 1; transform: translateY(0) }
+        from { opacity: 0; transform: translateY(-30px) scale(0.9) }
+        to { opacity: 1; transform: translateY(0) scale(1) }
       }
 
-      .gen-fields-grid { grid-template-columns: 1fr }
-      .concurrency-control input[type="range"] { width: 60px }
-      .batch-actions { margin-bottom: 16px }
-      .batch-actions .btn { width: 100%; justify-content: center }
+      .gen-fields-grid { grid-template-columns: 1fr; gap: 16px; }
+      .concurrency-control input[type="range"] { width: 80px }
+      .batch-actions { margin-bottom: 20px }
+      .batch-actions .btn { width: 100%; justify-content: center; border-radius: 16px; height: 48px; }
 
-      /* Bottom bar */
+      /* Bottom bar (高级毛玻璃底部导航) */
       .mobile-bottom-bar {
         display: flex;
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        background: var(--white);
-        border-top: 2px solid var(--border);
-        padding: 4px 8px env(safe-area-inset-bottom, 4px);
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 6px 12px calc(6px + env(safe-area-inset-bottom, 0px));
         z-index: 900;
-        gap: 0;
-        justify-content: space-around;
+        gap: 8px;
+        justify-content: space-between;
         align-items: center;
-        box-shadow: 0 -4px 20px var(--shadow-soft)
+        box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.03);
       }
-      .mobile-bottom-btn { min-width: 0; flex: 1; max-width: 72px; padding: 4px 2px; min-height: 50px }
-      .mobile-bottom-btn .mbb-icon { font-size: 22px }
-      .mobile-bottom-btn .mbb-label { font-size: 9px; white-space: nowrap }
+      [data-theme="dark"] .mobile-bottom-bar {
+        background: rgba(30, 41, 59, 0.85);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .mobile-bottom-btn { flex: 1; }
 
       /* Floating bar above bottom bar */
       .tr-mini-bar {
@@ -2801,14 +2853,513 @@
 
     /* Desktop-only model dropdown handle - hidden */
     .mdp-handle { display: none }
+	
+	/* =========================================
+   新增功能专属样式 (正则、变量、脚本、预览等)
+   ========================================= */
+
+/* 预览模态框 Tabs */
+.preview-tabs { display: flex; gap: 8px; border-bottom: 2px solid var(--cream-deep); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.preview-tabs button { background: var(--cream); border: 2px solid var(--cream-deep); color: var(--text-soft); padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: var(--transition); }
+.preview-tabs button:hover { background: var(--sky-pale); color: var(--sky); border-color: var(--sky-soft); }
+.preview-tabs button.active { background: var(--sky-pale); color: var(--sky); border-color: var(--sky); }
+
+/* 预览内容区 */
+.preview-content { background: var(--cream); border-radius: var(--radius-md); padding: 16px; border: 2px solid var(--cream-deep); font-size: 13px; white-space: pre-wrap; word-break: break-all; color: var(--text); max-height: 60vh; overflow-y: auto; }
+.preview-content .summary-block strong { color: var(--sky); }
+.preview-content .var-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 6px; }
+.preview-content .var-item .key { color: var(--purple); font-weight: 600; }
+
+/* 列表项通用 (正则、脚本、变量) */
+.list-manager-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px dashed var(--cream-deep); }
+.adv-list-item { background: var(--white); border: 2px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; transition: var(--transition); }
+.adv-list-item:hover { border-color: var(--sky-soft); box-shadow: 0 4px 12px var(--shadow-soft); }
+.adv-list-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+.adv-list-header input { flex: 1; background: var(--cream); border: 2px solid transparent; padding: 6px 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-dark); outline: none; transition: var(--transition); }
+.adv-list-header input:focus { border-color: var(--sky-soft); background: var(--white); }
+
+/* 变量行 */
+.var-row { display: flex; gap: 12px; align-items: center; background: var(--white); border: 2px solid var(--border); border-radius: var(--radius-md); padding: 8px 12px; margin-bottom: 10px; transition: var(--transition); }
+.var-row:hover { border-color: var(--purple-soft); }
+.var-row input { flex: 1; background: transparent; border: none; font-size: 14px; color: var(--text); outline: none; }
+.var-row .divider { color: var(--text-soft); font-weight: bold; }
+
+/* 代码输入框 */
+.code-textarea { font-family: 'Consolas', 'Courier New', monospace; background: var(--cream) !important; color: var(--text-dark) !important; font-size: 13px !important; line-height: 1.5 !important; }
+
+/* 世界书高级网格 */
+.adv-grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 2px dashed var(--cream-deep); }
+.adv-grid-container .grid-field { flex-direction: column; align-items: flex-start; gap: 4px; }
+.adv-grid-container .grid-field input, .adv-grid-container .grid-field select { width: 100%; }
+
+/* =========================================
+   新增功能专属样式 (AI助手、Diff弹窗、正则沙盒等)
+   ========================================= */
+
+/* AI 悬浮按钮 */
+.ai-fab {
+  position: fixed;
+  bottom: calc(30px + var(--bottom-bar-h));
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-soft));
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(159, 122, 234, 0.4);
+  transition: var(--transition);
+  z-index: 9900;
+  border: 2px solid var(--purple-pale);
+}
+.ai-fab:hover { transform: scale(1.1) rotate(-5deg); box-shadow: 0 12px 32px rgba(159, 122, 234, 0.6); }
+
+/* AI 聊天面板 */
+.ai-chat-panel {
+  position: fixed;
+  bottom: calc(100px + var(--bottom-bar-h));
+  right: 30px;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  height: 60vh;
+  min-height: 400px;
+  background: var(--white);
+  border: 2px solid var(--purple-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  z-index: 9901;
+  overflow: hidden;
+  animation: slideUp .3s ease;
+}
+.ai-chat-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-soft));
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ai-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ai-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.ai-msg.user {
+  align-self: flex-end;
+  background: var(--purple-pale);
+  border: 1px solid var(--purple-soft);
+  color: var(--text-dark);
+  border-bottom-right-radius: 4px;
+}
+.ai-msg.assistant {
+  align-self: flex-start;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+.ai-chat-input {
+  display: flex;
+  padding: 12px;
+  background: var(--white);
+  border-top: 2px solid var(--border);
+  gap: 8px;
+}
+.ai-chat-input input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  background: var(--cream);
+}
+.ai-chat-input input:focus { border-color: var(--purple-soft); }
+
+/* Diff 确认弹窗样式 */
+.diff-item {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-left: 4px solid var(--mint-dark);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.diff-item .diff-key { font-weight: 700; color: var(--mint-dark); margin-bottom: 6px; font-size: 13px; }
+.diff-item .diff-val { background: var(--cream); padding: 8px; border-radius: 6px; font-family: monospace; font-size: 12px; white-space: pre-wrap; max-height: 150px; overflow-y: auto; }
+
+/* 世界书蓝绿灯 */
+.wb-status-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+.wb-toggle-track { background: var(--mint-dark) !important; }
+.toggle input:checked + .wb-toggle-track { background: var(--sky) !important; }
+
+/* 世界书右侧悬浮导航 */
+.wb-nav-fab {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 9000;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  padding: 6px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.wb-nav-fab button {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: var(--text-soft);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+.wb-nav-fab button:hover {
+  background: var(--sky-pale);
+  color: var(--sky);
+}
+@media (max-width: 768px) {
+  /* 恢复悬浮导航到右侧，增加毛玻璃透明度，避免遮挡文字 */
+  .wb-nav-fab { 
+    right: 4px; 
+    padding: 6px 4px; 
+    gap: 8px; 
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+  .wb-nav-fab button { 
+    width: 32px; 
+    height: 32px; 
+    font-size: 16px; 
+    background: rgba(255, 255, 255, 0.5); 
+  }
   
+  /* 优化展开后的网格表单（位置、深度等输入框），让它们在手机上自动换行铺满 */
+  .entry-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 手机端变成两列 */
+    gap: 12px;
+  }
+  .entry-grid .grid-field {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .entry-grid .grid-field input[type="number"], 
+  .entry-grid .grid-field select {
+    width: 100%; /* 输入框占满整列 */
+  }
+}
+
+/* 移动端 AI 面板适配 */
+@media(max-width:768px) {
+  .ai-chat-panel {
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 80vh;
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+  }
+  .ai-fab {
+    bottom: calc(90px + env(safe-area-inset-bottom, 0px)); /* 抬高一点，防止和底部栏打架 */
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+    box-shadow: 0 8px 20px rgba(159, 122, 234, 0.5);
+  }
+}
+
+/* =========================================
+   新增功能专属样式 (蓝绿灯、AI清空按钮等)
+   ========================================= */
+.mode-toggle-group {
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  height: 34px;
+}
+.mode-toggle-btn {
+  padding: 0 12px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.mode-toggle-btn:hover { background: var(--sky-pale); }
+.mode-toggle-btn.active.blue { background: #66ccff; color: #fff; }
+.mode-toggle-btn.active.green { background: #7cc9b8; color: #fff; }
+
+.ai-clear-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-right: auto;
+}
+.ai-clear-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+/* =========================================
+   新增功能专属样式 (标签联想、剧场模式、帮助)
+   ========================================= */
+/* 标签联想下拉框 */
+.tag-suggestions { position: absolute; background: var(--white); border: 2px solid var(--sky-soft); border-radius: var(--radius-sm); max-height: 150px; overflow-y: auto; z-index: 100; box-shadow: 0 4px 12px var(--shadow); display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; margin-top: 4px; width: 100%; max-width: 300px; }
+.tag-suggestions button { background: var(--cream); border: 1px solid var(--cream-deep); padding: 4px 10px; border-radius: 12px; font-size: 12px; cursor: pointer; color: var(--text-dark); transition: var(--transition); }
+.tag-suggestions button:hover { background: var(--sky-pale); color: var(--sky); border-color: var(--sky); transform: translateY(-1px); }
+
+/* 剧场预览模式 */
+.theater-container { background: var(--cream); border-radius: var(--radius-lg); padding: 20px; min-height: 50vh; display: flex; flex-direction: column; gap: 16px; border: 2px solid var(--cream-deep); overflow-y: auto; }
+.theater-msg { display: flex; gap: 12px; max-width: 90%; animation: slideUp .3s ease; }
+.theater-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+.theater-msg .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--sky-pale); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; object-fit: cover; border: 2px solid var(--white); box-shadow: 0 2px 8px var(--shadow-soft); }
+.theater-msg .msg-content { display: flex; flex-direction: column; gap: 4px; }
+.theater-msg.user .msg-content { align-items: flex-end; }
+.theater-name { font-size: 12px; color: var(--text-soft); font-weight: 700; padding: 0 4px; }
+.theater-msg .bubble { background: var(--white); padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.6; color: var(--text-dark); border: 1px solid var(--border); word-break: break-word; white-space: pre-wrap; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+.theater-msg.user .bubble { background: var(--sky-pale); border-color: var(--sky-soft); color: var(--text-dark); border-top-right-radius: 4px; }
+.theater-msg.char .bubble { border-top-left-radius: 4px; }
+.theater-sys { align-self: center; background: rgba(0,0,0,0.05); padding: 4px 12px; border-radius: 12px; font-size: 11px; color: var(--text-soft); }
+/* =========================================
+   新增：极致可爱的果冻玻璃悬浮栏
+   ========================================= */
+.desktop-sticky-bar {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 28px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* 高级内发光与柔和阴影 */
+  box-shadow: 0 10px 30px rgba(102, 204, 255, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  z-index: 9999;
+  align-items: center;
+  touch-action: none;
+  /* Q弹的果冻动画 */
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+[data-theme="dark"] .desktop-sticky-bar {
+  background: rgba(30, 41, 59, 0.65);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* 极致无感的折叠状态 */
+.desktop-sticky-bar.collapsed {
+  padding: 0;
+  gap: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  opacity: 0.5; /* 半透明，降低存在感 */
+}
+.desktop-sticky-bar.collapsed:hover {
+  opacity: 1;
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--sky-soft);
+}
+[data-theme="dark"] .desktop-sticky-bar.collapsed {
+  background: rgba(30, 41, 59, 0.3);
+}
+[data-theme="dark"] .desktop-sticky-bar.collapsed:hover {
+  background: rgba(30, 41, 59, 0.9);
+}
+
+/* 展开时的可爱短横线拖拽手柄 */
+.drag-handle {
+  width: 32px;
+  height: 6px;
+  background: var(--sky-soft);
+  border-radius: 3px;
+  cursor: grab;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
+  margin-bottom: 4px;
+}
+.drag-handle:hover { opacity: 1; transform: scaleX(1.2); }
+.drag-handle:active { cursor: grabbing; }
+
+/* 展开时的可爱短横线拖拽手柄 (移到底部) */
+.drag-handle {
+  width: 32px;
+  height: 6px;
+  background: var(--sky-soft);
+  border-radius: 3px;
+  cursor: grab;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
+  margin-top: 4px; /* 改为距顶部留白 */
+}
+.drag-handle:hover { opacity: 1; transform: scaleX(1.2); }
+.drag-handle:active { cursor: grabbing; }
+
+/* 折叠时的小圆球按钮 */
+.cute-fab-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  color: var(--sky);
+}
+.cute-fab-btn:active { cursor: grabbing; }
+
+/* 内部功能按钮 */
+.desktop-sticky-bar button.tool-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: var(--white);
+  color: var(--text-soft);
+  box-shadow: 0 4px 12px var(--shadow-soft);
+  flex-shrink: 0;
+}
+.desktop-sticky-bar button.tool-btn .icon { font-size: 18px; line-height: 1; }
+.desktop-sticky-bar button.tool-btn .label { font-size: 9px; font-weight: 700; }
+.desktop-sticky-bar button.tool-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: var(--sky-pale);
+  color: var(--sky);
+  border-radius: 16px;
+}
+.desktop-sticky-bar button.export-btn-cute {
+  background: linear-gradient(135deg, var(--mint-dark), var(--mint-soft));
+  color: white;
+}
+.desktop-sticky-bar button.export-btn-cute:hover {
+  background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+  color: white;
+  box-shadow: 0 6px 20px rgba(52, 211, 153, 0.4);
+}
+
+/* 收起按钮 (移到顶部，极致无感设计) */
+.desktop-sticky-bar button.toolbar-toggle-btn {
+  background: transparent;
+  color: var(--text-soft);
+  height: 20px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.4; /* 默认很淡 */
+}
+.desktop-sticky-bar button.toolbar-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 1;
+}
+[data-theme="dark"] .desktop-sticky-bar button.toolbar-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* 让悬浮工具栏在手机端显示，并稍微缩小以防挡住过多内容 */
+@media(max-width:768px) { 
+  .desktop-sticky-bar { 
+    transform: scale(0.85); 
+    transform-origin: top left;
+  } 
+  .desktop-sticky-bar.collapsed:hover {
+    transform: scale(0.95);
+  }
+}
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  max-width: 90vw;
+  height: 100vh;
+  background: var(--white);
+  box-shadow: -10px 0 40px var(--shadow);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease;
+  border-left: 2px solid var(--purple-soft);
+}
+
 .header-btn.github{background:rgba(159,122,234,.4);border-color:rgba(159,122,234,.6)}.header-btn.github.connected{background:rgba(124,201,184,.5);border-color:rgba(124,201,184,.7)}
 .github-logo{width:18px;height:18px;vertical-align:middle;fill:currentColor}
 .sync-info{background:var(--purple-pale);border:2px solid var(--purple-soft);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.sync-info h4{color:var(--purple);margin-bottom:8px}.sync-info p{font-size:13px;color:var(--text)}.sync-info .time{font-size:12px;color:var(--text-soft);margin-top:8px}.sync-info .gist-link{font-size:12px;color:var(--purple);display:inline-block;margin-top:8px}
 .step-guide{background:var(--cream);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}.step-guide h4{color:var(--text-dark);margin-bottom:12px}.step-guide ol{padding-left:20px;font-size:13px}.step-guide li{margin-bottom:8px}.step-guide a{color:var(--purple)}
 </style>
 </head>
-
 <body>
   <a class="skip-nav" href="#main-content">跳转到主内容</a>
   <div id="cdn-error" class="cdn-error-overlay">
@@ -2818,68 +3369,21 @@
     <button onclick="location.reload()">🔄 重新加载</button>
   </div>
   <div id="root"></div>
-  <script type="module">
-    import htm from 'htm';
-    import { GoogleGenerativeAI } from "@google/generative-ai";
-    const html = htm.bind((tag, props, ...c) => (!tag || tag === '') ? React.createElement(React.Fragment, null, ...c) : React.createElement(tag, props, ...c));
-    const { useState, useEffect, useCallback, useMemo, useRef, memo, Component, createContext, useContext, useReducer } = React;
-    const { startTransition } = React;
 
-    /* ═══ DEBUG: 详细 hooks 错误追踪 ═══ */
-    const _origUseState = useState;
-    const _origUseEffect = useEffect;
-    const _origUseCallback = useCallback;
-    const _origUseMemo = useMemo;
-    const _origUseRef = useRef;
-    const _origUseReducer = useReducer;
-    const _origUseContext = useContext;
-    let _hookCallCount = 0;
-    let _hookRenderCount = 0;
-    let _hookTrace = [];
-    let _prevHookTrace = [];
-    let _debugHooks = false;
+  <!-- 【注意这里】引入了外部的 JS 文件 -->
+  
 
-    window._enableHookDebug = () => {
-      _debugHooks = true;
-      console.log('🔍 Hook debug enabled. Interact with the page to trigger re-renders.');
-    };
+<script type="module">
+/* --- 注入的核心灵魂 --- */
 
-    window._disableHookDebug = () => {
-      _debugHooks = false;
-      console.log('Hook debug disabled.');
-    };
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import htm from 'htm';
 
-    window._compareHookTraces = () => {
-      console.log('Previous hooks:', _prevHookTrace);
-      console.log('Current hooks:', _hookTrace);
-      if (_prevHookTrace.length !== _hookTrace.length) {
-        console.error(`❌ Hook count mismatch! Previous: ${_prevHookTrace.length}, Current: ${_hookTrace.length}`);
-        const maxLen = Math.max(_prevHookTrace.length, _hookTrace.length);
-        for (let i = 0; i < maxLen; i++) {
-          const prev = _prevHookTrace[i] || '(missing)';
-          const curr = _hookTrace[i] || '(missing)';
-          if (prev !== curr) console.warn(`  Hook #${i}: "${prev}" → "${curr}" ← DIFF`);
-          else console.log(`  Hook #${i}: "${prev}" ✓`);
-        }
-      }
-    };
+/* ================================== */
+/*          底层机制 (utils.js)        */
+/* ================================== */
 
-    /* 全局错误捕获 */
-    window.addEventListener('error', e => {
-      if (e.message && (e.message.includes('hooks') || e.message.includes('fewer') || e.message.includes('Rendered'))) {
-        console.error('🚨 HOOKS ERROR DETECTED');
-        console.error('Error:', e.message);
-        console.error('File:', e.filename, 'Line:', e.lineno, 'Col:', e.colno);
-        console.error('Stack:', e.error?.stack);
-        window._compareHookTraces();
-      }
-    });
-
-    console.log('%c🐱 调试模式已启用', 'color: #66ccff; font-size: 16px; font-weight: bold');
-    console.log('在控制台输入以下命令：');
-    console.log('  _enableHookDebug()  — 开启hook追踪');
-    console.log('  _compareHookTraces() — 对比前后hook调用');
-
+var { useRef, useCallback } = React;
     /* ═══════════ 常量 ═══════════ */
     const PNG_SIG = [137, 80, 78, 71, 13, 10, 26, 10];
     const DEF_CHUNK = 6;
@@ -2906,8 +3410,8 @@
     /* C4: Use ref-based z-index counter instead of module-level mutable */
     const useModalZ = () => { const ref = useRef(1000); return useCallback(() => ++ref.current, []) };
     /* C2: Tab and Modal key constants */
-    const TAB = { BASIC: 'basic', ADVANCED: 'advanced', BOOK: 'book' };
-    const MK = { SETTINGS: 'settings', PROMPT: 'prompt', JB: 'jb', BATCH: 'batch', ADV: 'adv', WB: 'wb', CMP: 'cmp', RPL: 'rpl', CLR: 'clr', EXP: 'exp', BACKUP: 'backup', GUIDE: 'guide', GEN: 'gen', GREET_GEN: 'greetGen', SF_PREVIEW: 'sfPreview' };
+    const TAB = { BASIC: 'basic', ADVANCED: 'advanced', BOOK: 'book', REGEX: 'regex', VARS: 'vars', SCRIPTS: 'scripts', THEATER: 'theater' };
+    const MK = { SETTINGS: 'settings', PROMPT: 'prompt', JB: 'jb', BATCH: 'batch', ADV: 'adv', WB: 'wb', CMP: 'cmp', RPL: 'rpl', CLR: 'clr', EXP: 'exp', BACKUP: 'backup', GUIDE: 'guide', GEN: 'gen', GREET_GEN: 'greetGen', SF_PREVIEW: 'sfPreview', HELP: 'help' };
     /* O2: Version */
     const APP_VERSION = '2.2.0';
     /* U11: Supported file types */
@@ -2917,8 +3421,8 @@
 
     /* ═══════════ S-1: API Key 混淆 ═══════════ */
     const _obfKey = 'mW0k'; /* Simple XOR seed */
-    const obfuscate = str => { if (!str) return ''; try { const bytes = new TextEncoder().encode(str); const key = new TextEncoder().encode(_obfKey); const out = new Uint8Array(bytes.length); for (let i = 0; i < bytes.length; i++) out[i] = bytes[i] ^ key[i % key.length]; return 'OBF:' + btoa(String.fromCharCode(...out)) } catch { return str } };
-    const deobfuscate = str => { if (!str || !str.startsWith('OBF:')) return str; try { const b64 = str.slice(4); const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0)); const key = new TextEncoder().encode(_obfKey); const out = new Uint8Array(bytes.length); for (let i = 0; i < bytes.length; i++) out[i] = bytes[i] ^ key[i % key.length]; return new TextDecoder().decode(out) } catch { return str } };
+    const obfuscate = str => { if (!str) return ''; try { const bytes = new TextEncoder().encode(str); const key = new TextEncoder().encode(_obfKey); const out = new Uint8Array(bytes.length); for (let i = 0; i < bytes.length; i++) out[i] = bytes[i] ^ key[i % key.length]; return 'OBF:' + btoa(String.fromCharCode(...out)) } catch(e) { console.warn('加密失败', e); return str } };
+    const deobfuscate = str => { if (!str || !str.startsWith('OBF:')) return str; try { const b64 = str.slice(4); const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0)); const key = new TextEncoder().encode(_obfKey); const out = new Uint8Array(bytes.length); for (let i = 0; i < bytes.length; i++) out[i] = bytes[i] ^ key[i % key.length]; return new TextDecoder().decode(out) } catch(e) { console.warn('解密失败', e); return str } };
 
     /* ═══════════ 字段标签映射 ═══════════ */
     const FIELD_LABELS = {
@@ -3043,10 +3547,11 @@
     const estimateTokens = text => { if (!text) return 0; const cached = _tokenCache.get(text); if (cached !== undefined) return cached; const cn = (text.match(/[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/g) || []).length; const en = text.replace(/[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/g, ''); const enTokens = Math.ceil(en.length / 3.5); const result = cn + enTokens; _tokenCache.set(text, result); return result };
 
     /* ═══════════ 数据工具 ═══════════ */
-    const mkEmpty = () => ({ name: '', description: '', personality: '', scenario: '', first_message: '', message_example: '', tags: [], alternate_greetings: [], book_entries: [], system_prompt: '', post_history_instructions: '', creator_notes: '', world_book_name: '' });
+    const mkEmpty = () => ({ name: '', creator: '', character_version: '1.0.0', description: '', personality: '', scenario: '', first_message: '', message_example: '', tags: [], alternate_greetings: [], book_entries: [], system_prompt: '', post_history_instructions: '', creator_notes: '', world_book_name: '', regex: [], variables: [], scripts: [] });
     const charCount = s => (s || '').length;
     const clip = async t => { try { await navigator.clipboard.writeText(t || ''); return true } catch { return false } };
     const formatDate = d => { const x = new Date(d); return `${x.getMonth() + 1}/${x.getDate()} ${x.getHours()}:${String(x.getMinutes()).padStart(2, '0')}` };
+    const formatBytes = bytes => { if (bytes < 1024) return bytes + ' B'; if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB'; return (bytes / 1048576).toFixed(1) + ' MB'; };
     const formatBackupDate = () => { const d = new Date(); return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}_${String(d.getHours()).padStart(2, '0')}${String(d.getMinutes()).padStart(2, '0')}` };
     /* M-5: Mobile-friendly download with correct filename */
     const downloadBlob = (blob, filename) => { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; a.rel = 'noopener'; a.style.display = 'none'; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url) }, 500) };
@@ -3094,8 +3599,16 @@
     };
 
     /* ═══════════ 字段定义 ═══════════ */
-    const BASIC_FIELDS = [['📖', '描述', 'description', 5], ['💫', '性格', 'personality', 4], ['🎬', '场景', 'scenario', 4]];
-    const ADV_FIELDS = [['🤖', '系统提示词', 'system_prompt'], ['📋', '历史后指令', 'post_history_instructions'], ['📋', '作者备注', 'creator_notes']];
+    const BASIC_FIELDS = [
+      ['📖', '描述', 'description', 5, '用具体细节而非抽象形容词描写：外貌特征、身份背景、说话习惯、行为举止上的小细节，以及与{{user}}的关系设定。例：银白色长发常年别着一支干枯的野花，说话时习惯先停顿半拍才开口...'], 
+      ['💫', '性格', 'personality', 4, '简短的关键词或短语列表，供模型快速抓取性格锚点。例：外冷内热、嘴硬心软、重承诺、对陌生人警惕高...'], 
+      ['🎬', '场景', 'scenario', 4, '故事发生的时间、地点和当前处境，为对话提供背景框架。例：故事发生在废弃的边境哨站，{{user}}是误入此地的旅人...']
+    ];
+    const ADV_FIELDS = [
+      ['🤖', '系统提示词', 'system_prompt', '定义行为边界和叙事规则，与角色描述互补而非重复。例：以第三人称有限视角描写{{char}}的动作、神态与心理活动...'], 
+      ['📋', '历史后指令', 'post_history_instructions', '在对话历史之后、生成回复之前插入的强提醒，用于纠正常见跑偏问题。例：请始终保持{{char}}的说话风格与设定性格一致...'], 
+      ['📋', '作者备注', 'creator_notes', '角色灵感、设计思路...']
+    ];
     const STATS_FIELDS = [['🏷️ 名称', 'name'], ['📖 描述', 'description'], ['💫 性格', 'personality'], ['🎬 场景', 'scenario'], ['👋 开场白', 'first_message'], ['💬 对话示例', 'message_example'], ['🤖 系统提示词', 'system_prompt'], ['📋 历史后指令', 'post_history_instructions'], ['📋 作者备注', 'creator_notes']];
     const BATCH_BASIC = { name: 1, description: 1, personality: 1, scenario: 1, first_message: 1, message_example: 1, tags: 1 };
     const BATCH_ADV = { system_prompt: 1, post_history_instructions: 1, creator_notes: 1 };
@@ -3115,8 +3628,8 @@
     const makeChunk = (kw, txt) => { const k = new TextEncoder().encode(kw), t = new TextEncoder().encode(txt), d = new Uint8Array(k.length + 1 + t.length); d.set(k); d.set(t, k.length + 1); const c = new Uint8Array(12 + d.length); new DataView(c.buffer).setUint32(0, d.length); c.set(new TextEncoder().encode('tEXt'), 4); c.set(d, 8); new DataView(c.buffer).setUint32(8 + d.length, crc32(c.slice(4, 8 + d.length))); return c };
     const base64Encode = s => { const bytes = new TextEncoder().encode(s); let bin = ''; for (let i = 0; i < bytes.length; i++)bin += String.fromCharCode(bytes[i]); return btoa(bin) };
     const base64Decode = b => new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0)));
-    /* P8: Async PNG chunk extraction */
-    const extractPNGText = async (bytes, kw) => { let off = 8; while (off < bytes.length) { const len = new DataView(bytes.buffer, bytes.byteOffset).getUint32(off); const type = new TextDecoder().decode(bytes.slice(off + 4, off + 8)); if (type === 'tEXt') { const chunk = bytes.slice(off + 8, off + 8 + len); const ni = chunk.indexOf(0); if (ni !== -1 && new TextDecoder().decode(chunk.slice(0, ni)) === kw) return new TextDecoder().decode(chunk.slice(ni + 1)) } if (type === 'IEND') break; off += 12 + len } return null };
+    /* P8: Async PNG chunk extraction (已修复边界溢出保护) */
+    const extractPNGText = async (bytes, kw) => { let off = 8; try { while (off < bytes.length) { if (off + 8 > bytes.length) break; const len = new DataView(bytes.buffer, bytes.byteOffset).getUint32(off); if (off + 12 + len > bytes.length) break; const type = new TextDecoder().decode(bytes.slice(off + 4, off + 8)); if (type === 'tEXt') { const chunk = bytes.slice(off + 8, off + 8 + len); const ni = chunk.indexOf(0); if (ni !== -1 && new TextDecoder().decode(chunk.slice(0, ni)) === kw) return new TextDecoder().decode(chunk.slice(ni + 1)) } if (type === 'IEND') break; off += 12 + len } } catch(e) { console.warn("PNG解析异常", e); } return null };
     /* B-5: Strip existing tEXt chunks with given keywords before export */
     const stripPNGChunks = (bytes, keywords) => {
       const kwSet = new Set(keywords);
@@ -3216,6 +3729,17 @@
 
     /* ═══════════ XML 验证与回退 — B-11: Raised threshold ═══════════ */
     const validateXMLResponse = (response, expectedCount) => { const re = /<T(\d+)>([\s\S]*?)<\/T\1>/g; const matches = new Map(); let m; while ((m = re.exec(response)) !== null) matches.set(parseInt(m[1]), m[2].trim()); return matches.size >= expectedCount * 0.8 ? matches : null };
+
+
+
+/* ================================== */
+/*        视图模块 (components.js)     */
+/* ================================== */
+
+var html = htm.bind((tag, props, ...c) => (!tag || tag === '') ? React.createElement(React.Fragment, null, ...c) : React.createElement(tag, props, ...c));
+var { useState, useEffect, useCallback, useMemo, useRef, memo, Component, createContext, useContext, useReducer } = React;
+
+
 
     /* ═══════════ B-2: useUndo — rewritten with useReducer for consistency ═══════════ */
     const UNDO_ACTION = { SET: 'set', SET_SILENT: 'set_s', UNDO: 'undo', REDO: 'redo', RESET: 'reset' };
@@ -3383,16 +3907,27 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
     });
 
     /* ═══════════ Mobile Bottom Bar ═══════════ */
-    const MobileBottomBar = memo(({ data, tab, onTranslate, onExport, onUndo, onRedo, canUndo, canRedo, onReplace }) => { if (!data) return null; return html`<nav class="mobile-bottom-bar" role="toolbar" aria-label="快捷操作"><button class="mobile-bottom-btn primary" onClick=${onTranslate} aria-label="翻译"><span class="mbb-icon" aria-hidden="true">🌸</span><span class="mbb-label">翻译</span></button><button class="mobile-bottom-btn warning" onClick=${onReplace} aria-label="查找替换"><span class="mbb-icon" aria-hidden="true">🔁</span><span class="mbb-label">替换</span></button><button class="mobile-bottom-btn" onClick=${onUndo} disabled=${!canUndo} aria-label="撤销"><span class="mbb-icon" aria-hidden="true">↶</span><span class="mbb-label">撤销</span></button><button class="mobile-bottom-btn" onClick=${onRedo} disabled=${!canRedo} aria-label="重做"><span class="mbb-icon" aria-hidden="true">↷</span><span class="mbb-label">重做</span></button><button class="mobile-bottom-btn success" onClick=${onExport} aria-label="导出"><span class="mbb-icon" aria-hidden="true">💾</span><span class="mbb-label">导出</span></button></nav>` });
+    const MobileBottomBar = memo(({ data, tab, onTranslate, onExport, onUndo, onRedo, canUndo, canRedo, onReplace }) => { 
+      if (!data) return null; 
+      return html`<nav class="mobile-bottom-bar" role="toolbar" aria-label="快捷操作">
+        <button class="mobile-bottom-btn primary" onClick=${onTranslate} aria-label="翻译"><span class="mbb-icon" aria-hidden="true">🌸</span><span class="mbb-label">翻译</span></button>
+        <button class="mobile-bottom-btn warning" onClick=${onReplace} aria-label="查找替换"><span class="mbb-icon" aria-hidden="true">🔁</span><span class="mbb-label">替换</span></button>
+        <button class="mobile-bottom-btn" onClick=${onUndo} disabled=${!canUndo} aria-label="撤销"><span class="mbb-icon" aria-hidden="true">↶</span><span class="mbb-label">撤销</span></button>
+        <button class="mobile-bottom-btn" onClick=${onRedo} disabled=${!canRedo} aria-label="重做"><span class="mbb-icon" aria-hidden="true">↷</span><span class="mbb-label">重做</span></button>
+        <button class="mobile-bottom-btn success" onClick=${onExport} aria-label="导出"><span class="mbb-icon" aria-hidden="true">💾</span><span class="mbb-label">导出</span></button>
+      </nav>` 
+    });
 
-    /* ═══════════ U6: Tag Chips Component ═══════════ */
+    /* ═══════════ U6: Tag Chips Component (支持自动联想) ═══════════ */
+    const COMMON_TAGS = ['傲娇', '病娇', '纯爱', '奇幻', '现代', '科幻', '百合', '后宫', '战斗', '日常', '腹黑', '无口', '人外', '魔法', '校园', '悬疑', '治愈'];
     const TagChips = memo(({ tags, onChange }) => {
-      const [inputVal, setInputVal] = useState(''); const inputRef = useRef(null);
+      const [inputVal, setInputVal] = useState(''); const [showSug, setShowSug] = useState(false); const inputRef = useRef(null);
       const addTag = useCallback(text => { const t = text.trim(); if (!t || tags.includes(t)) return; onChange([...tags, t]) }, [tags, onChange]);
       const removeTag = useCallback(idx => { onChange(tags.filter((_, i) => i !== idx)) }, [tags, onChange]);
-      const handleKeyDown = useCallback(e => { if ((e.key === 'Enter' || e.key === ',') && inputVal.trim()) { e.preventDefault(); inputVal.split(/[,，]/).forEach(t => addTag(t)); setInputVal('') } if (e.key === 'Backspace' && !inputVal && tags.length) { removeTag(tags.length - 1) } }, [inputVal, tags, addTag, removeTag]);
-      const handlePaste = useCallback(e => { e.preventDefault(); const text = e.clipboardData.getData('text'); text.split(/[,，\n]/).forEach(t => addTag(t)); setInputVal('') }, [addTag]);
-      return html`<div class="tag-chips-wrap" onClick=${() => inputRef.current?.focus()}>${tags.map((t, i) => html`<span key=${i} class="tag-chip"><span>${t}</span><button class="tag-del" onClick=${e => { e.stopPropagation(); removeTag(i) }} aria-label="删除标签 ${t}">×</button></span>`)}<input ref=${inputRef} class="tag-chips-input" value=${inputVal} onChange=${e => setInputVal(e.target.value)} onKeyDown=${handleKeyDown} onPaste=${handlePaste} onBlur=${() => { if (inputVal.trim()) { inputVal.split(/[,，]/).forEach(t => addTag(t)); setInputVal('') } }} placeholder=${tags.length ? '' : '输入标签，逗号分隔'}/></div>`
+      const handleKeyDown = useCallback(e => { if ((e.key === 'Enter' || e.key === ',') && inputVal.trim()) { e.preventDefault(); inputVal.split(/[,，]/).forEach(t => addTag(t)); setInputVal(''); setShowSug(false) } if (e.key === 'Backspace' && !inputVal && tags.length) { removeTag(tags.length - 1) } }, [inputVal, tags, addTag, removeTag]);
+      const handlePaste = useCallback(e => { e.preventDefault(); const text = e.clipboardData.getData('text'); text.split(/[,，\n]/).forEach(t => addTag(t)); setInputVal(''); setShowSug(false) }, [addTag]);
+      const suggestions = COMMON_TAGS.filter(t => !tags.includes(t) && (!inputVal || t.includes(inputVal)));
+      return html`<div style=${{position:'relative'}}><div class="tag-chips-wrap" onClick=${() => {inputRef.current?.focus(); setShowSug(true)}}>${tags.map((t, i) => html`<span key=${i} class="tag-chip"><span>${t}</span><button class="tag-del" onClick=${e => { e.stopPropagation(); removeTag(i) }} aria-label="删除标签 ${t}">×</button></span>`)}<input ref=${inputRef} class="tag-chips-input" value=${inputVal} onChange=${e => {setInputVal(e.target.value); setShowSug(true)}} onKeyDown=${handleKeyDown} onPaste=${handlePaste} onFocus=${()=>setShowSug(true)} onBlur=${() => setTimeout(() => { if (inputVal.trim()) { inputVal.split(/[,，]/).forEach(t => addTag(t)); setInputVal('') }; setShowSug(false) }, 200)} placeholder=${tags.length ? '' : '输入标签，逗号分隔'}/></div>${showSug && suggestions.length > 0 && html`<div class="tag-suggestions">${suggestions.map(t => html`<button key=${t} onClick=${e => { e.preventDefault(); addTag(t); setInputVal(''); setShowSug(false); inputRef.current?.focus() }}>${t}</button>`)}</div>`}</div>`
     });
 
     /* ═══════════ 模板系统 ═══════════ */
@@ -3402,6 +3937,24 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
       return html`<div class="tpl-section"><h4 style=${{ fontSize: 14, color: 'var(--text-dark)', marginBottom: 12 }}>📁 模板</h4><div class="tpl-save-row"><input placeholder="名称" value=${newName} onChange=${e => setNewName(e.target.value)}/><select value=${catSel} onChange=${e => setCatSel(e.target.value)}><option value="__none__">无类别</option>${userCats.map(c => html`<option key=${c.id} value=${c.id}>${c.name}</option>`)}</select><button class="btn primary" style=${{ padding: '10px 16px', fontSize: 12 }} onClick=${saveTpl} disabled=${!newName.trim()}>💾</button></div><div class="tpl-save-row" style=${{ marginBottom: 14 }}><input placeholder="新类别" value=${newCatName} onChange=${e => setNewCatName(e.target.value)} style=${{ flex: 1 }}/><button class="btn secondary" style=${{ padding: '8px 14px', fontSize: 12 }} onClick=${addCat} disabled=${!newCatName.trim()}>📂</button></div>${editItem && html`<div class="tpl-edit-form"><div class="form-group"><label>名称</label><input value=${editItem.name} onChange=${e => setEditItem({ ...editItem, name: e.target.value })}/></div>${editItem[ck] !== undefined && html`<div class="form-group"><label>内容</label><textarea value=${editItem[ck] || ''} onChange=${e => setEditItem({ ...editItem, [ck]: e.target.value })} style=${{ minHeight: 60 }}/></div>`}<div style=${{ display: 'flex', gap: 8 }}><button class="btn primary" style=${{ padding: '8px 16px', fontSize: 12 }} onClick=${saveEdit}>保存</button><button class="btn secondary" style=${{ padding: '8px 16px', fontSize: 12 }} onClick=${() => setEditItem(null)}>取消</button></div></div>`}<div class="tpl-list">${list.map(node => { if (isCat(node)) return html`<div key=${node.id} class="tpl-cat ${node.collapsed ? 'collapsed' : ''}"><div class="tpl-cat-header" onClick=${() => toggleCat(node.id)}><div class="left"><span class="collapse-icon">▼</span><span class="cat-name">${node.name}</span>${node.isPreset && html`<span class="preset-badge">预设</span>`}<span class="count">${node.items?.length || 0}</span></div>${!node.isPreset && html`<button class="btn-sm blush" onClick=${e => { e.stopPropagation(); delNode(node.id) }}>🗑️</button>`}</div><div class="tpl-cat-body">${(node.items || []).map(item => html`<div key=${item.id} class="tpl-item" style=${{ marginBottom: 6 }}><div class="info" onClick=${() => onLoad(item)}><div class="tpl-name">${item.name}</div></div><div class="btns"><button class="btn-sm sky" onClick=${() => onLoad(item)}>加载</button><button class="btn-sm lavender" onClick=${() => setEditItem({ ...item })}>✏️</button><button class="btn-sm blush" onClick=${() => delChild(node.id, item.id)}>🗑️</button></div></div>`)}</div></div>`; return html`<div key=${node.id} class="tpl-item"><div class="info" onClick=${() => onLoad(node)}><div class="tpl-name">${node.name}</div></div><div class="btns"><button class="btn-sm sky" onClick=${() => onLoad(node)}>加载</button><button class="btn-sm lavender" onClick=${() => setEditItem({ ...node })}>✏️</button><button class="btn-sm blush" onClick=${() => delNode(node.id)}>🗑️</button></div></div>` })}</div></div>`
     });
 
+
+
+
+/* ================================== */
+/*          主心骨 (app.js)            */
+/* ================================== */
+    
+    var html = htm.bind((tag, props, ...c) => (!tag || tag === '') ? React.createElement(React.Fragment, null, ...c) : React.createElement(tag, props, ...c));
+    var { useState, useEffect, useCallback, useMemo, useRef, memo, Component, createContext, useContext, useReducer } = React;
+    var { startTransition } = React;
+	
+
+
+
+    /* 调试代码已移除，提升生产环境性能与稳定性 */
+
+
+
     /* ═══════════ 配置弹窗 — S-1: 使用混淆 key ═══════════ */
     const GuideModal = memo(({ show, onClose, guideRows, onSave, gList, setGList }) => { const [rows, setRows] = useState([]); useEffect(() => { if (show) setRows(guideRows?.length ? deepClone(guideRows) : [{ src: '', dst: '', enabled: true }]) }, [show]); if (!show) return null; const updateRow = (i, k, v) => setRows(p => p.map((r, j) => j === i ? { ...r, [k]: v } : r)); return html`<${Modal} show onClose=${onClose} title="📖 翻译指导" headerClass="warning" large footer=${html`<><button class="btn secondary" style=${{ marginRight: 'auto' }} onClick=${() => setRows([{ src: '', dst: '', enabled: true }])}>🗑️</button><button class="btn warning" onClick=${() => { onSave(rows.filter(r => r.src.trim())); onClose() }}>💾</button><button class="btn secondary" onClick=${onClose}>取消</button></>`}>${rows.map((r, i) => html`<div key=${i} class="guide-row ${r.enabled ? '' : 'disabled'}"><input type="checkbox" checked=${r.enabled} onChange=${e => updateRow(i, 'enabled', e.target.checked)}/><input class="src" value=${r.src} onChange=${e => updateRow(i, 'src', e.target.value)} placeholder="原文"/><span class="arrow">→</span><input class="dst" value=${r.dst} onChange=${e => updateRow(i, 'dst', e.target.value)} placeholder="译文"/><button class="del-btn" onClick=${() => setRows(p => p.filter((_, j) => j !== i))} aria-label="删除行">−</button></div>`)}<div class="guide-add"><button onClick=${() => setRows(p => [...p, { src: '', dst: '', enabled: true }])}>＋</button></div><${TplSys} list=${gList} setList=${setGList} onLoad=${t => { if (t.rows) setRows(deepClone(t.rows)) }} type="guide" ck="rows"/><//>` });
 
@@ -3410,7 +3963,7 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
     const PromptModal = memo(({ show, onClose, cfg, onSave, list, setList }) => { const [prompt, setPrompt] = useState(''); useEffect(() => { if (show) setPrompt(cfg?.systemPrompt || '') }, [show]); if (!show) return null; return html`<${Modal} show onClose=${onClose} title="📝 提示词" footer=${html`<><button class="btn secondary" style=${{ marginRight: 'auto' }} onClick=${() => setPrompt('')}>清空</button><button class="btn primary" onClick=${() => { onSave({ ...cfg, systemPrompt: prompt }); onClose() }}>保存</button></>`}><div class="form-group"><textarea value=${prompt} onChange=${e => setPrompt(e.target.value)} style=${{ minHeight: 120 }}/></div><${TplSys} list=${list} setList=${setList} onLoad=${t => setPrompt(t.prompt || '')} type="prompt" ck="prompt"/><//>` });
 
     const SettingsModal = memo(({ show, onClose, providers: pvIn, providerIdx: piIn, onSave, cachedModels, setCachedModels }) => {
-      const [providerList, setProviderList] = useState([]); const [activeIdx, useState] = React.useState(0); const [editing, setEditing] = React.useState(null); const [modelList, setModelList] = React.useState([]); const [modelSearch, setModelSearch] = React.useState(''); const [fetchingModels, setFetchingModels] = React.useState(false); const [modelListCollapsed, setModelListCollapsed] = React.useState(false); const [selectedModels, setSelectedModels] = React.useState(new Set()); const [testResult, setTestResult] = React.useState(null); const [testing, setTesting] = React.useState(false); const [showKey, setShowKey] = React.useState(false);
+      const [providerList, setProviderList] = useState([]); const [activeIdx, setActiveIdx] = React.useState(0); const [editing, setEditing] = React.useState(null); const [modelList, setModelList] = React.useState([]); const [modelSearch, setModelSearch] = React.useState(''); const [fetchingModels, setFetchingModels] = React.useState(false); const [modelListCollapsed, setModelListCollapsed] = React.useState(false); const [selectedModels, setSelectedModels] = React.useState(new Set()); const [testResult, setTestResult] = React.useState(null); const [testing, setTesting] = React.useState(false); const [showKey, setShowKey] = React.useState(false);
       /* S-1: Deobfuscate key for editing display */
       useEffect(() => { if (show) { setProviderList(deepClone(pvIn).map(p => ({ ...p, key: deobfuscate(p.key) }))); setActiveIdx(piIn); setEditing(null); setModelList([]); setTestResult(null); setShowKey(false) } }, [show]);
       if (!show) return null;
@@ -3418,7 +3971,7 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
       const doTest = async () => { setTesting(true); setTestResult({ t: 'loading', m: '测试中...' }); try { const md = (editing.models || '').split(',')[0]?.trim(); await testConnection(editing, md); setTestResult({ t: 'ok', m: '✅ 连接成功' }) } catch (err) { setTestResult({ t: 'fail', m: '❌ ' + err.message }) } finally { setTesting(false) } };
       /* S-1: Re-obfuscate keys before saving */
       const handleSave = () => { const obfList = providerList.map(p => ({ ...p, key: obfuscate(p.key) })); onSave(obfList, activeIdx); onClose() };
-      return html`<${Modal} show onClose=${onClose} title="⚙️ API 设置" footer=${html`<button class="btn primary" onClick=${handleSave}>保存</button>`}><div class="form-group"><label>当前提供商</label><select value=${activeIdx} onChange=${e => setActiveIdx(+e.target.value)}>${providerList.map((p, j) => html`<option key=${p.id || j} value=${j}>${p.name}</option>`)}</select></div><hr style=${{ border: 'none', borderTop: '2px dashed var(--cream-deep)', margin: '20px 0' }}/>${providerList.map(p => html`<div key=${p.id} class="provider-item"><span class="name">${p.name}</span><div class="btns"><button class="btn-sm sky" onClick=${() => { setEditing(shallowClone(p)); setModelList([]); setTestResult(null); setShowKey(false) }}>编辑</button><button class="btn-sm blush" onClick=${() => { const a = providerList.filter(x => x.id !== p.id); setProviderList(a); if (activeIdx >= a.length) setActiveIdx(Math.max(0, a.length - 1)) }}>删除</button></div></div>`)}<button class="btn secondary" style=${{ width: '100%' }} onClick=${() => { setEditing({ name: '', url: '', key: '', models: '', endpoint: '' }); setTestResult(null); setShowKey(false) }}>➕ 新增</button>${editing && html`<><hr style=${{ border: 'none', borderTop: '2px dashed var(--cream-deep)', margin: '20px 0' }}/><div class="form-group"><label>名称</label><input value=${editing.name} onChange=${e => setEditing({ ...editing, name: e.target.value })}/></div><div class="form-group"><label>API地址(Gemini留空)</label><input value=${editing.url || ''} onChange=${e => setEditing({ ...editing, url: e.target.value })}/></div><div class="form-group"><label>Endpoint(默认/chat/completions)</label><input value=${editing.endpoint || ''} onChange=${e => setEditing({ ...editing, endpoint: e.target.value })} placeholder="/chat/completions"/></div><div class="form-group"><label>API Key</label><div class="pwd-field-wrap"><input type=${showKey ? 'text' : 'password'} value=${editing.key} onChange=${e => setEditing({ ...editing, key: e.target.value })}/><button class="pwd-toggle-btn" onClick=${() => setShowKey(!showKey)} type="button" aria-label=${showKey ? '隐藏密钥' : '显示密钥'}>${showKey ? '🙈' : '👁️'}</button></div><small>⚠️ Key 以混淆形式存储在浏览器本地，请注意安全</small></div><div class="form-group"><label>模型(逗号分隔)</label><div class="form-row"><div class="form-group"><input value=${editing.models || ''} onChange=${e => setEditing({ ...editing, models: e.target.value })}/></div><button class="btn success" style=${{ padding: '10px', whiteSpace: 'nowrap' }} onClick=${doTest} disabled=${testing || !editing.key} title="测试连接">${testing ? '⏳' : '🔗'}</button><button class="btn secondary" style=${{ padding: '10px', whiteSpace: 'nowrap' }} onClick=${async () => { setFetchingModels(true); try { const m = await fetchModels(editing); setModelList(m); setModelListCollapsed(false); setCachedModels(p => ({ ...p, [editing.id]: m })) } catch (err) { console.warn(err) } finally { setFetchingModels(false) } }} disabled=${fetchingModels} title="获取模型列表">${fetchingModels ? '...' : '📥'}</button></div></div>${testResult && html`<div class="test-result ${testResult.t}">${testResult.m}</div>`}${modelList.length > 0 && html`<div class="model-list-section ${modelListCollapsed ? 'collapsed' : ''}"><div class="model-list-header" onClick=${() => setModelListCollapsed(!modelListCollapsed)}><h5>▼ 可用模型(${modelList.length})</h5><span style=${{ fontSize: 12, color: 'var(--text-soft)' }}>${selectedModels.size}已选</span></div><div class="model-list-body"><div class="model-list-search"><input placeholder="搜索模型..." value=${modelSearch} onChange=${e => setModelSearch(e.target.value)}/><button class="btn-sm mint" onClick=${() => setSelectedModels(new Set(filteredModels))}>全选</button><button class="btn-sm blush" onClick=${() => setSelectedModels(new Set())}>清空</button><button class="btn-sm sky" onClick=${applySelected}>应用</button></div><div class="model-list-items">${filteredModels.map(m => html`<div key=${m} class="model-list-item ${selectedModels.has(m) ? 'selected' : ''}" onClick=${() => toggleModel(m)}><input type="checkbox" checked=${selectedModels.has(m)} onChange=${() => toggleModel(m)}/><span>${m}</span></div>`)}</div></div></div>`}<div style=${{ display: 'flex', gap: 10, marginTop: 16 }}><button class="btn primary" onClick=${() => { if (!editing.name || !editing.key) return; if (!editing.id) { editing.id = Date.now(); setProviderList([...providerList, editing]) } else setProviderList(providerList.map(p => p.id === editing.id ? editing : p)); setEditing(null) }}>保存</button><button class="btn secondary" onClick=${() => setEditing(null)}>取消</button></div></>`}<//>`
+      return html`<${Modal} show onClose=${onClose} title="⚙️ API 设置" footer=${html`<button class="btn primary" onClick=${handleSave}>保存</button>`}><div class="form-group"><label>当前提供商</label><select value=${activeIdx} onChange=${e => setActiveIdx(+e.target.value)}>${providerList.map((p, j) => html`<option key=${p.id || j} value=${j}>${p.name}</option>`)}</select></div><hr style=${{ border: 'none', borderTop: '2px dashed var(--cream-deep)', margin: '20px 0' }}/>${providerList.map(p => html`<div key=${p.id} class="provider-item"><span class="name">${p.name}</span><div class="btns"><button class="btn-sm sky" onClick=${() => { setEditing(shallowClone(p)); setModelList([]); setTestResult(null); setShowKey(false) }}>编辑</button><button class="btn-sm blush" onClick=${() => { const a = providerList.filter(x => x.id !== p.id); setProviderList(a); if (activeIdx >= a.length) setActiveIdx(Math.max(0, a.length - 1)) }}>删除</button></div></div>`)}<button class="btn secondary" style=${{ width: '100%' }} onClick=${() => { setEditing({ name: '', url: '', key: '', models: '', endpoint: '' }); setTestResult(null); setShowKey(false) }}>➕ 新增</button>${editing && html`<><hr style=${{ border: 'none', borderTop: '2px dashed var(--cream-deep)', margin: '20px 0' }}/><div class="form-group"><label>名称</label><input value=${editing.name} onChange=${e => setEditing({ ...editing, name: e.target.value })}/></div><div class="form-group"><label>API地址(Gemini留空)</label><input value=${editing.url || ''} onChange=${e => setEditing({ ...editing, url: e.target.value })}/></div><div class="form-group"><label>Endpoint(默认/chat/completions)</label><input value=${editing.endpoint || ''} onChange=${e => setEditing({ ...editing, endpoint: e.target.value })} placeholder="/chat/completions"/></div><div class="form-group"><label>API Key</label><div class="pwd-field-wrap"><input type=${showKey ? 'text' : 'password'} value=${editing.key} onChange=${e => setEditing({ ...editing, key: e.target.value })}/><button class="pwd-toggle-btn" onClick=${() => setShowKey(!showKey)} type="button" aria-label=${showKey ? '隐藏密钥' : '显示密钥'}>${showKey ? '🙈' : '👁️'}</button></div><small style=${{color:'var(--orange)'}}>⚠️ 密钥仅保存在您的浏览器本地，但并未进行强加密，请勿在公共网吧等不安全环境使用！</small></div><div class="form-group"><label>模型(逗号分隔)</label><div class="form-row"><div class="form-group"><input value=${editing.models || ''} onChange=${e => setEditing({ ...editing, models: e.target.value })}/></div><button class="btn success" style=${{ padding: '10px', whiteSpace: 'nowrap' }} onClick=${doTest} disabled=${testing || !editing.key} title="测试连接">${testing ? '⏳' : '🔗'}</button><button class="btn secondary" style=${{ padding: '10px', whiteSpace: 'nowrap' }} onClick=${async () => { setFetchingModels(true); try { const m = await fetchModels(editing); setModelList(m); setModelListCollapsed(false); setCachedModels(p => ({ ...p, [editing.id]: m })) } catch (err) { console.warn(err) } finally { setFetchingModels(false) } }} disabled=${fetchingModels} title="获取模型列表">${fetchingModels ? '...' : '📥'}</button></div></div>${testResult && html`<div class="test-result ${testResult.t}">${testResult.m}</div>`}${modelList.length > 0 && html`<div class="model-list-section ${modelListCollapsed ? 'collapsed' : ''}"><div class="model-list-header" onClick=${() => setModelListCollapsed(!modelListCollapsed)}><h5>▼ 可用模型(${modelList.length})</h5><span style=${{ fontSize: 12, color: 'var(--text-soft)' }}>${selectedModels.size}已选</span></div><div class="model-list-body"><div class="model-list-search"><input placeholder="搜索模型..." value=${modelSearch} onChange=${e => setModelSearch(e.target.value)}/><button class="btn-sm mint" onClick=${() => setSelectedModels(new Set(filteredModels))}>全选</button><button class="btn-sm blush" onClick=${() => setSelectedModels(new Set())}>清空</button><button class="btn-sm sky" onClick=${applySelected}>应用</button></div><div class="model-list-items">${filteredModels.map(m => html`<div key=${m} class="model-list-item ${selectedModels.has(m) ? 'selected' : ''}" onClick=${() => toggleModel(m)}><input type="checkbox" checked=${selectedModels.has(m)} onChange=${() => toggleModel(m)}/><span>${m}</span></div>`)}</div></div></div>`}<div style=${{ display: 'flex', gap: 10, marginTop: 16 }}><button class="btn primary" onClick=${() => { if (!editing.name || !editing.key) return; if (!editing.id) { editing.id = Date.now(); setProviderList([...providerList, editing]) } else setProviderList(providerList.map(p => p.id === editing.id ? editing : p)); setEditing(null) }}>保存</button><button class="btn secondary" onClick=${() => setEditing(null)}>取消</button></div></>`}<//>`
     });
 
     /* ═══════════ AI 生成弹窗 ═══════════ */
@@ -3445,106 +3998,424 @@ const uGHS=()=>{const[tk,sTk]=useLocalStorage('ght','');const[gi,sGi]=useLocalSt
       return html`<div class="section-card"><div class="section-header"><span class="section-title">👋 开场白</span><div class="section-tools"><button class="btn-sm peach" onClick=${ctx.onUndo} disabled=${!ctx.canUndo} aria-label="撤销">↶</button><button class="btn-sm peach" onClick=${ctx.onRedo} disabled=${!ctx.canRedo} aria-label="重做">↷</button><button class="btn-sm lavender" onClick=${() => ctx.onExpand(idx === 0 ? 'first_message' : '_g_' + idx, idx === 0 ? '开场白' : '开场白 #' + (idx + 1))} aria-label="全屏编辑">⛶</button><button class="btn-sm mint" onClick=${async () => ctx.onCopy(await clip(cur))} aria-label="复制">📋</button><button class="btn-sm blush" onClick=${() => setCur('')} aria-label="清空">🗑️</button><span class="char-count">${charCount(cur)}字</span><span class="token-count">~${curTokens}tk</span>${curTokens > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠长</span>`}<button class="btn-sm orange" onClick=${onDetect} aria-label="检测拆分">🔍</button><button class="ai-gen-tag" onClick=${onOpenGreetGen} disabled=${disabled}>✨ AI</button></div></div><${DebouncedTextarea} className="textarea" rows=${6} value=${cur} onChange=${setCur}/><div class="greeting-nav"><button class="nav-del" onClick=${() => { if (total <= 1) return; if (idx === 0) { const [f, ...r] = data.alternate_greetings || []; onChange('first_message', f || ''); onChange('alternate_greetings', r) } else { const a = [...(data.alternate_greetings || [])]; a.splice(idx - 1, 1); onChange('alternate_greetings', a); setIdx(Math.max(0, idx - 1)) } }} disabled=${total <= 1} aria-label="删除当前开场白">🗑️</button><button class="nav-add" onClick=${() => { onChange('alternate_greetings', [...(data.alternate_greetings || []), '']); setIdx(total) }} aria-label="添加开场白">➕</button><div style=${{ flex: 1 }}/><button class="nav-btn" onClick=${() => setIdx(i => Math.max(0, i - 1))} disabled=${idx === 0} aria-label="上一个">‹</button><input class="nav-input" inputmode="numeric" value=${idx + 1} onChange=${e => { const v = parseInt(e.target.value); if (!isNaN(v) && v >= 1 && v <= total) setIdx(v - 1) }} aria-label="当前开场白序号"/><span class="nav-total">/ ${total}</span><button class="nav-btn" onClick=${() => setIdx(i => Math.min(total - 1, i + 1))} disabled=${idx >= total - 1} aria-label="下一个">›</button></div></div>`
     });
 
-    const FieldSection = memo(({ icon, title, fieldKey, value, onChange, rows = 4 }) => {
+    const FieldSection = memo(({ icon, title, fieldKey, value, onChange, rows = 4, placeholder = '' }) => {
       const ctx = useContext(EditorContext);
+      const [collapsed, setCollapsed] = useState(false);
       const cc = useMemo(() => charCount(value), [value]); const tk = useMemo(() => estimateTokens(value), [value]);
-      return html`<div class="section-card"><div class="section-header"><span class="section-title">${icon} ${title}</span><div class="section-tools"><button class="btn-sm peach" onClick=${ctx.onUndo} disabled=${!ctx.canUndo} aria-label="撤销">↶</button><button class="btn-sm peach" onClick=${ctx.onRedo} disabled=${!ctx.canRedo} aria-label="重做">↷</button><button class="btn-sm lavender" onClick=${() => ctx.onExpand(fieldKey, title)} aria-label="全屏编辑">⛶</button><button class="btn-sm mint" onClick=${async () => ctx.onCopy(await clip(value))} aria-label="复制">📋</button><button class="btn-sm blush" onClick=${() => ctx.onClear(fieldKey)} aria-label="清空">🗑️</button><span class="char-count">${cc}字</span><span class="token-count">~${tk}tk</span>${tk > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠长</span>`}</div></div><${DebouncedTextarea} className="textarea" rows=${rows} value=${value || ''} onChange=${onChange}/></div>`
+      return html`<div class="section-card"><div class="section-header" style=${{cursor:'pointer'}} onClick=${()=>setCollapsed(!collapsed)}><span class="section-title">${collapsed ? '▶' : '▼'} ${icon} ${title}</span><div class="section-tools" onClick=${e=>e.stopPropagation()}><button class="btn-sm peach" onClick=${ctx.onUndo} disabled=${!ctx.canUndo} aria-label="撤销">↶</button><button class="btn-sm peach" onClick=${ctx.onRedo} disabled=${!ctx.canRedo} aria-label="重做">↷</button><button class="btn-sm lavender" onClick=${() => ctx.onExpand(fieldKey, title)} aria-label="全屏编辑">⛶</button><button class="btn-sm mint" onClick=${async () => ctx.onCopy(await clip(value))} aria-label="复制">📋</button><button class="btn-sm blush" onClick=${() => ctx.onClear(fieldKey)} aria-label="清空">🗑️</button><span class="char-count">${cc}字</span><span class="token-count">~${tk}tk</span>${tk > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠长</span>`}</div></div>
+      ${!collapsed && html`<${DebouncedTextarea} className="textarea" rows=${rows} value=${value || ''} onChange=${onChange} placeholder=${placeholder}/>`}</div>`
     });
 
-    const BasicTab = memo(p => html`<div>${BASIC_FIELDS.map(([ic, ti, fk, ro]) => html`<${FieldSection} key=${fk} icon=${ic} title=${ti} fieldKey=${fk} value=${p.data[fk]} onChange=${v => p.onChange(fk, v)} rows=${ro}/>`)}<${GrEditor} data=${p.data} onChange=${p.onChange} disabled=${p.disabled} onDetect=${p.onDetect} onOpenGreetGen=${p.onOpenGreetGen}/><${FieldSection} icon="💬" title="对话示例" fieldKey="message_example" value=${p.data.message_example} onChange=${v => p.onChange('message_example', v)} rows=${5}/></div>`);
+    const BasicTab = memo(p => html`<div>${BASIC_FIELDS.map(([ic, ti, fk, ro, ph]) => html`<${FieldSection} key=${fk} icon=${ic} title=${ti} fieldKey=${fk} value=${p.data[fk]} onChange=${v => p.onChange(fk, v)} rows=${ro} placeholder=${ph}/>`)}<${GrEditor} data=${p.data} onChange=${p.onChange} disabled=${p.disabled} onDetect=${p.onDetect} onOpenGreetGen=${p.onOpenGreetGen}/><${FieldSection} icon="💬" title="对话示例" fieldKey="message_example" value=${p.data.message_example} onChange=${v => p.onChange('message_example', v)} rows=${5} placeholder="<START>\n{{user}}: 你好\n{{char}}: *warily 打量了一下来人* ……你好。有事吗？"/></div>`);
 
-    const AdvancedTab = memo(p => html`<div>${ADV_FIELDS.map(([ic, ti, fk]) => html`<${FieldSection} key=${fk} icon=${ic} title=${ti} fieldKey=${fk} value=${p.data[fk]} onChange=${v => p.onChange(fk, v)}/>`)}</div>`);
+    const AdvancedTab = memo(p => html`<div>${ADV_FIELDS.map(([ic, ti, fk, ph]) => html`<${FieldSection} key=${fk} icon=${ic} title=${ti} fieldKey=${fk} value=${p.data[fk]} onChange=${v => p.onChange(fk, v)} placeholder=${ph}/>`)}</div>`);
+	    /* ════ 新增：帮助与快捷键弹窗 ════ */
+    const HelpModal = memo(({ show, onClose }) => {
+      if (!show) return null;
+      return html`<${Modal} show onClose=${onClose} title="❓ 帮助与快捷键" footer=${html`<button class="btn primary" onClick=${onClose}>我知道了</button>`}>
+        <div style=${{fontSize: 14, color: 'var(--text-dark)', lineHeight: 1.8}}>
+          <h4 style=${{color: 'var(--sky)', marginBottom: 8}}>⌨️ 常用快捷键</h4>
+          <ul style=${{paddingLeft: 20, marginBottom: 16}}>
+            <li><kbd>Ctrl</kbd> + <kbd>S</kbd> : 快速唤起导出面板</li>
+            <li><kbd>Ctrl</kbd> + <kbd>Z</kbd> : 撤销上一步修改</li>
+            <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> : 重做</li>
+          </ul>
+          <h4 style=${{color: 'var(--sky)', marginBottom: 8}}>💡 核心字段科普</h4>
+          <ul style=${{paddingLeft: 20}}>
+            <li><strong>系统提示词 (System Prompt)</strong>：定义AI扮演该角色时的底层规则，影响最深。</li>
+            <li><strong>历史后指令 (Post History)</strong>：插在聊天记录最后面的一句话，用于强力纠正AI跑题或格式错误。</li>
+            <li><strong>世界书 (World Book)</strong>：相当于角色的“外置记忆库”，当聊天触发关键词时，才会把内容塞给AI。</li>
+          </ul>
+        </div>
+      <//>`;
+    });
+
+    /* ════ 新增：剧场预览组件 ════ */
+    const TheaterTab = memo(({ data, imgUrl }) => {
+      const charName = data.name || '角色';
+      // 简单解析对话示例
+      const parseExamples = (text) => {
+        if (!text) return [];
+        const lines = text.split('\n');
+        const msgs = [];
+        let currentRole = '';
+        let currentText = '';
+        const flush = () => { if (currentText) msgs.push({ role: currentRole, text: currentText.trim() }); currentText = ''; };
+        for (const line of lines) {
+          if (line.trim() === '<START>') { msgs.push({ role: 'sys', text: '--- 新的对话开始 ---' }); continue; }
+          const m = line.match(/^\{\{([^}]+)\}\}:(.*)/) || line.match(/^([A-Za-z0-9_\u4e00-\u9fa5]+):(.*)/);
+          if (m) {
+            flush();
+            currentRole = (m[1].toLowerCase() === 'user' || m[1] === '你') ? 'user' : 'char';
+            currentText = m[2];
+          } else {
+            currentText += '\n' + line;
+          }
+        }
+        flush();
+        return msgs;
+      };
+      
+      const msgs = [];
+      if (data.first_message) msgs.push({ role: 'char', text: data.first_message.replace(/\{\{user\}\}/gi, '你').replace(/\{\{char\}\}/gi, charName) });
+      const examples = parseExamples(data.message_example);
+      if (examples.length > 0) {
+        msgs.push({ role: 'sys', text: '--- 以下为对话示例 ---' });
+        examples.forEach(e => {
+          let t = e.text.replace(/\{\{user\}\}/gi, '你').replace(/\{\{char\}\}/gi, charName);
+          msgs.push({ role: e.role, text: t });
+        });
+      }
+
+      return html`<div class="theater-container">
+        ${msgs.length === 0 ? html`<div style=${{textAlign:'center', color:'var(--text-soft)', marginTop: 40}}>暂无开场白或对话示例，快去填写吧~</div>` : 
+        msgs.map((m, i) => {
+          if (m.role === 'sys') return html`<div key=${i} class="theater-sys">${m.text}</div>`;
+          const isUser = m.role === 'user';
+          return html`<div key=${i} class="theater-msg ${isUser ? 'user' : 'char'}">
+            <div class="avatar">${isUser ? '👤' : (imgUrl ? html`<img src=${imgUrl} style=${{width:'100%', height:'100%', borderRadius:'50%', objectFit:'cover'}}/>` : '🐱')}</div>
+            <div class="msg-content">
+              <div class="theater-name">${isUser ? '你' : charName}</div>
+              <div class="bubble">${m.text}</div>
+            </div>
+          </div>`;
+        })}
+      </div>`;
+    });
 
     /* ═══════════ 世界书 ═══════════ */
-    /* U1: 添加了 position, role, probability 选项 */
+/* U1: 兼容数字与字符串、支持酒馆/Luck原生文本位置的强力映射方案 */
     const WB_POSITIONS = [
-      { label: "角色定义之前", pos: 0, role: 0 },
-      { label: "角色定义之后", pos: 1, role: 0 },
-      { label: "作者注释之前", pos: 2, role: 0 },
-      { label: "作者注释之后", pos: 3, role: 0 },
-      { label: "@D [系统]在深度", pos: 4, role: 0 },
-      { label: "@D [用户]在深度", pos: 4, role: 1 },
-      { label: "@D [AI]在深度", pos: 4, role: 2 },
-      { label: "示例消息前", pos: 5, role: 0 },
-      { label: "示例消息后", pos: 6, role: 0 }
+      { label: "角色定义之前", pos: 0, role: 0, keys: [0, "0", "before_char", "角色定义之前"] },
+      { label: "角色定义之后", pos: 1, role: 0, keys: [1, "1", "after_char", "角色定义之后"] },
+      { label: "作者注释之前", pos: 2, role: 0, keys: [2, "2", "before_author", "作者注释之前"] },
+      { label: "作者注释之后", pos: 3, role: 0, keys: [3, "3", "after_author", "作者注释之后"] },
+      { label: "@D [系统]", pos: 4, role: 0, keys: [4, "4", "system"] },
+      { label: "@D [用户]", pos: 4, role: 1, keys: ["user"] },
+      { label: "@D [AI]", pos: 4, role: 2, keys: ["ai"] },
+      { label: "示例消息前", pos: 5, role: 0, keys: [5, "5", "before_em"] },
+      { label: "示例消息后", pos: 6, role: 0, keys: [6, "6", "after_em"] }
     ];
 
-    const BookEntry = memo(({ entry, index, onChange, onRemove, collapsed, onToggle, onExpandContent, onMoveUp, onMoveDown, isFirst, isLast, onDuplicate, selected, onSelect }) => { 
+    const BookEntry = memo(({ entry, index, onChange, onRemove, collapsed, onToggle, onExpandContent, onMoveUp, onMoveDown, isFirst, isLast, onDuplicate, selected, onSelect, allGroups }) => { 
       const update = (k, v) => onChange(index, k, v); 
-      
-      const posValue = `${entry.position || 0}_${entry.role || 0}`;
+      const updateMulti = (obj) => onChange(index, obj);
 
-      return html`<div class="book-entry ${collapsed ? 'collapsed' : ''}"><div class="entry-header" onClick=${onToggle}><span class="collapse-icon">▼</span>${onSelect && html`<input type="checkbox" checked=${!!selected} onClick=${e => e.stopPropagation()} onChange=${e => onSelect(index, e.target.checked)} style=${{ width: 20, height: 20, accentColor: 'var(--sky)', flexShrink: 0 }}/>`}<input value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder="名称"/><div class="entry-actions" onClick=${e => e.stopPropagation()}><button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button><button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button><button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button><${Toggle} label="启用" checked=${entry.enabled !== false} onChange=${v => update('enabled', v)}/><button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除条目">删除</button></div></div><div class="entry-body"><div class="entry-row">
-  <label style=${{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '8px' }}>
-    <span>🔑 关键词 (回车或英文逗号自动生成 Tag)</span>
-    <button class="btn-sm mint" title="一键将带有中文逗号、顿号的混乱关键词修复为独立的Tag" onClick=${e => {
-      e.stopPropagation();
-      const rawText = Array.isArray(entry.key) ? entry.key.join(',') : '';
-      const fixed = rawText.split(/[,，、|]+/).map(t => t.trim()).filter(Boolean);
-      update('key', fixed);
-    }}>🛠️ 一键修复格式</button>
-  </label>
-  <${TagChips} 
-    tags=${Array.isArray(entry.key) ? entry.key : []} 
-    onChange=${arr => update('key', arr)} 
-  />
-</div><div class="entry-row"><label>📝 内容 <span class="expand-icon" onClick=${() => onExpandContent(index)} aria-label="展开编辑">⛶</span></label><${DebouncedTextarea} className="textarea" rows=${3} value=${entry.content || ''} onChange=${v => update('content', v)}/></div><div class="entry-grid"><div class="grid-field"><label>📌 位置</label><select value=${posValue} onChange=${e => { const [p, r] = e.target.value.split('_').map(Number); update('position', p); update('role', r); }}>${WB_POSITIONS.map(op => html`<option key=${`${op.pos}_${op.role}`} value=${`${op.pos}_${op.role}`}>${op.label}</option>`)}</select></div><div class="grid-field"><label>🐚 深度</label><input type="number" value=${entry.depth ?? 4} onChange=${e => update('depth', +e.target.value)}/></div><div class="grid-field"><label>⚙️ 顺序</label><input type="number" value=${entry.order ?? (entry.insertion_order ?? 100)} onChange=${e => { update('order', +e.target.value); update('insertion_order', +e.target.value); }}/></div><div class="grid-field"><label>🎲 触发%</label><input type="number" min="0" max="100" value=${entry.probability ?? 100} onChange=${e => update('probability', +e.target.value)}/></div><${Toggle} label="🔵常驻" checked=${!!entry.constant} onChange=${v => update('constant', v)}/></div></div></div>` 
+      // 融合 Luck & 清清丫的兼容逻辑：同时支持数字下标、字符串和英文代号匹配
+      const rawPos = entry.position ?? 0;
+      const rawRole = entry.role ?? 0;
+      const matchedPosObj = WB_POSITIONS.find(op => 
+        op.keys.includes(rawPos) || op.pos === Number(rawPos) && (op.role === Number(rawRole) || rawRole === 0)
+      );
+      const posNum = matchedPosObj ? matchedPosObj.pos : 0;
+      const roleNum = matchedPosObj ? matchedPosObj.role : 0;
+      const posValue = `${posNum}_${roleNum}`;
+      const posLabel = matchedPosObj ? matchedPosObj.label : "角色定义之前";
+// 新增：自动判断当前是 PC 还是 移动端 (<=768px 为移动端)
+const isMobileView = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+      return html`<div id="wb-entry-${index}" class="book-entry wb-entry-item ${collapsed ? 'collapsed' : ''}">
+        <div class="entry-header" onClick=${onToggle} style=${{ display: 'flex', flexDirection: 'column', padding: '12px 16px', gap: '8px', minHeight: 'auto' }}>
+          
+          <div style=${{ display: 'flex', justifyContent: 'space-between', alignItems: isMobileView ? 'center' : 'flex-start', width: '100%' }}>
+            
+            <div style=${{ display: 'flex', alignItems: 'center', gap: '8px', flex: isMobileView ? 'none' : 1, minWidth: isMobileView ? 'auto' : '150px' }}>
+              <span class="collapse-icon">▼</span>
+              <span class="wb-status-dot" title=${entry.constant ? '常驻激活' : '关键词触发'} style=${{ background: entry.constant ? '#66ccff' : '#7cc9b8', flexShrink: 0 }}></span>
+              ${onSelect && html`<input type="checkbox" checked=${!!selected} onClick=${e => e.stopPropagation()} onChange=${e => onSelect(index, e.target.checked)} style=${{ width: 20, height: 20, accentColor: 'var(--sky)', flexShrink: 0, margin: 0 }}/>`}
+              ${!isMobileView ? html`<span style=${{ fontSize: '12px', color: 'var(--text-soft)', fontWeight: 'bold' }}>#${index + 1}</span>` : null}
+            </div>
+
+            ${isMobileView ? html`<span style=${{ fontSize: '12px', color: 'var(--text-soft)', fontWeight: 'bold' }}>#${index + 1}</span>` : null}
+
+            ${!isMobileView ? html`
+              <div style=${{ flex: 2, textAlign: 'center', padding: '0 10px', display: 'flex', alignItems: 'center' }}>
+                <textarea value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder=${(Array.isArray(entry.key) && entry.key[0]) || '条目标题（名称为空时显示关键词）'} rows="1" style=${{ width: '100%', textAlign: 'center', fontSize: '17px', background: 'transparent', border: 'none', outline: 'none', color: 'var(--text-dark)', fontWeight: 'bold', resize: 'none', overflow: 'hidden', lineHeight: '1.4', wordBreak: 'break-word', display: 'block', padding: 0 }} onInput=${e => { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }} ref=${el => { if(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; } }}/>
+              </div>
+            ` : null}
+
+            ${!isMobileView ? html`
+              <div class="entry-actions" onClick=${e => e.stopPropagation()} style=${{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'flex-end', alignItems: 'center', gap: '6px', flex: 1, minWidth: '150px' }}>
+                <button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button>
+                <button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button>
+                <button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button>
+                <div style=${{ display: 'flex', alignItems: 'center', marginLeft: '4px', gap: '6px' }}>
+                  <${Toggle} label="启用" checked=${entry.enabled !== false} onChange=${v => update('enabled', v)}/>
+                  <button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除">删除</button>
+                </div>
+              </div>
+            ` : null}
+          </div>
+
+          ${isMobileView ? html`
+            <div style=${{ width: '100%', padding: '4px 0', display: 'flex', justifyContent: 'center' }}>
+              <textarea value=${entry.name || ''} onChange=${e => { e.stopPropagation(); update('name', e.target.value) }} onClick=${e => e.stopPropagation()} placeholder=${(Array.isArray(entry.key) && entry.key[0]) || '条目标题（名称为空时显示关键词）'} rows="1" style=${{ width: '100%', textAlign: 'center', fontSize: '17px', background: 'transparent', border: 'none', outline: 'none', color: 'var(--text-dark)', fontWeight: 'bold', resize: 'none', overflow: 'hidden', lineHeight: '1.4', wordBreak: 'break-word', display: 'block', padding: 0 }} onInput=${e => { e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; }} ref=${el => { if(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; } }}/>
+            </div>
+          ` : null}
+
+          ${isMobileView ? html`
+            <div class="entry-actions" onClick=${e => e.stopPropagation()} style=${{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', gap: '6px', width: '100%', alignItems: 'center', background: 'var(--cream)', padding: '6px 8px', borderRadius: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+              <button class="btn-sm sky" onClick=${onMoveUp} disabled=${isFirst} aria-label="上移">↑</button>
+              <button class="btn-sm sky" onClick=${onMoveDown} disabled=${isLast} aria-label="下移">↓</button>
+              <button class="btn-sm mint" onClick=${onDuplicate} aria-label="复制">📋</button>
+              <div style=${{ display: 'flex', alignItems: 'center', marginLeft: '2px', gap: '6px' }}>
+                <${Toggle} label="启用" checked=${entry.enabled !== false} onChange=${v => update('enabled', v)}/>
+                <button class="btn-sm blush" onClick=${() => onRemove(index)} aria-label="删除">删除</button>
+              </div>
+            </div>
+          ` : null}
+
+          <div style=${{ display: 'flex', gap: '12px', fontSize: '12px', color: 'var(--text-soft)', flexWrap: 'wrap', justifyContent: 'center', width: '100%', marginTop: '4px' }}>
+            <span style=${{ whiteSpace: 'nowrap' }}>📍 ${posLabel}</span>
+            ${posNum === 4 ? html`<span style=${{ whiteSpace: 'nowrap' }}>🐚 深度: ${entry.depth ?? 4}</span>` : null}
+            <span style=${{ whiteSpace: 'nowrap' }}>⚙️ 顺序: ${entry.order ?? (entry.insertion_order ?? 100)}</span>
+            <span style=${{ whiteSpace: 'nowrap' }}>🎲 触发: ${entry.probability ?? 100}%</span>
+          </div>
+          
+        </div>
+        <div class="entry-body">
+          <div class="entry-row">
+            <label style=${{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '8px' }}>
+              <span>🔑 关键词 (回车或英文逗号自动生成 Tag)</span>
+              <button class="btn-sm mint" title="一键将带有中文逗号、顿号的混乱关键词修复为独立的Tag" onClick=${e => {
+                e.stopPropagation();
+                const rawText = Array.isArray(entry.key) ? entry.key.join(',') : '';
+                const fixed = rawText.split(/[,，、|]+/).map(t => t.trim()).filter(Boolean);
+                update('key', fixed);
+              }}>🛠️ 一键修复格式</button>
+            </label>
+            <${TagChips} tags=${Array.isArray(entry.key) ? entry.key : []} onChange=${arr => update('key', arr)} />
+          </div>
+          <div class="entry-row">
+            <label>📝 内容 <span class="expand-icon" onClick=${() => onExpandContent(index)} aria-label="展开编辑">⛶</span></label>
+            <${DebouncedTextarea} className="textarea" rows=${3} value=${entry.content || ''} onChange=${v => update('content', v)}/>
+          </div>
+          <div class="entry-grid">
+            <div class="grid-field"><label>📌 位置</label>
+              <select value=${posValue} onChange=${e => { const [p, r] = e.target.value.split('_').map(Number); updateMulti({ position: p, role: r }); }}>
+                ${WB_POSITIONS.map(op => html`<option key=${`${op.pos}_${op.role}`} value=${`${op.pos}_${op.role}`}>${op.label}</option>`)}
+              </select>
+            </div>
+            
+            ${posNum === 4 ? html`
+              <div class="grid-field"><label>🐚 深度</label><input type="number" value=${entry.depth ?? 4} onChange=${e => update('depth', +e.target.value)}/></div>
+            ` : null}
+
+            <div class="grid-field"><label>⚙️ 顺序</label><input type="number" value=${entry.order ?? (entry.insertion_order ?? 100)} onChange=${e => updateMulti({ order: +e.target.value, insertion_order: +e.target.value })}/></div>
+            <div class="grid-field"><label>🎲 触发%</label><input type="number" min="0" max="100" value=${entry.probability ?? 100} onChange=${e => update('probability', +e.target.value)}/></div>
+            <div class="grid-field">
+              <label>模式</label>
+              <label class="toggle" role="switch" style=${{ cursor: 'pointer' }}>
+                <input type="checkbox" checked=${!!entry.constant} onChange=${e => update('constant', e.target.checked)} style=${{ display: 'none' }}/>
+                <span class="toggle-track wb-toggle-track"/>
+                <span style=${{ color: entry.constant ? 'var(--sky)' : 'var(--mint-dark)', fontWeight: 'bold' }}>${entry.constant ? "常驻" : "触发"}</span>
+              </label>
+            </div>
+            </div>
+            <details style=${{ marginTop: 12 }}>
+            <summary style=${{ cursor: 'pointer', fontWeight: 'bold' }}>⚙️ 高级逻辑参数 (点击展开)</summary>
+            <div class="adv-grid-container">
+              <div class="grid-field"><label>逻辑</label><select value=${entry.selectiveLogic ?? 0} onChange=${e => update('selectiveLogic', +e.target.value)}><option value="0">AND ANY</option><option value="1">AND ALL</option><option value="2">NOT ANY</option><option value="3">NOT ALL</option></select></div>
+              <div class="grid-field"><label>扫描深度</label><input type="number" value=${entry.scan_depth ?? 0} onChange=${e => update('scan_depth', +e.target.value)}/></div>
+              <div class="grid-field"><label>组权重</label><input type="number" value=${entry.group_weight ?? 100} onChange=${e => update('group_weight', +e.target.value)}/></div>
+              <div class="grid-field"><label>黏性(Sticky)</label><input type="number" value=${entry.sticky ?? 0} onChange=${e => update('sticky', +e.target.value)}/></div>
+              <div class="grid-field"><label>冷却(Cooldown)</label><input type="number" value=${entry.cooldown ?? 0} onChange=${e => update('cooldown', +e.target.value)}/></div>
+              <div class="grid-field"><label>延迟(Delay)</label><input type="number" value=${entry.delay ?? 0} onChange=${e => update('delay', +e.target.value)}/></div>
+              <div class="grid-field" style=${{ flex: '1', minWidth: '200px' }}>
+                <label>分组名</label>
+                <div style=${{ display: 'flex', gap: '4px' }}>
+                  <input style=${{ flex: 1 }} placeholder="输入组名" value=${entry.group ?? ''} onChange=${e => update('group', e.target.value)}/>
+                  <select style=${{ width: '100px' }} value="" onChange=${e => { if(e.target.value) update('group', e.target.value); }}>
+                    <option value="">快捷选择...</option>
+                    ${(allGroups || []).map(g => html`<option key=${g} value=${g}>${g}</option>`)}
+                  </select>
+                </div>
+              </div>	  
+<div class="grid-field" style=${{ flexDirection: 'row', gridColumn: '1 / -1', flexWrap: 'wrap', gap: 12, marginTop: 8 }}>
+                <label><input type="checkbox" checked=${!!entry.case_sensitive} onChange=${e => update('case_sensitive', e.target.checked)}/> 区分大小写</label>
+                <label><input type="checkbox" checked=${!!entry.match_whole_words} onChange=${e => update('match_whole_words', e.target.checked)}/> 完整单词</label>
+                <label><input type="checkbox" checked=${!!entry.prevent_recursion} onChange=${e => update('prevent_recursion', e.target.checked)}/> 防递归</label>
+                <label><input type="checkbox" checked=${!!entry.delay_until_recursion} onChange=${e => update('delay_until_recursion', e.target.checked)}/> 延迟到递归</label>
+              </div>
+            </div>
+          </details>					
+          </div>
+        </div>` 
     });
 
     const WorldBookTab = memo(({ data, setData, onExpandEntry, onExportWB, addToast }) => {
-      const [search, setSearch] = useState(''); const [collapsed, setCollapsed] = useState({}); const [batchSel, setBatchSel] = useState(new Set()); const wbImportRef = useRef(); const entries = data.book_entries || []; const filtered = useMemo(() => entries.filter(e => !search || (e.name || '').toLowerCase().includes(search.toLowerCase()) || (Array.isArray(e.key) ? e.key.join(' ') : '').toLowerCase().includes(search.toLowerCase()) || (e.content || '').toLowerCase().includes(search.toLowerCase())), [entries, search]); const updateEntry = (i, k, v) => { const a = [...entries]; a[i] = { ...a[i], [k]: v }; setData(p => ({ ...p, book_entries: a })) }; const moveEntry = (idx, dir) => { const a = [...entries]; const t = idx + dir; if (t < 0 || t >= a.length) return;[a[idx], a[t]] = [a[t], a[idx]]; setData(p => ({ ...p, book_entries: a })) }; const collapseAll = () => { const nc = {}; entries.forEach((_, i) => nc[i] = true); setCollapsed(nc) }; const expandAll = () => setCollapsed({}); const dupEntry = idx => { const e = entries[idx]; const ne = { ...shallowClone(e), name: (e.name || '') + '(副本)', _id: `wb_${Date.now()}` }; const a = [...entries]; a.splice(idx + 1, 0, ne); setData(p => ({ ...p, book_entries: a })); addToast('已复制', 'success') }; const batchToggle = val => { setData(p => ({ ...p, book_entries: (p.book_entries || []).map(e => ({ ...e, enabled: val })) })); addToast(val ? '全部启用' : '全部禁用', 'success') }; const toggleBatchSel = (idx, checked) => { setBatchSel(p => { const n = new Set(p); checked ? n.add(idx) : n.delete(idx); return n }) }; const batchDelete = () => { if (!batchSel.size) return; setData(p => ({ ...p, book_entries: entries.filter((_, i) => !batchSel.has(i)) })); addToast(`删除${batchSel.size}个`, 'success'); setBatchSel(new Set()) }; 
+      const allGroups = useMemo(() => Array.from(new Set((data.book_entries || []).map(e => e.group).filter(Boolean))), [data.book_entries]);
+      const [search, setSearch] = useState(''); const [activeTag, setActiveTag] = useState(null); const [collapsed, setCollapsed] = useState({}); const [batchSel, setBatchSel] = useState(new Set()); const wbImportRef = useRef(); const docImportRef = useRef(); const entries = data.book_entries || []; 
+      const allTags = useMemo(() => { const tags = new Set(); entries.forEach(e => { if (Array.isArray(e.key)) e.key.forEach(k => tags.add(k)); }); return Array.from(tags); }, [entries]);
+      const filtered = useMemo(() => entries.filter(e => { const matchSearch = !search || (e.name || '').toLowerCase().includes(search.toLowerCase()) || (Array.isArray(e.key) ? e.key.join(' ') : '').toLowerCase().includes(search.toLowerCase()) || (e.content || '').toLowerCase().includes(search.toLowerCase()); const matchTag = !activeTag || (Array.isArray(e.key) && e.key.includes(activeTag)); return matchSearch && matchTag; }), [entries, search, activeTag]);
       
-const importWB = async file => {
+      const updateEntry = (i, k, v) => { setData(p => { const a = [...(p.book_entries || [])]; if (typeof k === 'object') { a[i] = { ...a[i], ...k }; } else { a[i] = { ...a[i], [k]: v }; } return { ...p, book_entries: a }; }); }; 
+      
+      const moveEntry = (idx, dir) => { const a = [...entries]; const t = idx + dir; if (t < 0 || t >= a.length) return;[a[idx], a[t]] = [a[t], a[idx]]; setData(p => ({ ...p, book_entries: a })) }; const collapseAll = () => { const nc = {}; entries.forEach((_, i) => nc[i] = true); setCollapsed(nc) }; const expandAll = () => setCollapsed({}); const dupEntry = idx => { const e = entries[idx]; const ne = { ...shallowClone(e), name: (e.name || '') + '(副本)', _id: `wb_${Date.now()}` }; const a = [...entries]; a.splice(idx + 1, 0, ne); setData(p => ({ ...p, book_entries: a })); addToast('已复制', 'success') }; const batchToggle = val => { setData(p => ({ ...p, book_entries: (p.book_entries || []).map(e => ({ ...e, enabled: val })) })); addToast(val ? '全部启用' : '全部禁用', 'success') }; const toggleBatchSel = (idx, checked) => { setBatchSel(p => { const n = new Set(p); checked ? n.add(idx) : n.delete(idx); return n }) }; const batchDelete = () => { if (!batchSel.size) return; setData(p => ({ ...p, book_entries: entries.filter((_, i) => !batchSel.has(i)) })); addToast(`删除${batchSel.size}个`, 'success'); setBatchSel(new Set()) }; 
+      
+      // ✅ 新增：Luck的灵魂架构 —— 将所勾选的条目“剥离/合并”成全新的纯净世界书文件直接下载
+      const batchExportAsIndependentWB = () => {
+        if (!batchSel.size) return;
+        const selectedEntries = entries.filter((_, i) => batchSel.has(i));
+        const entriesObj = {};
+        let maxUid = Date.now();
+        selectedEntries.forEach((e, i) => {
+          const formatted = { ...e };
+          // 清除喵喵内部使用的状态标签，复原Luck原生格式
+          delete formatted._id; delete formatted.enabled; delete formatted.name;
+          formatted.comment = e.name || '';
+          formatted.disable = !(e.enabled !== false);
+          entriesObj[e.uid || (maxUid++)] = formatted;
+        });
+        const customName = `${data.world_book_name || data.name || '定制世界书'}_提取版`;
+        const exportJson = { name: customName, entries: entriesObj, extensions: {} };
+        const blob = new Blob([JSON.stringify(exportJson, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); 
+        a.download = `${customName}.json`; a.click(); URL.revokeObjectURL(a.href);
+        addToast(`✅ 成功剥离提取 ${batchSel.size} 个条目到新世界书`, 'important', 5000);
+      };
+
+      const importWB = async file => {
         try {
           const text = await file.text(); const wb = JSON.parse(text); if (!wb || typeof wb !== 'object') throw new Error('格式无效');
-          // U2: 借鉴 luck 编辑器，导入独立世界书时也要保留原有的 uid
           const entriesArr = Array.isArray(wb.entries) ? wb.entries : Object.entries(wb.entries || {}).map(([k, v]) => ({ ...v, uid: v.uid ?? parseInt(k) }));
 
           const newEntries = entriesArr.map((e, i) => ({
-            ...e, // 完美保留所有原生和插件的隐藏字段
-            uid: e.uid ?? parseInt(i),
-            name: e.comment || e.name || `条目${i + 1}`,
-            // 完美对齐 Luck：原生保留数组格式，彻底防止带有逗号的正则关键词被强制切碎
+            ...e, uid: e.uid ?? parseInt(i), name: e.comment || e.name || `条目${i + 1}`,
             key: Array.isArray(e.keys) ? e.keys : (Array.isArray(e.key) ? e.key : (typeof e.key === 'string' ? [e.key].filter(Boolean) : [])),
-            content: e.content || '',
-            enabled: e.disable ? false : (e.enabled !== false),
-            insertion_order: e.order ?? (e.insertion_order ?? 100),
-            order: e.order ?? (e.insertion_order ?? 100),
-            depth: e.depth ?? 4,
-            constant: !!e.constant,
-            position: e.position ?? 0,
-            role: (e.position === 4) ? (e.role ?? 0) : null,
-            probability: e.probability ?? 100,
-            _id: `wb_${Date.now()}_${i}`
+            content: e.content || '', enabled: e.disable ? false : (e.enabled !== false),
+            insertion_order: e.order ?? (e.insertion_order ?? 100), order: e.order ?? (e.insertion_order ?? 100),
+            depth: e.depth ?? 4, constant: !!e.constant, position: e.position ?? 0,
+            role: (e.position === 4) ? (e.role ?? 0) : null, probability: e.probability ?? 100, _id: `wb_${Date.now()}_${i}`
           }));
           
-          // 借鉴 Luck 编辑器逻辑：如果世界书内部没有设定 name，则抓取外部导入文件的文件名（剔除.json后缀）作为它的名字
-          setData(p => ({ 
-            ...p, 
-            book_entries: [...(p.book_entries || []), ...newEntries], 
-            world_book_name: wb.name || file.name.replace(/\.json$/i, '') || p.world_book_name, 
-            world_book_extensions: wb.extensions || p.world_book_extensions || {} 
-          })); 
+          setData(p => ({ ...p, book_entries: [...(p.book_entries || []), ...newEntries], world_book_name: wb.name || file.name.replace(/\.json$/i, '') || p.world_book_name, world_book_extensions: wb.extensions || p.world_book_extensions || {} })); 
           addToast(`已导入 ${newEntries.length} 个条目`, 'success');
-        } catch (err) {
-          addToast('导入失败: ' + err.message, 'error')
-        }
+        } catch (err) { addToast('导入失败: ' + err.message, 'error') }
       };
 
+      // ✅ 升级：融合Luck的阶梯降级逻辑。排序的同时强制将参数分配为 1000, 990, 980 防止乱序冲突
       const sortEntries = () => {
         const sorted = [...entries].sort((a,b) => {
           if (a.enabled !== b.enabled) return a.enabled ? -1 : 1;
           if (a.constant !== b.constant) return a.constant ? -1 : 1;
           const orderA = a.order ?? (a.insertion_order ?? 100);
           const orderB = b.order ?? (b.insertion_order ?? 100);
-          if (orderA !== orderB) return orderB - orderA; // Descending order like luck
+          if (orderA !== orderB) return orderB - orderA;
           return 0;
         });
-        setData(p => ({ ...p, book_entries: sorted }));
-        addToast('已按优先级重新排序', 'success');
+        
+        let luckOrderWeight = 1000;
+        sorted.forEach(e => {
+            e.order = luckOrderWeight;
+            e.insertion_order = luckOrderWeight;
+            luckOrderWeight -= 10;
+        });
+        
+        setData(p => ({ ...p, book_entries: sorted })); 
+        addToast('⚡ 已应用最高优解：重新分配阶梯权重值并排列！', 'important', 4000);
       };
 
-      return html`<div>${!entries.length ? html`<div style=${{ textAlign: 'center', padding: 40, color: 'var(--text-soft)' }}><div style=${{ fontSize: 48, marginBottom: 12 }}>📚</div><p>暂无世界书条目</p><div style=${{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 16 }}><button class="btn primary" style=${{ padding: '10px 20px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', key: [], content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: null, probability: 100, _id: `wb_${Date.now()}` }] }))}>➕ 新建</button><label class="btn secondary" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label></div></div>` : html`<><div class="book-toolbar"><div class="search-box"><input placeholder="搜索..." value=${search} onChange=${e => { startTransition(() => setSearch(e.target.value)) }}/></div><button class="btn primary" style=${{ padding: '10px 16px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', key: [], content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: null, probability: 100, _id: `wb_${Date.now()}` }, ...(p.book_entries || [])] }))}>➕</button><label class="btn secondary" style=${{ padding: '10px 16px', fontSize: 13, cursor: 'pointer' }}>📥 导入<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label><button class="btn success" style=${{ padding: '10px 16px', fontSize: 13 }} onClick=${onExportWB} disabled=${!entries.length}>📤 导出</button><button class="btn-sm lavender" onClick=${collapseAll} aria-label="全部折叠">▲</button><button class="btn-sm lavender" onClick=${expandAll} aria-label="全部展开">▼</button><button class="btn-sm mint" onClick=${() => batchToggle(true)}>全启</button><button class="btn-sm blush" onClick=${() => batchToggle(false)}>全禁</button><button class="btn-sm orange" onClick=${sortEntries}>🔄 优先级排序</button></div>${batchSel.size > 0 && html`<div class="wb-batch-bar"><span>已选 ${batchSel.size} 个</span><button style=${{ background: 'var(--blush)', borderColor: 'var(--rose)', color: '#c9939c' }} onClick=${batchDelete}>🗑️ 批量删除</button><button style=${{ background: 'var(--cream)', borderColor: 'var(--cream-deep)', color: 'var(--text-soft)' }} onClick=${() => setBatchSel(new Set())}>取消选择</button><button style=${{ background: 'var(--sky-pale)', borderColor: 'var(--sky-soft)', color: 'var(--sky)' }} onClick=${() => setBatchSel(new Set(entries.map((_, i) => i)))}>全选</button></div>`}<div style=${{ fontSize: 12, color: 'var(--text-soft)', marginBottom: 12 }}>共 ${entries.length} 个${search ? `，匹配 ${filtered.length}` : ''}</div>${filtered.map(e => { const realIdx = entries.indexOf(e); return html`<${BookEntry} key=${e._id || realIdx} entry=${e} index=${realIdx} onChange=${updateEntry} onRemove=${idx => setData(p => ({ ...p, book_entries: entries.filter((_, j) => j !== idx) }))} collapsed=${collapsed[realIdx]} onToggle=${() => setCollapsed(p => ({ ...p, [realIdx]: !p[realIdx] }))} onExpandContent=${onExpandEntry} onMoveUp=${() => moveEntry(realIdx, -1)} onMoveDown=${() => moveEntry(realIdx, 1)} isFirst=${realIdx === 0} isLast=${realIdx === entries.length - 1} onDuplicate=${() => dupEntry(realIdx)} selected=${batchSel.has(realIdx)} onSelect=${toggleBatchSel}/>` })}</>`}</div>`
+      const loadJSZip = () => new Promise((res, rej) => { if (window.JSZip) return res(); const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+      const loadMammoth = () => new Promise((res, rej) => { if (window.mammoth) return res(); const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+
+      const importDocs = async files => {
+        if (!files || files.length === 0) return;
+        const hasDocx = Array.from(files).some(f => f.name.toLowerCase().endsWith('.docx') || f.name.toLowerCase().endsWith('.zip'));
+        if (hasDocx) { try { await loadMammoth(); } catch (err) { addToast('文档组件异常', 'error'); return; } }
+        const hasZip = Array.from(files).some(f => f.name.toLowerCase().endsWith('.zip'));
+        if (hasZip) { try { await loadJSZip(); } catch (err) { addToast('文档组件异常', 'error'); return; } }
+
+        let importedCount = 0; const newEntries = [];
+        const processOneFile = async (file, customName) => {
+          let content = ''; const pureName = customName || file.name.replace(/\.[^.]+$/, '');
+          const ext = file.name.split('.').pop().toLowerCase();
+          if (ext === 'txt') { content = await file.text(); } 
+          else if (ext === 'docx') { const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() }); content = result.value || ''; } 
+          else if (ext === 'json') { const raw = await file.text(); try { content = JSON.stringify(JSON.parse(raw), null, 2); } catch { content = raw; } } 
+          else return null;
+          if (!content || !content.trim()) return null;
+          return { fileName: pureName, content };
+        };
+
+        for (const file of Array.from(files)) {
+          const ext = file.name.split('.').pop().toLowerCase();
+          if (ext === 'zip') {
+            const zip = await JSZip.loadAsync(await file.arrayBuffer());
+            for (const zfn of Object.keys(zip.files)) {
+              const zEntry = zip.files[zfn]; if (zEntry.dir) continue;
+              const zExt = zfn.split('.').pop().toLowerCase(); if (!['txt', 'docx', 'json'].includes(zExt)) continue;
+              const fakeFile = new File([await zEntry.async('blob')], zfn);
+              const result = await processOneFile(fakeFile, zfn.split('/').pop().replace(/\.[^.]+$/, ''));
+              if (result) {
+                newEntries.push({ uid: Date.now() + Math.random(), key: [result.fileName], name: result.fileName, content: result.content, enabled: true, constant: false, position: 2, role: 0, depth: 4, order: 100, insertion_order: 100, probability: 100, _id: `wb_doc_${Date.now()}_${Math.random()}` });
+                importedCount++;
+              }
+            }
+          } else {
+            const result = await processOneFile(file);
+            if (result) {
+              newEntries.push({ uid: Date.now() + Math.random(), key: [result.fileName], name: result.fileName, content: result.content, enabled: true, constant: false, position: 2, role: 0, depth: 4, order: 100, insertion_order: 100, probability: 100, _id: `wb_doc_${Date.now()}_${Math.random()}` });
+              importedCount++;
+            }
+          }
+        }
+        if (newEntries.length > 0) { setData(p => ({ ...p, book_entries: [...(p.book_entries || []), ...newEntries] })); addToast(`成功导入 ${importedCount} 个文档`, 'success'); } 
+        else { addToast('未检测到内容', 'warning'); }
+      };
+
+      const scrollToEntry = (type) => {
+        const items = document.querySelectorAll('.wb-entry-item');
+        if (!items.length) return;
+        if (type === 'first') { items[0].scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+        if (type === 'last') { items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+        
+        let target = null;
+        if (type === 'next') {
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].getBoundingClientRect().top > 120) { target = items[i]; break; }
+          }
+        } else if (type === 'prev') {
+          for (let i = items.length - 1; i >= 0; i--) {
+            // 将判定线从 80 改为 10，强制跳过当前正卡在顶部的元素，精准找到真正在它上面的条目
+            if (items[i].getBoundingClientRect().top < 10) { target = items[i]; break; }
+          }
+        }
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+
+      return html`<div style=${{ position: 'relative' }}>
+        ${entries.length > 0 ? html`<div class="wb-nav-fab">
+          <button onClick=${() => scrollToEntry('first')} title="跳到第一个">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline></svg>
+          </button>
+          <button onClick=${() => scrollToEntry('prev')} title="上一个条目">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          </button>
+          <button onClick=${() => scrollToEntry('next')} title="下一个条目">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <button onClick=${() => scrollToEntry('last')} title="跳到最后一个">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+          </button>
+        </div>` : null}
+        ${!entries.length ? html`<div style=${{ textAlign: 'center', padding: 40, color: 'var(--text-soft)' }}><div style=${{ fontSize: 48, marginBottom: 12 }}>📚</div><p>暂无世界书条目</p><div style=${{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginTop: 16 }}><button class="btn primary" style=${{ padding: '10px 20px' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', key: [], content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: null, probability: 100, _id: `wb_${Date.now()}` }] }))}>➕ 新建</button><label class="btn secondary" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📥 导入完整世界书(JSON)<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label><label class="btn success" style=${{ padding: '10px 20px', cursor: 'pointer' }}>📄 导入文档(txt/docx/zip)<input ref=${docImportRef} type="file" accept=".txt,.docx,.zip" multiple class="hidden" onChange=${e => { if (e.target.files.length) importDocs(e.target.files); e.target.value = '' }}/></label></div></div>` : html`<><div class="book-toolbar" style=${{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div class="search-box" style=${{ width: '100%' }}><input placeholder="搜索..." value=${search} onChange=${e => { startTransition(() => setSearch(e.target.value)) }}/></div>
+          <div style=${{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+            <button class="btn primary" style=${{ padding: '8px', fontSize: '13px', justifyContent: 'center' }} onClick=${() => setData(p => ({ ...p, book_entries: [{ name: '新条目', key: [], content: '', enabled: true, order: 100, insertion_order: 100, depth: 4, position: 0, role: null, probability: 100, _id: `wb_${Date.now()}` }, ...(p.book_entries || [])] }))}>➕ 新建</button>
+            <label class="btn secondary" style=${{ padding: '8px', fontSize: '13px', justifyContent: 'center', cursor: 'pointer', textAlign: 'center' }}>📥 导入JSON<input ref=${wbImportRef} type="file" accept=".json" class="hidden" onChange=${e => { const f = e.target.files[0]; if (f) importWB(f); e.target.value = '' }}/></label>
+            <label class="btn success" style=${{ padding: '8px', fontSize: '13px', justifyContent: 'center', cursor: 'pointer', textAlign: 'center' }}>📄 导入文档<input ref=${docImportRef} type="file" accept=".txt,.docx,.zip" multiple class="hidden" onChange=${e => { if (e.target.files.length) importDocs(e.target.files); e.target.value = '' }}/></label>
+          </div>
+          <div style=${{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '8px' }}>
+            <button class="btn-sm lavender" onClick=${collapseAll}>▲ 折叠</button>
+            <button class="btn-sm lavender" onClick=${expandAll}>▼ 展开</button>
+            <button class="btn-sm mint" onClick=${() => batchToggle(true)}>✅ 全启</button>
+            <button class="btn-sm blush" onClick=${() => batchToggle(false)}>❌ 全禁</button>
+          </div>
+          <button class="btn-sm orange" style=${{ padding: '10px', fontSize: '13px', width: '100%' }} onClick=${sortEntries} title="不仅排序视觉位置，还会根据优先级将秩序重写编排为(1000, 990, 980)格式，防止ST导入时发生撞车。">⚡ 重分配级差排序</button>
+        </div>
+        ${allTags.length > 0 && html`<div style=${{marginBottom: 16, padding: 12, background: 'var(--white)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)'}}><div style=${{fontSize:12, fontWeight:'bold', color:'var(--text-soft)', marginBottom:8}}>🏷️ 标签云过滤</div><div style=${{display:'flex', flexWrap:'wrap', gap:6}}><button class="btn-sm ${!activeTag ? 'sky' : 'secondary'}" onClick=${()=>setActiveTag(null)}>全部</button>${allTags.map(t => html`<button key=${t} class="btn-sm ${activeTag === t ? 'sky' : 'secondary'}" onClick=${()=>setActiveTag(activeTag === t ? null : t)}>${t}</button>`)}</div></div>`}
+        ${batchSel.size > 0 && html`<div class="wb-batch-bar"><span style=${{ fontWeight: 'bold' }}>📍 已勾选 ${batchSel.size} 个条目：</span><button style=${{ background: 'var(--blush)', borderColor: 'var(--rose)', color: '#c9939c' }} onClick=${batchDelete}>🗑️ 删除</button><button style=${{ background: 'var(--cream)', borderColor: 'var(--cream-deep)', color: 'var(--text-soft)' }} onClick=${() => setBatchSel(new Set())}>取消</button><button style=${{ background: '#e1d4ff', borderColor: '#bfa3f0', color: '#6836ce' }} onClick=${batchExportAsIndependentWB}>📥 将选中项提取另存为新世界书</button></div>`}<div style=${{ fontSize: 12, color: 'var(--text-soft)', marginBottom: 12 }}>共 ${entries.length} 个${search || activeTag ? `，匹配 ${filtered.length}` : ''}</div>${filtered.map(e => { const realIdx = entries.indexOf(e); return html`<${BookEntry} key=${e._id || realIdx} entry=${e} index=${realIdx} onChange=${updateEntry} onRemove=${idx => setData(p => ({ ...p, book_entries: entries.filter((_, j) => j !== idx) }))} collapsed=${collapsed[realIdx]} onToggle=${() => setCollapsed(p => ({ ...p, [realIdx]: !p[realIdx] }))} onExpandContent=${onExpandEntry} onMoveUp=${() => moveEntry(realIdx, -1)} onMoveDown=${() => moveEntry(realIdx, 1)} isFirst=${realIdx === 0} isLast=${realIdx === entries.length - 1} onDuplicate=${() => dupEntry(realIdx)} selected=${batchSel.has(realIdx)} onSelect=${toggleBatchSel} allGroups=${allGroups}/>` })}</>`}</div>`
     });
 
     /* ═══════════ 批量翻译弹窗 ═══════════ */
@@ -3626,8 +4497,80 @@ ${expandItem && html`<${Modal} show fullscreen onClose=${() => setExpandItem(nul
     /* ═══════════ 浮动条 ═══════════ */
     const FloatingTrBar = memo(({ show, progress, items, eta, onRestore, onCancel, translating }) => { if (!show) return null; const stats = items.reduce((a, i) => { a[i.status || 'pending']++; return a }, { success: 0, error: 0, pending: 0, translating: 0 }); return html`<div class="tr-mini-bar" role="status"><span class="tr-mini-icon" aria-hidden="true">🐱</span><div class="tr-mini-progress"><div class="tr-mini-fill" style=${{ width: `${progress}%` }}/></div><span class="tr-mini-text">${Math.round(progress)}%</span><div class="tr-mini-stats"><span class="s">✓${stats.success}</span><span class="e">✗${stats.error}</span></div>${eta > 0 && html`<span class="tr-mini-eta">~${eta < 60 ? Math.ceil(eta) + 's' : Math.ceil(eta / 60) + 'm'}</span>`}<button class="tr-mini-restore" onClick=${onRestore}>展开</button>${translating && html`<button class="tr-mini-cancel" onClick=${e => { e.stopPropagation(); onCancel() }} aria-label="取消翻译">⏹</button>`}</div>` });
 
-    /* ═══════════ 统计卡 — P-6: unified token computation ═══════════ */
-    const StatsCard = memo(({ data }) => { const [col, setCol] = useState(true); if (!data) return null; const altCount = useMemo(() => (data.alternate_greetings || []).reduce((s, g) => s + charCount(g), 0), [data.alternate_greetings]); const bookCount = useMemo(() => (data.book_entries || []).reduce((s, e) => s + charCount(e.content) + charCount(e.name), 0), [data.book_entries]); const { fieldCounts, totalTokens, total } = useMemo(() => { const fc = STATS_FIELDS.map(([, k]) => [k, charCount(data[k])]); const fieldCount = fc.reduce((s, [, c]) => s + c, 0); let tk = 0; STATS_FIELDS.forEach(([, k]) => { tk += estimateTokens(data[k]) }); tk += estimateTokens((data.alternate_greetings || []).join('\n')); return { fieldCounts: fc, totalTokens: tk, total: fieldCount + altCount + bookCount } }, [data.name, data.description, data.personality, data.scenario, data.first_message, data.message_example, data.system_prompt, data.post_history_instructions, data.creator_notes, data.alternate_greetings, altCount, bookCount]); const pct = v => total ? (v / total) * 100 : 0; return html`<div class="stats-card ${col ? 'collapsed' : ''}"><div class="stats-card-header" onClick=${() => setCol(!col)}><span>${col ? '▶' : '▼'} 📊 字符统计</span><span class="stats-total">${total.toLocaleString()} 字 <span class="token-count">~${totalTokens.toLocaleString()}tk</span></span></div><div class="stats-card-body">${fieldCounts.map(([k, v]) => { const label = STATS_FIELDS.find(f => f[1] === k)?.[0]; return v > 0 ? html`<div class="stats-row" key=${k}><span class="stats-label">${label}</span><div class="stats-bar-wrap"><div class="stats-bar-fill" style=${{ width: `${pct(v)}%` }}/></div><span class="stats-val">${v.toLocaleString()}<span class="token-count">~${estimateTokens(data[k])}tk</span></span></div>` : null })}${(data.alternate_greetings?.length > 0) && html`<div class="stats-row"><span class="stats-label">👋 其他开场白 ×${data.alternate_greetings.length}</span><div class="stats-bar-wrap"><div class="stats-bar-fill orange" style=${{ width: `${pct(altCount)}%` }}/></div><span class="stats-val">${altCount.toLocaleString()}</span></div>`}${(data.book_entries?.length > 0) && html`<div class="stats-row"><span class="stats-label">📚 世界书 ×${data.book_entries.length}</span><div class="stats-bar-wrap"><div class="stats-bar-fill purple" style=${{ width: `${pct(bookCount)}%` }}/></div><span class="stats-val">${bookCount.toLocaleString()}</span></div>`}</div></div>` });
+/* ═══════════ 统计卡 — 纯净版 Token 统计 (大字号、无波浪号、无顶部进度条) ═══════════ */
+const StatsCard = memo(({ data }) => { 
+  const [col, setCol] = useState(true); 
+  if (!data) return null; 
+  
+  const { fieldTokens, totalTokens, wbStats, altTokens } = useMemo(() => { 
+    const ft = [];
+    let tk = 0; 
+    
+    // 1. 计算基础字段 Token
+    STATS_FIELDS.forEach(([label, k]) => { 
+      const t = estimateTokens(data[k]);
+      if (t > 0) ft.push({ label, key: k, tokens: t });
+      tk += t;
+    }); 
+    
+    // 2. 计算备选开场白 Token
+    const altT = estimateTokens((data.alternate_greetings || []).join('\n'));
+    tk += altT;
+    
+    // 3. 计算世界书 Token（细分蓝绿灯）
+    let wbTotalTk = 0;
+    let wbConstTk = 0;
+    let wbSelTk = 0;
+    (data.book_entries || []).forEach(e => {
+      const eTk = estimateTokens(e.content) + estimateTokens(e.name);
+      tk += eTk;
+      wbTotalTk += eTk;
+      if (e.constant) wbConstTk += eTk;
+      else wbSelTk += eTk;
+    });
+
+    return { 
+      fieldTokens: ft, 
+      totalTokens: tk, 
+      altTokens: altT,
+      wbStats: { count: (data.book_entries || []).length, total: wbTotalTk, constant: wbConstTk, selective: wbSelTk }
+    } 
+  }, [data.name, data.description, data.personality, data.scenario, data.first_message, data.message_example, data.system_prompt, data.post_history_instructions, data.creator_notes, data.alternate_greetings, data.book_entries]); 
+  
+  const pct = v => totalTokens ? (v / totalTokens) * 100 : 0; 
+  // 【已修改】将总Token数强行设定为活力橙色
+  const tokenColor = '#66ccff';
+
+return html`<div class="stats-card ${col ? 'collapsed' : ''}">
+  <div class="stats-card-header" onClick=${() => setCol(!col)} title="点击展开/折叠详细统计" style=${{fontSize: 15}}>
+    <div style=${{display:'flex', alignItems:'center', gap: 8, fontWeight: 700, color: 'var(--text-dark)'}}>
+      <span style=${{color:'var(--text-soft)', width: 14, display:'inline-block'}}>${col ? '▶' : '▼'}</span>
+      <span>📊 字符统计</span>
+    </div>
+    
+    <div title="Tokens是AI消耗的算力单位。" style=${{display:'flex', alignItems:'center', gap: 8, background: 'var(--cream)', padding: '4px 12px', borderRadius: 20, border: '1px solid var(--cream-deep)'}}>
+      <!-- 【已修改】这里的 fontSize 改成了 18，fontWeight 改成了 900（加粗），颜色使用了上方定义的活力橙 -->
+      <span style=${{fontSize: 18, color: tokenColor, fontWeight: 900}}>${totalTokens.toLocaleString()} <span style=${{fontSize: 12, color: 'var(--text-soft)', fontWeight: 'normal'}}>Tokens</span></span>
+    </div>
+  </div>
+
+  <div class="stats-card-body">
+    <!-- 【已修改】下面的 fontWeight: 'bold' 为新增的加粗属性 -->
+    ${fieldTokens.map(f => html`<div class="stats-row" key=${f.key}><span class="stats-label" style=${{fontSize: 14, fontWeight: 'bold'}}>${f.label}</span><div class="stats-bar-wrap"><div class="stats-bar-fill" style=${{ width: `${pct(f.tokens)}%` }}/></div><span class="stats-val token-count" style=${{fontSize: 14, fontWeight: 'bold', color:'var(--text)', background:'transparent', padding:0}}>${f.tokens.toLocaleString()} tk</span></div>`)}
+    
+    ${altTokens > 0 ? html`<div class="stats-row"><span class="stats-label" style=${{fontSize: 14, fontWeight: 'bold'}}>💬 备选开场白</span><div class="stats-bar-wrap"><div class="stats-bar-fill orange" style=${{ width: `${pct(altTokens)}%` }}/></div><span class="stats-val token-count" style=${{fontSize: 14, fontWeight: 'bold', color:'var(--orange)', background:'transparent', padding:0}}>${altTokens.toLocaleString()} tk</span></div>` : null}
+    
+    ${wbStats.count > 0 ? html`
+      <div class="stats-row" style=${{alignItems: 'center', marginTop: 8}}>
+        <span class="stats-label" style=${{fontSize: 14, fontWeight: 'bold'}}>📚 世界书 ×${wbStats.count}</span>
+        <div class="stats-bar-wrap"><div class="stats-bar-fill purple" style=${{ width: `${pct(wbStats.total)}%` }}/></div>
+        <span class="stats-val token-count" style=${{fontSize: 14, fontWeight: 'bold', color:'var(--purple)', background:'transparent', padding:0}}>${wbStats.total.toLocaleString()} tk</span>
+      </div>
+      ${wbStats.constant > 0 ? html`<div class="stats-row" style=${{alignItems: 'center'}}><span class="stats-label" style=${{paddingLeft: 20, color:'var(--sky)', fontSize: 13, fontWeight: 'bold'}}>↳ 常驻 (蓝灯)</span><div class="stats-bar-wrap" style=${{height: 4}}><div class="stats-bar-fill" style=${{ width: `${pct(wbStats.constant)}%`, background: 'var(--sky)' }}/></div><span class="stats-val token-count" style=${{fontSize: 13, fontWeight: 'bold', color:'var(--sky)', background:'transparent', padding:0}}>${wbStats.constant.toLocaleString()} tk</span></div>` : null}
+      ${wbStats.selective > 0 ? html`<div class="stats-row" style=${{alignItems: 'center'}}><span class="stats-label" style=${{paddingLeft: 20, color:'var(--mint-dark)', fontSize: 13, fontWeight: 'bold'}}>↳ 触发 (绿灯)</span><div class="stats-bar-wrap" style=${{height: 4}}><div class="stats-bar-fill" style=${{ width: `${pct(wbStats.selective)}%`, background: 'var(--mint-dark)' }}/></div><span class="stats-val token-count" style=${{fontSize: 13, fontWeight: 'bold', color:'var(--mint-dark)', background:'transparent', padding:0}}>${wbStats.selective.toLocaleString()} tk</span></div>` : null}
+    ` : null}
+  </div>
+</div>` });
 
     /* ═══════════ 备份弹窗 ═══════════ */
     const BackupModal = memo(({ show, onClose, pv, pi, cfg, jL, pL, gr, gL, onApply, addToast }) => { const fileRef = useRef(); if (!show) return null; return html`<${Modal} show onClose=${onClose} title="💾 备份" headerClass="purple"><div class="backup-section"><h4>📤 导出配置</h4><button class="btn purple" onClick=${() => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ pv, pi, cfg, jL, pL, gr, gL }, null, 2)])); a.download = 'meow-backup-' + formatBackupDate() + '.json'; a.click(); URL.revokeObjectURL(a.href); addToast('导出成功', 'success') }}>📤 导出</button></div><div class="backup-section"><h4>📥 导入配置</h4><label class="btn primary" style=${{ cursor: 'pointer' }}>📥 选择文件<input ref=${fileRef} type="file" accept=".json" class="hidden" onChange=${async e => { const f = e.target.files[0]; if (!f) return; try { onApply(JSON.parse(await f.text())); addToast('导入成功', 'success') } catch { addToast('格式错误', 'error') } e.target.value = '' }}/></label></div><//>` });
@@ -3716,8 +4659,10 @@ ${expandMatch && html`<${ReplaceExpandModal} match=${expandMatch} checked=${!!ch
     /* ═══════════ P-2: 拆分 Header 为独立组件 ═══════════ */
     const HeaderBar = memo(({ hasApiKey, modelDropRef, modelDropOpen, setModelDropOpen, model, setModel, modelFilter, setModelFilter, filteredNavModels, navModels, kbFocusIdx, handleModelDropKeyDown, closeModelDrop, refreshModels, openModal, toggleTheme, theme, cycleFontSize, fontSize, setMobileMenuOpen, isMobile, sync }) => {
       return html`<header class="header">
-<div class="header-title"><span class="cat-icon" aria-hidden="true">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">${html`<${GHLogo}/>`} GitHub</span></div>
+<div class="header-title" style=${isMobile ? { maxWidth: '55%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } : {}}><span class="cat-icon" aria-hidden="true">🐱</span><span>喵喵角色卡工坊</span><span class="ver-badge">${html`<${GHLogo}/>`} GitHub</span></div>
+
 <div class="header-actions">
+
 
 ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="header-btn conn-badge" style=${{ padding: '6px 12px', fontSize: 11, cursor: 'pointer', background: 'rgba(124,201,184,.4)', borderColor: 'rgba(124,201,184,.6)' }} onClick=${() => openModal(MK.SETTINGS)} aria-label="API已连接">🟢 已连接</span>` : html`<span class="header-btn conn-badge" style=${{ padding: '6px 12px', fontSize: 11, cursor: 'pointer', background: 'rgba(201,147,156,.3)', borderColor: 'rgba(201,147,156,.5)' }} onClick=${() => openModal(MK.SETTINGS)} aria-label="API未连接 — 点击设置">🔴 未连接</span>`}
 <div class="header-select" ref=${modelDropRef}><span aria-hidden="true">🤖</span><div class="model-dropdown-wrap"><div class="model-dropdown-trigger" onClick=${() => { setModelDropOpen(p => !p); if (!modelDropOpen) { setModelFilter(''); } }} role="button" aria-haspopup="listbox" aria-expanded=${modelDropOpen}><span class="model-name">${model || '选择模型'}</span><span class="drop-arrow" aria-hidden="true">${modelDropOpen ? '▲' : '▼'}</span></div>${modelDropOpen && html`<>${isMobile && html`<div class="model-dropdown-backdrop" onClick=${closeModelDrop}/>`}<div class="model-dropdown-panel" onClick=${e => e.stopPropagation()} role="listbox"><div class="mdp-handle"/><div class="mdp-header"><span class="mdp-title">🤖 选择模型</span><button class="mdp-close" onClick=${closeModelDrop} aria-label="关闭">✕</button></div><input class="mdp-search" placeholder="🔍 筛选模型..." value=${modelFilter} onChange=${e => { setModelFilter(e.target.value); }} onKeyDown=${handleModelDropKeyDown} autoFocus=${!isMobile}/><div class="mdp-list">${filteredNavModels.length ? filteredNavModels.map((m, mi) => html`<div key=${m} class="mdp-item ${m === model ? 'active' : ''} ${mi === kbFocusIdx ? 'kb-focus' : ''}" onClick=${() => { setModel(m); closeModelDrop() }} role="option" aria-selected=${m === model}><span class="check" aria-hidden="true">${m === model ? '✓' : ''}</span><span>${m}</span></div>`) : html`<div class="mdp-empty">😿 无匹配模型${!navModels.length ? html`<br/><span style=${{ fontSize: 12 }}>请先在 ⚙️ API设置 中配置模型</span>` : ''}</div>`}</div></div></>`}</div><button class="refresh-btn" onClick=${refreshModels} title="刷新模型列表" aria-label="刷新模型列表">🔄</button></div>
@@ -3726,6 +4671,8 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 <button class="header-btn desktop-only warning" onClick=${() => openModal(MK.JB)} title="破限设置" aria-label="破限设置">🔓<span class="label">破限</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.GUIDE)} title="翻译指导" aria-label="翻译指导">📖<span class="label">指导</span></button>
 <button class="header-btn desktop-only" onClick=${() => openModal(MK.SETTINGS)} title="API设置" aria-label="API设置">⚙️<span class="label">API</span></button>
+<button class="header-btn desktop-only" onClick=${() => openModal(MK.HELP)} title="帮助与快捷键" aria-label="帮助与快捷键">❓<span class="label">帮助</span></button>
+<button class="header-btn desktop-only success" onClick=${() => openModal('preview')} title="全局预览" aria-label="全局预览">👁️<span class="label">预览</span></button>
 <button class=${'header-btn desktop-only github '+(sync.ic?'connected':'')} onClick=${()=>openModal('sync')}>${html`<${GHLogo}/>`}<span class="label">同步</span></button>
 <button class="font-size-btn desktop-only" onClick=${cycleFontSize} title=${'字体：' + FONT_LABELS[fontSize]} aria-label=${'切换字体大小，当前' + FONT_LABELS[fontSize]}>${FONT_ICONS[fontSize]} ${FONT_LABELS[fontSize]}</button>
 <button class="header-btn desktop-only" onClick=${toggleTheme} title=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'} aria-label=${theme === 'light' ? '切换暗色模式' : '切换亮色模式'}>${theme === 'light' ? '🌙' : '☀️'}</button>
@@ -3734,6 +4681,374 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
 </header>`
     });
 
+    /* ==============================================================
+       新增组件：全局预览、正则、变量、脚本
+       ============================================================== */
+    /* ════ 新增：正则沙盒测试弹窗 ════ */
+    const RegexPreviewModal = memo(({ show, onClose, entry }) => {
+      const [testText, setTestText] = useState("<日期>戊子年 正月初三</日期>\n<时间>子夜 23:47</时间>\n<地点>不明之地</地点>\n<状态>心情：平静</状态>\n<内容>这是一段用于测试正则效果的示例文本，你可以自行替换成实际会出现的格式。</内容>");
+      const [result, setResult] = useState({ ok: true, output: '' });
+
+      useEffect(() => {
+        if (!show || !entry) return;
+        try {
+          let pat = (entry.pattern || '').trim();
+          let flg = (entry.flags || 'g').trim() || 'g';
+          const wrapped = pat.match(/^\/([\s\S]+)\/([a-z]*)$/i);
+          if (wrapped) { pat = wrapped[1]; if (wrapped[2]) flg = wrapped[2]; }
+          const re = new RegExp(pat, flg);
+          let repl = entry.replacement || '';
+          const m = repl.match(/^```[a-zA-Z]*\s*\n?([\s\S]*?)\n?```$/);
+          if (m) repl = m[1];
+          const out = testText.replace(re, repl);
+          setResult({ ok: true, output: out, changed: out !== testText });
+        } catch (e) {
+          setResult({ ok: false, error: e.message });
+        }
+      }, [show, entry, testText]);
+
+      if (!show || !entry) return null;
+      return html`<${Modal} show onClose=${onClose} title=${'🔍 正则测试 · ' + (entry.name || '未命名')} footer=${html`<button class="btn secondary" onClick=${onClose}>关闭</button>`}>
+        <div class="form-group">
+          <label>测试文本 <span style=${{fontSize:11, color:'var(--text-soft)', fontWeight:'normal'}}>可自行修改模拟实际内容</span></label>
+          <textarea class="textarea" rows="4" value=${testText} onChange=${e => setTestText(e.target.value)} style=${{fontFamily:'monospace', fontSize:13}}/>
+        </div>
+        <div style=${{marginTop:16, padding:16, background:'var(--cream)', border:'2px solid var(--cream-deep)', borderRadius:'var(--radius-md)'}}>
+          <div style=${{fontSize:12, color:'var(--text-soft)', marginBottom:8, fontWeight:700}}>✨ 渲染效果 ${result.ok && !result.changed ? '(未匹配到，显示原文)' : ''}</div>
+          ${result.ok ? html`<div style=${{fontSize:14, color:'var(--text-dark)', whiteSpace:'pre-wrap'}} dangerouslySetInnerHTML=${{__html: result.output}} />` : html`<div style=${{color:'#c9939c', fontWeight:700}}>❌ 正则错误: ${result.error}</div>`}
+        </div>
+      <//>`;
+    });
+    const PreviewModal = memo(({ show, onClose, data }) => {
+      const [tab, setTab] = useState('summary');
+      if (!show || !data) return null;
+
+      const summary = `名称: ${data.name || '未设置'}\n版本: ${data.character_version || '1.0.0'}\n创建者: ${data.creator || '未设置'}\n标签: ${(data.tags||[]).join(', ') || '无'}\n\n【描述】\n${data.description||''}\n\n【性格】\n${data.personality||''}\n\n【场景】\n${data.scenario||''}`;
+      
+      const renderContent = () => {
+        if (tab === 'summary') return html`<div class="summary-block">${summary}</div>`;
+        if (tab === 'greetings') return html`<div><strong>首条消息:</strong><br/>${data.first_message||'无'}<br/><br/><strong>备选开场白 (${(data.alternate_greetings||[]).length}):</strong><br/>${(data.alternate_greetings||[]).map((g,i)=>html`<div style=${{marginTop:8, padding:8, background:'var(--white)', borderRadius:8}}>${i+1}. ${g}</div>`)}</div>`;
+        if (tab === 'vars') return html`<div><div style=${{marginBottom:12, fontWeight:700, color:'var(--text-dark)'}}>📊 STscript 变量 (${(data.variables||[]).length})</div>${(data.variables||[]).map((v,i)=>html`<div class="var-item" style=${{background:'var(--cream)', border:'1px solid var(--cream-deep)'}}><span class="key" style=${{color:'var(--purple)'}}>${v.name}</span> = <span style=${{color:'var(--text-dark)', fontWeight:600}}>${v.value}</span></div>`)}</div>`;
+        if (tab === 'regex') return html`<div><div style=${{marginBottom:12, fontWeight:700, color:'var(--text-dark)'}}>🔧 正则表达式 (${(data.regex||[]).length})</div>${(data.regex||[]).map((r,i)=>html`<div class="var-item" style=${{background:'var(--cream)', border:'1px solid var(--cream-deep)'}}><div style=${{display:'flex', justifyContent:'space-between', marginBottom:8}}><strong style=${{color:'var(--sky)'}}>${r.name||'未命名'}</strong><span style=${{fontSize:11, padding:'2px 8px', borderRadius:10, color:'#fff', background: r.enabled?'var(--mint-dark)':'var(--blush)'}}>${r.enabled?'启用':'禁用'}</span></div><div style=${{fontSize:12, color:'var(--text-soft)'}}>模式: <code style=${{color:'var(--orange)'}}>/${r.pattern}/${r.flags}</code><br/>替换: <code>${r.replacement}</code></div></div>`)}</div>`;
+        if (tab === 'scripts') return html`<div><div style=${{marginBottom:12, fontWeight:700, color:'var(--text-dark)'}}>💻 JS 脚本 (${(data.scripts||[]).length})</div>${(data.scripts||[]).map((s,i)=>html`<div class="var-item" style=${{background:'var(--cream)', border:'1px solid var(--cream-deep)'}}><div style=${{display:'flex', justifyContent:'space-between', marginBottom:8}}><strong style=${{color:'var(--purple)'}}>${s.name||'未命名'}</strong><span style=${{fontSize:11, padding:'2px 8px', borderRadius:10, color:'#fff', background: s.enabled?'var(--mint-dark)':'var(--blush)'}}>${s.enabled?'启用':'禁用'}</span></div><pre class="code-textarea" style=${{padding:8, borderRadius:4, background:'var(--white)', border:'1px solid var(--border)', maxHeight:150, overflowY:'auto'}}>${s.code}</pre></div>`)}</div>`;
+        if (tab === 'json') return html`<pre class="code-textarea">${JSON.stringify(data, null, 2)}</pre>`;
+        return null;
+      };
+
+      return html`<${Modal} show onClose=${onClose} title="👁️ 全局预览" large footer=${html`<button class="btn secondary" onClick=${onClose}>关闭</button>`}>
+        <div class="preview-tabs">
+          <button class=${tab==='summary'?'active':''} onClick=${()=>setTab('summary')}>📝 摘要</button>
+          <button class=${tab==='greetings'?'active':''} onClick=${()=>setTab('greetings')}>👋 开场白</button>
+          <button class=${tab==='vars'?'active':''} onClick=${()=>setTab('vars')}>📊 变量</button>
+          <button class=${tab==='regex'?'active':''} onClick=${()=>setTab('regex')}>🔧 正则</button>
+          <button class=${tab==='scripts'?'active':''} onClick=${()=>setTab('scripts')}>💻 脚本</button>
+          <button class=${tab==='json'?'active':''} onClick=${()=>setTab('json')}>📦 JSON</button>
+        </div>
+        <div class="preview-content">${renderContent()}</div>
+      <//>`;
+    });
+
+    const RegexTab = memo(({ data, onChange }) => {
+      const regexList = data.regex || [];
+      const [previewIdx, setPreviewIdx] = useState(null); // 新增状态
+      const update = (idx, key, val) => { const arr = [...regexList]; arr[idx][key] = val; onChange('regex', arr); };
+      const add = () => onChange('regex', [...regexList, { name: '新正则', pattern: '', replacement: '', flags: 'g', enabled: true }]);
+      const remove = idx => { const arr = [...regexList]; arr.splice(idx, 1); onChange('regex', arr); };
+      return html`<div>
+        <${RegexPreviewModal} show=${previewIdx !== null} onClose=${() => setPreviewIdx(null)} entry=${previewIdx !== null ? regexList[previewIdx] : null}/>
+        <div class="list-manager-header">
+          <span style=${{fontWeight:'bold', color:'var(--text-dark)'}}>🔧 正则表达式 (${regexList.length})</span>
+          <button class="btn primary" style=${{padding:'8px 16px'}} onClick=${add}>➕ 添加正则</button>
+        </div>
+        ${regexList.length === 0 ? html`<div style=${{textAlign:'center', padding:40, color:'var(--text-soft)'}}>暂无正则脚本</div>` : 
+          regexList.map((r, i) => html`<div key=${i} class="adv-list-item">
+            <div class="adv-list-header">
+              <input value=${r.name} onChange=${e=>update(i, 'name', e.target.value)} placeholder="正则名称"/>
+              <${Toggle} label="启用" checked=${r.enabled} onChange=${v=>update(i, 'enabled', v)}/>
+              <button class="btn-sm mint" onClick=${()=>setPreviewIdx(i)}>🔍 测试</button>
+              <button class="btn-sm blush" onClick=${()=>remove(i)}>删除</button>
+            </div>
+            <div class="form-group"><label>匹配模式 (Pattern)</label><input class="code-textarea input" value=${r.pattern} onChange=${e=>update(i, 'pattern', e.target.value)} placeholder="如: \\bhello\\b"/></div>
+            <div class="form-group"><label>替换内容 (Replacement)</label><textarea class="code-textarea textarea" rows="2" value=${r.replacement} onChange=${e=>update(i, 'replacement', e.target.value)} placeholder="支持 HTML，用 $1 引用捕获组"></textarea></div>
+            <div class="form-group"><label>修饰符 (Flags)</label><input class="input" value=${r.flags} onChange=${e=>update(i, 'flags', e.target.value)} placeholder="g, i, m"/></div>
+          </div>`)}
+      </div>`;
+    });
+
+    const VarsTab = memo(({ data, onChange }) => {
+      const vars = data.variables || [];
+      const update = (idx, key, val) => { const arr = [...vars]; arr[idx][key] = val; onChange('variables', arr); };
+      const add = () => onChange('variables', [...vars, { name: '新变量', value: '0' }]);
+      const remove = idx => { const arr = [...vars]; arr.splice(idx, 1); onChange('variables', arr); };
+      return html`<div>
+        <div class="list-manager-header">
+          <span style=${{fontWeight:'bold', color:'var(--text-dark)'}}>📊 变量列表 & 原生 STscript</span>
+          <button class="btn primary" style=${{padding:'8px 16px'}} onClick=${add}>➕ 添加变量</button>
+        </div>
+        <div class="outline-hint" style=${{marginBottom:16, borderLeft:'4px solid var(--sky)'}}>
+          <strong>💡 提示：</strong> 这里的变量导出时会自动拼接到系统提示词末尾。<br/>
+          你可以在下方直接编写原生的 STscript（如 <code>{{incvar::好感度}}</code>），它将与上方的变量列表合并生效。
+        </div>
+        ${vars.length === 0 ? html`<div style=${{textAlign:'center', padding:10, color:'var(--text-soft)'}}>暂无键值对变量</div>` : 
+          vars.map((v, i) => html`<div key=${i} class="var-row">
+            <input value=${v.name} onChange=${e=>update(i, 'name', e.target.value)} placeholder="变量名 (如: 好感度)"/>
+            <span class="divider">=</span>
+            <input value=${v.value} onChange=${e=>update(i, 'value', e.target.value)} placeholder="初始值 (如: 0)"/>
+            <button class="btn-sm blush" onClick=${()=>remove(i)}>×</button>
+          </div>`)}
+        <div class="form-group" style=${{marginTop: 20, paddingTop: 20, borderTop: '2px dashed var(--cream-deep)'}}>
+          <label>📜 原生变量脚本区 (STscript)</label>
+          <textarea class="code-textarea textarea" rows="5" value=${data.variable_script || ''} onChange=${e=>onChange('variable_script', e.target.value)} placeholder="{{setvar::金币::100}}\n{{addvar::金币::10}}"></textarea>
+        </div>
+      </div>`;
+    });
+
+    const ScriptsTab = memo(({ data, onChange }) => {
+      const scripts = data.scripts || [];
+      const update = (idx, key, val) => { const arr = [...scripts]; arr[idx][key] = val; onChange('scripts', arr); };
+      const add = () => onChange('scripts', [...scripts, { id: Date.now().toString(), name: '新脚本', code: '// 在此编写 JavaScript', info: '', enabled: true }]);
+      const remove = idx => { const arr = [...scripts]; arr.splice(idx, 1); onChange('scripts', arr); };
+      return html`<div>
+        <div class="list-manager-header">
+          <span style=${{fontWeight:'bold', color:'var(--text-dark)'}}>💻 角色专属 JS 脚本 (${scripts.length})</span>
+          <button class="btn primary" style=${{padding:'8px 16px'}} onClick=${add}>➕ 添加脚本</button>
+        </div>
+        <div class="outline-hint" style=${{marginBottom:16, borderLeft:'4px solid var(--purple-soft)'}}>
+          <strong>💡 脚本编写指南：</strong><br/>
+          脚本运行在酒馆助手 (TavernHelper) 环境中，可调用其内置全局函数：<br/>
+          • 读写变量：<code>const vars = getVariables(); insertOrAssignVariables({ 好感度: (vars.好感度 || 0) + 1 });</code><br/>
+          • 监听事件：<code>eventOn(tavern_events.MESSAGE_RECEIVED, () => { ... });</code><br/>
+          • 执行命令：<code>triggerSlash('/send 你好！');</code>
+        </div>
+        ${scripts.length === 0 ? html`<div style=${{textAlign:'center', padding:40, color:'var(--text-soft)'}}>暂无脚本</div>` : 
+          scripts.map((s, i) => html`<div key=${i} class="adv-list-item">
+            <div class="adv-list-header">
+              <input value=${s.name} onChange=${e=>update(i, 'name', e.target.value)} placeholder="脚本名称" style=${{flex: 1}}/>
+              <input value=${s.info || ''} onChange=${e=>update(i, 'info', e.target.value)} placeholder="作者备注(选填)" style=${{flex: 1, backgroundColor: 'var(--cream)', border: '2px solid transparent', padding: '6px 12px', borderRadius: 'var(--radius-sm)', fontSize: '12px'}}/>
+              <${Toggle} label="启用" checked=${s.enabled} onChange=${v=>update(i, 'enabled', v)}/>
+              <button class="btn-sm blush" onClick=${()=>remove(i)}>删除</button>
+            </div>
+            <div class="form-group"><label>JavaScript 代码</label><textarea class="code-textarea textarea" rows="5" value=${s.code} onChange=${e=>update(i, 'code', e.target.value)} placeholder="// 输入 JS 代码"></textarea></div>
+          </div>`)}
+      </div>`;
+    });
+	
+	    /* ════ 新增：AI 修改确认 Diff 弹窗 ════ */
+    const AIDiffModal = memo(({ show, onClose, diffData, onConfirm }) => {
+      if (!show || !diffData) return null;
+      return html`<${Modal} show onClose=${onClose} title="✨ AI 修改确认" headerClass="success" footer=${html`<><button class="btn success" onClick=${() => { onConfirm(diffData); onClose(); }}>✅ 确认应用</button><button class="btn secondary" onClick=${onClose}>取消</button></>`}>
+        <p style=${{fontSize:13, color:'var(--text-soft)', marginBottom:12}}>AI 建议修改以下内容，请确认：</p>
+        <div>
+          ${Object.entries(diffData).map(([k, v]) => html`<div key=${k} class="diff-item"><div class="diff-key">字段: ${FIELD_LABELS[k] || k}</div><div class="diff-val">${typeof v === 'object' ? JSON.stringify(v, null, 2) : v}</div></div>`)}
+        </div>
+      <//>`;
+    });
+
+    /* ════ 新增：悬浮 AI 助手组件 ════ */
+    const FloatingAIAssistant = memo(({ show, onClose, data, onApplyDiff, providers, providerIdx, model }) => {
+      const [input, setInput] = useState('');
+      const [history, setHistory] = useState([{ role: 'assistant', content: '喵~ 我是你的写卡小助手！\n你可以让我“把人设改得傲娇一点”、“写一个好感度变量脚本”或者“添加两条打招呼的开场白”。\n我会直接帮你修改表单哦！' }]);
+      const [loading, setLoading] = useState(false);
+      const chatEndRef = useRef(null);
+
+      useEffect(() => { if (show) chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [history, show]);
+
+      const handleSend = async () => {
+        if (!input.trim() || loading) return;
+        const userMsg = input.trim();
+        setInput('');
+        setHistory(p => [...p, { role: 'user', content: userMsg }]);
+        
+        const pv = providers[providerIdx];
+        if (!pv || !pv.key) {
+          setHistory(p => [...p, { role: 'assistant', content: '❌ 请先在顶部【⚙️ API】中配置并连接大模型哦！' }]);
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const sysPrompt = `你是一个SillyTavern角色卡制作专家。当前角色卡JSON数据如下：\n${JSON.stringify(data)}\n\n如果用户要求修改卡片，请必须返回严格的JSON格式指令：{"action":"update", "data": {"字段名": "新值"}}。支持修改的字段包括：name, description, personality, scenario, first_message, message_example, system_prompt, tags, alternate_greetings(数组), variables(数组), scripts(数组)。如果是数组请提供完整替换内容。除此之外，你可以像正常助手一样回答。`;
+          
+          const actualKey = deobfuscate(pv.key);
+          let reply = '';
+          
+          // 复用现有的 API 请求逻辑 (简化版)
+          if (pv.url) {
+            const body = { model, messages: [{ role: 'system', content: sysPrompt }, ...history.slice(-6).map(m=>({role: m.role, content: m.content})), { role: 'user', content: userMsg }], temperature: 0.7 };
+            const resp = await fetch(pv.url.replace(/\/$/, '') + (pv.endpoint || '/chat/completions'), { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${actualKey}` }, body: JSON.stringify(body) });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            reply = (await resp.json()).choices?.[0]?.message?.content || '';
+          } else {
+            const genAI = new GoogleGenerativeAI(actualKey);
+            const genModel = genAI.getGenerativeModel({ model, systemInstruction: sysPrompt });
+            const chat = genModel.startChat({ history: history.slice(-6).map(m=>({role: m.role==='assistant'?'model':'user', parts:[{text:m.content}]})) });
+            reply = (await chat.sendMessage(userMsg)).response.text();
+          }
+
+          // 尝试解析 JSON 修改指令
+          let actionData = null;
+          const jsonMatch = reply.match(/```json\s*([\s\S]*?)```/i) || reply.match(/\{[\s\S]*"action"\s*:\s*"update"[\s\S]*\}/);
+          if (jsonMatch) {
+            try {
+              const parsed = JSON.parse(jsonMatch[1] || jsonMatch[0]);
+              if (parsed.action === 'update' && parsed.data) actionData = parsed.data;
+            } catch (e) {}
+          }
+
+          if (actionData) {
+            setHistory(p => [...p, { role: 'assistant', content: reply.replace(/```json[\s\S]*?```/i, '').trim() + '\n\n✨ [已生成修改建议，请在弹窗中确认]' }]);
+            onApplyDiff(actionData);
+          } else {
+            setHistory(p => [...p, { role: 'assistant', content: reply }]);
+          }
+
+        } catch (e) {
+          setHistory(p => [...p, { role: 'assistant', content: `❌ 请求失败：${e.message}` }]);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      if (!show) return null;
+      return html`<><div class="modal-overlay" onClick=${onClose} style=${{zIndex:9999}}></div><div class="drawer-panel">
+        <div class="ai-chat-header"><span>🤖 AI 助手</span><button class="ai-clear-btn" onClick=${() => { setHistory([{ role: 'assistant', content: '喵~ 记忆已清空，我是你的写卡小助手！\n你可以让我“把人设改得傲娇一点”、“写一个好感度变量脚本”或者“添加两条打招呼的开场白”。\n我会直接帮你修改表单哦！' }]) }}>🗑️ 清空记忆</button><button style=${{background:'none',border:'none',color:'#fff',cursor:'pointer',fontSize:20}} onClick=${onClose}>×</button></div>
+        <div class="ai-chat-messages">
+          ${history.map((m, i) => html`<div key=${i} class="ai-msg ${m.role}">${m.content}</div>`)}
+          ${loading && html`<div class="ai-msg assistant">🐱 思考中...</div>`}
+          <div ref=${chatEndRef}></div>
+        </div>
+        <div class="ai-chat-input">
+          <input value=${input} onChange=${e=>setInput(e.target.value)} onKeyDown=${e=>{if(e.key==='Enter') handleSend()}} placeholder="输入你的要求..."/>
+          <button class="btn purple" onClick=${handleSend} disabled=${loading}>发送</button>
+        </div>
+      </div>`;
+    });
+    /* ════ 新增：角色卡体检 ════ */
+    const LintModal = memo(({ show, onClose, data }) => {
+      const [results, setResults] = useState([]);
+      useEffect(() => {
+        if (!show || !data) return;
+        const issues = [];
+        if (!data.name?.trim()) issues.push({ type: 'error', msg: '缺少角色名称' });
+        if (!data.first_message?.trim()) issues.push({ type: 'warning', msg: '缺少开场白，在酒馆中可能无法正常发起对话' });
+        if (!data.system_prompt?.trim()) issues.push({ type: 'warning', msg: '缺少系统提示词，AI 可能无法准确把握扮演规则' });
+        if (data.book_entries?.length > 0) {
+          const orders = data.book_entries.map(e => e.order);
+          if (new Set(orders).size !== orders.length) issues.push({ type: 'warning', msg: '世界书存在重复的 Order(顺序) 值，可能导致注入冲突' });
+        }
+        if (data.regex?.length > 0) {
+          data.regex.forEach(r => {
+            try { new RegExp(r.pattern, r.flags); } catch (e) { issues.push({ type: 'error', msg: `正则 [${r.name}] 语法错误: ${e.message}` }); }
+          });
+        }
+        setResults(issues.length ? issues : [{ type: 'success', msg: '太棒了！角色卡非常健康，没有发现明显问题。' }]);
+      }, [show, data]);
+      if (!show) return null;
+      return html`<${Modal} show onClose=${onClose} title="🩺 角色卡体检" footer=${html`<button class="btn primary" onClick=${onClose}>我知道了</button>`}>
+        <div style=${{display:'flex', flexDirection:'column', gap:12}}>
+          ${results.map((r, i) => html`<div key=${i} style=${{padding:'12px 16px', borderRadius:'8px', background: r.type==='error'?'var(--blush)':r.type==='warning'?'var(--orange-pale)':'var(--mint)', color: r.type==='error'?'#c9939c':r.type==='warning'?'var(--orange)':'var(--mint-dark)', fontWeight:'bold'}}>${r.type==='error'?'❌ ':r.type==='warning'?'⚠️ ':'✅ '}${r.msg}</div>`)}
+        </div>
+      <//>`;
+    });
+
+    /* ════ 新增：历史快照 ════ */
+    const SnapshotModal = memo(({ show, onClose, data, onRestore, addToast }) => {
+      const [snapshots, setSnapshots] = useLocalStorage('char_snapshots', []);
+      const saveSnapshot = () => {
+        if (!data) return;
+        setSnapshots([{ id: Date.now(), time: new Date().toLocaleString(), name: data.name || '未命名', data: deepClone(data) }, ...snapshots].slice(0, 10));
+        addToast('已保存快照', 'success');
+      };
+      if (!show) return null;
+      return html`<${Modal} show onClose=${onClose} title="📸 历史快照" footer=${html`<button class="btn secondary" onClick=${onClose}>关闭</button>`}>
+        <button class="btn primary" style=${{width:'100%', marginBottom:16}} onClick=${saveSnapshot}>📸 保存当前状态为快照</button>
+        ${snapshots.length === 0 ? html`<div style=${{textAlign:'center', color:'var(--text-soft)'}}>暂无快照，最多保存10条</div>` : 
+          snapshots.map(s => html`<div key=${s.id} style=${{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'12px', background:'var(--cream)', border:'1px solid var(--cream-deep)', borderRadius:'8px', marginBottom:8}}>
+            <div><div style=${{fontWeight:'bold', color:'var(--text-dark)'}}>${s.name}</div><div style=${{fontSize:12, color:'var(--text-soft)'}}>${s.time}</div></div>
+            <button class="btn-sm sky" onClick=${()=>{onRestore(s.data); onClose(); addToast('已回滚到快照', 'success');}}>回滚</button>
+          </div>`)}
+      <//>`;
+    });	
+	
+    /* ════ 新增：可拖拽折叠的悬浮工具栏 (精致版) ════ */
+    const DraggableToolbar = memo(({ data, openModal, loading }) => {
+      // 默认位置：左上角 (x: 20, y: 20)
+      const [pos, setPos] = useState(() => {
+        try {
+          const saved = localStorage.getItem('toolbar_pos');
+          if (saved) return JSON.parse(saved);
+        } catch(e) {}
+        return { x: 20, y: 20 };
+      });
+      // 强制默认状态：每次打开网页都乖乖折叠起来，不再读取缓存
+      const [collapsed, setCollapsed] = useState(true);
+      
+      const [isDragging, setIsDragging] = useState(false);
+      const offset = useRef({ x: 0, y: 0 });
+      const startPos = useRef({ x: 0, y: 0 }); // 用于区分点击和拖拽
+
+      // 现在只记忆拖拽的位置，不再记忆展开状态
+      useEffect(() => { localStorage.setItem('toolbar_pos', JSON.stringify(pos)); }, [pos]);
+
+      const onPointerDown = (e) => {
+        // 展开状态下只能点顶部手柄拖，折叠状态下点整个球都能拖
+        if (!collapsed && !e.target.closest('.drag-handle')) return;
+        e.preventDefault();
+        setIsDragging(true);
+        const rect = e.currentTarget.getBoundingClientRect();
+        offset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        startPos.current = { x: e.clientX, y: e.clientY };
+        e.currentTarget.setPointerCapture(e.pointerId);
+      };
+
+      const onPointerMove = (e) => {
+        if (!isDragging) return;
+        let newX = e.clientX - offset.current.x;
+        let newY = e.clientY - offset.current.y;
+        // 边界限制，防止拖出屏幕
+        const maxX = window.innerWidth - (collapsed ? 44 : 70);
+        const maxY = window.innerHeight - (collapsed ? 44 : 350);
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
+        setPos({ x: newX, y: newY });
+      };
+
+      const onPointerUp = (e) => {
+        if (!isDragging) return;
+        setIsDragging(false);
+        e.currentTarget.releasePointerCapture(e.pointerId);
+        
+        // 【核心逻辑】：如果是折叠状态，且鼠标移动距离极小（< 5px），则认为是“点击”，执行展开
+        if (collapsed) {
+          const dx = e.clientX - startPos.current.x;
+          const dy = e.clientY - startPos.current.y;
+          if (Math.sqrt(dx*dx + dy*dy) < 5) {
+            setCollapsed(false);
+          }
+        }
+      };
+
+      if (!data) return null;
+
+      return html`<div class="desktop-sticky-bar ${collapsed ? 'collapsed' : ''}"
+           style=${{ left: pos.x + 'px', top: pos.y + 'px' }}
+           onPointerDown=${onPointerDown} onPointerMove=${onPointerMove} onPointerUp=${onPointerUp} onPointerCancel=${onPointerUp}>
+        
+        ${collapsed ? html`
+          <button class="cute-fab-btn" title="点击展开，按住拖动">🛠️</button>
+        ` : html`
+          <button class="toolbar-toggle-btn" onClick=${(e) => { e.stopPropagation(); setCollapsed(true); }} title="收起工具栏">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          </button>
+          <button class="tool-btn" onClick=${() => openModal('lint')} title="检查角色卡健康度"><span class="icon">🩺</span><span class="label">体检</span></button>
+          <button class="tool-btn" onClick=${() => openModal('snapshot')} title="保存或回滚快照"><span class="icon">📸</span><span class="label">快照</span></button>
+          <button class="tool-btn" onClick=${() => openModal('preview')} title="全局预览"><span class="icon">👁️</span><span class="label">预览</span></button>
+          <button class="tool-btn export-btn-cute" onClick=${() => openModal(MK.EXP)} disabled=${loading} title="导出角色卡"><span class="icon">💾</span><span class="label">导出</span></button>
+          <div class="drag-handle" title="按住拖动我"></div>
+        `}
+      </div>`;
+    });
+	
     /* ═══════════ 主应用 ═══════════ */
     const App = () => {
       const { theme, toggleTheme } = useTheme(); const { fontSize, cycleFontSize } = useFontSize(); const { hist, addHist, removeHist, clearAllHist } = useHistory();
@@ -3761,8 +5076,19 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       const [lastGenFields, setLastGenFields] = useState(null); const [regenLoading, setRegenLoading] = useState(false);
       const { state: data, set: setData, undo, redo, canUndo, canRedo, reset: resetData } = useUndo(null); const dataRef = useRef(null); dataRef.current = data;
       const [compareItems, setCompareItems] = useState([]); const [translating, setTranslating] = useState(false); const [progress, setProgress] = useState(0); const [antiTrunc, setAntiTrunc] = useState(false); const [streamEnabled, setStreamEnabled] = useLocalStorage('streamEnabled', true); const [concurrency, setConcurrency] = useLocalStorage('concurrency', 3); const [eta, setEta] = useState(0); const abortRef = useRef(null); const [trMinimized, setTrMin] = useState(false);
+      const [aiChatOpen, setAiChatOpen] = useState(false);
+      const [diffData, setDiffData] = useState(null);
+      const handleConfirmDiff = useCallback((updates) => {
+        setData(prev => {
+          const n = { ...prev };
+          Object.keys(updates).forEach(k => { n[k] = updates[k]; });
+          return n;
+        });
+        addToast('已应用 AI 修改', 'success');
+      }, [setData, addToast]);
       const [modals, setModals] = useState({
         [MK.SETTINGS]: 0, [MK.PROMPT]: 0, [MK.JB]: 0, [MK.BATCH]: 0, [MK.ADV]: 0, [MK.WB]: 0, [MK.CMP]: 0, [MK.RPL]: 0, [MK.CLR]: 0, [MK.EXP]: 0, [MK.BACKUP]: 0, [MK.GUIDE]: 0, [MK.GEN]: 0, [MK.GREET_GEN]: 0, [MK.SF_PREVIEW]: 0,
+        lint: 0, snapshot: 0,
         sync:0
       }); const openModal = useCallback((k, v = 1) => setModals(m => ({ ...m, [k]: v })), []);
       const [fullEditor, setFullEditor] = useState({ show: false, field: '', title: '', entryIdx: null, value: '' });
@@ -3779,7 +5105,11 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
       const hasApiKey = useMemo(() => { const p = providers[providerIdx]; return !!(p?.key && deobfuscate(p.key)) }, [providers, providerIdx]);
 
       useEffect(() => { setIsDirty(true) }, [data]);
-      useEffect(() => { loadTrCache() }, []);
+      useEffect(() => { 
+        loadTrCache();
+        // 修复内存泄漏：组件卸载时清理图片 Blob URL
+        return () => { if (imgUrlRef.current) URL.revokeObjectURL(imgUrlRef.current); };
+      }, []);
       /* B-1: Update cache prefix when model/prompt changes */
       useEffect(() => { setCachePrefix(model, config.systemPrompt) }, [model, config.systemPrompt]);
 
@@ -3847,6 +5177,51 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
         }));
         d.world_book_name = b.name || '';
         d.world_book_extensions = b.extensions || {}; // 保留世界书顶级扩展
+        
+        // 解析基础元数据
+        d.creator = json.creator || d.creator || '';
+        d.character_version = json.character_version || d.character_version || '1.0.0';
+
+        // 解析正则
+        const ext = d.extensions || json.extensions || {};
+        d.regex = (ext.regex_scripts || []).map(r => ({
+          name: r.scriptName || '', pattern: r.findRegex ? r.findRegex.replace(/^\/(.*)\/[a-z]*$/, '$1') : '',
+          replacement: r.replaceString || '', flags: r.findRegex ? r.findRegex.match(/[a-z]*$/)[0] || 'g' : 'g',
+          enabled: !r.disabled
+        }));
+
+        // 解析脚本 (兼容多种格式)
+        const scriptCandidates = [ext.TavernHelper_scripts, ext.tavern_helper?.scripts, ext.tavern_helper_scripts];
+        d.scripts = [];
+        for (const cand of scriptCandidates) {
+          if (Array.isArray(cand) && cand.length) {
+            d.scripts = cand.filter(s => !s.type || s.type === 'script').map(s => ({
+              id: s.id || Date.now().toString(), name: s.name || '未命名脚本',
+              code: s.content || s.code || '', enabled: s.enabled !== false
+            }));
+            break;
+          }
+        }
+
+        // 解析变量 (从 system_prompt 中提取)
+        d.variables = [];
+        d.variable_script = d.variable_script || '';
+        if (d.system_prompt) {
+          const lines = d.system_prompt.split('\n');
+          const newSys = [];
+          const rawScripts = [];
+          for (const line of lines) {
+            const match = line.match(/\{\{\s*setvar\s*::\s*([^:]+?)\s*::\s*([^}]*?)\s*\}\}/);
+            if (match) d.variables.push({ name: match[1], value: match[2] });
+            else if (line.includes('{{')) rawScripts.push(line); // 保留其他宏到原生区
+            else newSys.push(line);
+          }
+          if (rawScripts.length > 0 && !d.variable_script) {
+             d.variable_script = rawScripts.join('\n');
+          }
+          // 【优化】彻底剔除宏，保持系统提示词纯净，导出时会自动拼回去
+          d.system_prompt = newSys.join('\n').trim(); 
+        }
         return d;
       };
 
@@ -4020,6 +5395,46 @@ ${/* U-15: Clickable connection badge */''} ${hasApiKey ? html`<span class="head
         delete ed.book_entries;
         delete ed.world_book_name;
         delete ed.world_book_extensions;
+
+        // 注入元数据
+        ed.creator = data.creator || '';
+        ed.character_version = data.character_version || '1.0.0';
+
+        // 注入变量到系统提示词
+        let combinedVars = '';
+        if (data.variables && data.variables.length > 0) {
+           combinedVars += data.variables.map(v => `{{setvar::${v.name}::${v.value}}}`).join('\n');
+        }
+        if (data.variable_script && data.variable_script.trim()) {
+           combinedVars += (combinedVars ? '\n' : '') + data.variable_script.trim();
+        }
+        if (combinedVars) {
+           ed.system_prompt = (ed.system_prompt || '') + '\n\n' + combinedVars;
+        }
+        delete ed.variables;
+        delete ed.variable_script;
+
+        // 注入正则和脚本到 extensions
+        ed.extensions = ed.extensions || {};
+        
+        if (data.regex && data.regex.length > 0) {
+          ed.extensions.regex_scripts = data.regex.map((r, i) => ({
+            id: `regex_${Date.now()}_${i}`, scriptName: r.name || '未命名正则', disabled: !r.enabled,
+            runOnEdit: true, findRegex: `/${r.pattern}/${r.flags || 'g'}`, trimStrings: [],
+            replaceString: r.replacement || '', placement: [2], substituteRegex: 0, markdownOnly: true, promptOnly: false
+          }));
+        }
+        delete ed.regex;
+
+        if (data.scripts && data.scripts.length > 0) {
+          const tavernScripts = data.scripts.map((s, i) => ({
+            type: 'script', id: s.id || `script_${Date.now()}_${i}`, name: s.name || '未命名脚本',
+            content: s.code || '', code: s.code || '', info: s.info || '', enabled: s.enabled !== false, data: {}
+          }));
+          ed.extensions.tavern_helper = { scripts: tavernScripts, variables: {} };
+          ed.extensions.TavernHelper_scripts = tavernScripts; // 双写兼容
+        }
+        delete ed.scripts;
         
         const str = JSON.stringify(ed, null, 2);
         const exportName = (ed.name || '').trim() || fileName?.replace(/\.[^.]+$/, '') || 'char'; 
@@ -4140,6 +5555,10 @@ ${isNew && html`<button class="ai-gen-tag" onClick=${() => openModal(MK.GEN)} di
 ${isNew && html`<button class="ai-gen-tag img-tag" onClick=${doImgGen} disabled=${!giRef.current || !hasApiKey || imgGen}>${imgGen ? '⏳' : '🖼️ 看图写卡'}</button>`}
 </div>
 <div class="field-group"><div class="field-label"><span>🏷️ 名称</span></div><input class="input" value=${data.name || ''} onChange=${e => updateField('name', e.target.value)}/></div>
+<div style=${{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+  <div class="field-group"><div class="field-label"><span>👤 创建者</span></div><input class="input" value=${data.creator || ''} onChange=${e => updateField('creator', e.target.value)} placeholder="你的名字"/></div>
+  <div class="field-group"><div class="field-label"><span>📌 版本号</span></div><input class="input" value=${data.character_version || ''} onChange=${e => updateField('character_version', e.target.value)} placeholder="1.0.0"/></div>
+</div>
 <div class="field-group"><div class="field-label"><span>🎀 标签</span><span style=${{ fontSize: 11, color: 'var(--text-soft)' }}>${(data.tags || []).length}个</span></div><${TagChips} tags=${data.tags || []} onChange=${v => updateField('tags', v)}/></div>
 </div></div>
 <${StatsCard} data=${data}/>
@@ -4147,6 +5566,10 @@ ${isNew && html`<button class="ai-gen-tag img-tag" onClick=${doImgGen} disabled=
 <button class="${`tab-btn ${tab === TAB.BASIC ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.BASIC)} role="tab" aria-selected=${tab === TAB.BASIC}>📋 基本</button>
 <button class="${`tab-btn ${tab === TAB.ADVANCED ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.ADVANCED)} role="tab" aria-selected=${tab === TAB.ADVANCED}>⚙️ 高级</button>
 <button class="${`tab-btn ${tab === TAB.BOOK ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.BOOK)} role="tab" aria-selected=${tab === TAB.BOOK}>📚 世界书<span class="badge">${data.book_entries?.length || 0}</span></button>
+<button class="${`tab-btn ${tab === TAB.REGEX ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.REGEX)} role="tab" aria-selected=${tab === TAB.REGEX}>🔧 正则<span class="badge">${data.regex?.length || 0}</span></button>
+<button class="${`tab-btn ${tab === TAB.VARS ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.VARS)} role="tab" aria-selected=${tab === TAB.VARS}>📊 变量<span class="badge">${data.variables?.length || 0}</span></button>
+<button class="${`tab-btn ${tab === TAB.SCRIPTS ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.SCRIPTS)} role="tab" aria-selected=${tab === TAB.SCRIPTS}>💻 脚本<span class="badge">${data.scripts?.length || 0}</span></button>
+<button class="${`tab-btn ${tab === TAB.THEATER ? 'active' : ''}`}" onClick=${() => handleTabChange(TAB.THEATER)} role="tab" aria-selected=${tab === TAB.THEATER}>🎭 剧场</button>
 <div class="tabs-spacer"/>
 <button class="clear-all-btn" onClick=${() => openModal(MK.CLR)} aria-label="清空所有内容">🗑️ 清空</button>
 </div>
@@ -4175,21 +5598,29 @@ ${isNew && html`<div class="outline-card">
 </>`}
 ${tab === TAB.ADVANCED && html`<${AdvancedTab} data=${data} onChange=${updateField}/>`}
 ${tab === TAB.BOOK && html`<${WorldBookTab} data=${data} setData=${setData} onExpandEntry=${onExpandEntry} onExportWB=${exportWB} addToast=${addToast}/>`}
+${tab === TAB.REGEX && html`<${RegexTab} data=${data} onChange=${updateField}/>`}
+${tab === TAB.VARS && html`<${VarsTab} data=${data} onChange=${updateField}/>`}
+${tab === TAB.SCRIPTS && html`<${ScriptsTab} data=${data} onChange=${updateField}/>`}
+${tab === TAB.THEATER && html`<${TheaterTab} data=${data} imgUrl=${imgUrl}/>`}
 </div>
 <//>
-<div class="export-section"><button class="export-btn" onClick=${() => openModal(MK.EXP)} disabled=${loading} aria-label="导出角色卡">💾 导出</button></div>
 </div></>`}
 </div>
+${data && html`<${DraggableToolbar} data=${data} openModal=${openModal} loading=${loading} />`}
 ${loading && html`<${LoadingOverlay} msg=${loading}/>`}
 ${imgGen && html`<${LoadingOverlay} msg="🖼️ 看图写卡中"/>`}
 ${regenLoading && html`<${LoadingOverlay} msg="🔄 重新生成中"/>`}
 ${imgLoading && html`<${LoadingOverlay} msg="📷 处理图片中"/>`}
+<button class="ai-fab" onClick=${() => setAiChatOpen(!aiChatOpen)} title="呼叫 AI 助手">🤖</button>
+<${FloatingAIAssistant} show=${aiChatOpen} onClose=${() => setAiChatOpen(false)} data=${data} onApplyDiff=${setDiffData} providers=${providers} providerIdx=${providerIdx} model=${model} />
+<${AIDiffModal} show=${!!diffData} onClose=${() => setDiffData(null)} diffData=${diffData} onConfirm=${handleConfirmDiff} />
 <${Toast} toasts=${toasts} onDismiss=${dismissToast}/>
 <${ConfirmModal} state=${confirmState} onClose=${closeConfirm} getZ=${getZ}/>
 <${MobileMenu} show=${mobileMenuOpen} onClose=${() => setMobileMenuOpen(false)} actions=${mobileMenuActions}/>
 <${MobileBottomBar} data=${data} tab=${tab} onTranslate=${handleMobileTranslate} onExport=${() => openModal(MK.EXP)} onUndo=${undo} onRedo=${redo} canUndo=${canUndo} canRedo=${canRedo} onReplace=${() => openModal(MK.RPL)}/>
 <${FloatingTrBar} show=${trMinimized && modals[MK.CMP]} progress=${progress} items=${compareItems} eta=${eta} translating=${translating} onRestore=${() => setTrMin(false)} onCancel=${cancelTranslation}/>
 ${!!modals[MK.SETTINGS] && html`<${SettingsModal} show onClose=${() => openModal(MK.SETTINGS, 0)} providers=${providers} providerIdx=${providerIdx} onSave=${(p, i) => { setProviders(p); setProviderIdx(i) }} cachedModels=${cachedModels} setCachedModels=${setCachedModels}/>`}
+${!!modals[MK.HELP] && html`<${HelpModal} show onClose=${() => openModal(MK.HELP, 0)}/>`}
 ${!!modals[MK.PROMPT] && html`<${PromptModal} show onClose=${() => openModal(MK.PROMPT, 0)} cfg=${config} onSave=${setConfig} list=${promptList} setList=${setPromptList}/>`}
 ${!!modals[MK.JB] && html`<${JailbreakModal} show onClose=${() => openModal(MK.JB, 0)} cfg=${config} onSave=${setConfig} list=${jbList} setList=${setJbList}/>`}
 ${!!modals[MK.GUIDE] && html`<${GuideModal} show onClose=${() => openModal(MK.GUIDE, 0)} guideRows=${guideRows} onSave=${setGuideRows} gList=${guideList} setGList=${setGuideList}/>`}
@@ -4219,11 +5650,16 @@ ${!!modals.sync&&html`<${SyncModal} show onClose=${()=>openModal('sync',0)} sync
 ${!!modals[MK.GEN] && html`<${GenModal} show onClose=${() => openModal(MK.GEN, 0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
 ${!!modals[MK.GREET_GEN] && html`<${GreetGenModal} show onClose=${() => openModal(MK.GREET_GEN, 0)} data=${data} onApply=${handleGreetApply} pv=${providers} pi=${providerIdx} model=${model}/>`}
 ${!!modals[MK.SF_PREVIEW] && html`<${SmartFillPreviewModal} show onClose=${() => openModal(MK.SF_PREVIEW, 0)} parsed=${sfPreviewData} currentData=${data || {}} onConfirm=${confirmSmartFill}/>`}
+
+${!!modals['preview'] && html`<${PreviewModal} show onClose=${() => openModal('preview', 0)} data=${data}/>`}
+${!!modals['lint'] && html`<${LintModal} show onClose=${() => openModal('lint', 0)} data=${data}/>`}
+${!!modals['snapshot'] && html`<${SnapshotModal} show onClose=${() => openModal('snapshot', 0)} data=${data} onRestore=${resetData} addToast=${addToast}/>`}
 ${''/* @SLOT:SYNC_MODAL_RENDER */}${''/* @SLOT:SYNC_MODAL_RENDER_END */}
 </>`;
     };
     ReactDOM.createRoot(document.getElementById('root')).render(html`<${ErrorBoundary}><${App}/><//>`);
-  </script>
-</body>
 
+
+</script>
+</body>
 </html>
